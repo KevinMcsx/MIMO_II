@@ -11,8 +11,29 @@ export default function ResultsScreen({
   stats, 
   onPlayAgain, 
   onMainMenu,
-  gameTitle 
+  gameTitle,
+  gameResult,
+  playerName
 }) {
+  const [showLevelUp, setShowLevelUp] = React.useState(false);
+  const [showXP, setShowXP] = React.useState(false);
+  const [progressionData, setProgressionData] = React.useState(null);
+  
+  React.useEffect(() => {
+    if (gameResult && playerName) {
+      awardXP(playerName, gameResult).then(data => {
+        if (data) {
+          setProgressionData(data);
+          setShowXP(true);
+          setTimeout(() => setShowXP(false), 2000);
+          
+          if (data.leveledUp) {
+            setTimeout(() => setShowLevelUp(true), 2000);
+          }
+        }
+      });
+    }
+  }, [gameResult, playerName]);
   const {
     totalTime = 0,
     avgReactionTime = 0,
@@ -27,6 +48,15 @@ export default function ResultsScreen({
   const accuracy = totalAttempts > 0 ? Math.round((correctHits / totalAttempts) * 100) : 0;
 
   return (
+    <>
+      <XPGainPopup show={showXP} xp={progressionData?.xpGained} />
+      <LevelUpModal 
+        show={showLevelUp} 
+        newLevel={progressionData?.newLevel}
+        newUnlocks={progressionData?.newUnlocks || []}
+        onClose={() => setShowLevelUp(false)}
+      />
+      
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -155,6 +185,22 @@ export default function ResultsScreen({
         <Download className="w-4 h-4 mr-2" />
         Download All Results as TXT
       </Button>
+      
+      {progressionData && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl p-4 w-full max-w-md text-center"
+        >
+          <p className="text-sm opacity-90">XP Earned</p>
+          <p className="text-3xl font-black">+{progressionData.xpGained} XP</p>
+          {progressionData.leveledUp && (
+            <p className="text-sm mt-1">🎉 Level {progressionData.oldLevel} → {progressionData.newLevel}!</p>
+          )}
+        </motion.div>
+      )}
     </motion.div>
+    </>
   );
 }
