@@ -5,6 +5,7 @@ import ShapeDisplay from './ShapeDisplay';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
+import { useTranslation } from '../utils/translations';
 
 const COLORS = ['yellow', 'green', 'blue', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -12,6 +13,7 @@ const SHAPES = ['circle', 'square', 'triangle', 'star'];
 const SHAPE_COUNTS = { 1: 20, 2: 40, 3: 60, 4: 80 };
 
 export default function Game1ColorReaction({ difficulty, onMainMenu, playerName }) {
+  const t = useTranslation();
   const [gameState, setGameState] = useState('countdown'); // countdown, playing, finished
   const [countdown, setCountdown] = useState(3);
   const [currentShape, setCurrentShape] = useState(null);
@@ -166,11 +168,11 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
           <span className="text-xl">/{totalShapes}</span>
         </div>
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white">Color Reaction</h2>
-          <p className="text-slate-400">{['Easy', 'Medium', 'Hard', 'Expert'][difficulty - 1]}</p>
+          <h2 className="text-2xl font-bold text-white">{t('colorReaction')}</h2>
+          <p className="text-slate-400">{[t('easy'), t('medium'), t('hard'), t('expert')][difficulty - 1]}</p>
         </div>
         <div className="text-right">
-          <p className="text-slate-400 text-sm">Correct</p>
+          <p className="text-slate-400 text-sm">{t('correct')}</p>
           <p className="text-2xl font-bold text-green-400">{stats.correctHits}</p>
         </div>
       </div>
@@ -186,7 +188,7 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
               exit={{ scale: 1.5, opacity: 0 }}
               className="text-9xl font-black text-white"
             >
-              {countdown || 'GO!'}
+              {countdown || t('go')}
             </motion.div>
           ) : currentShape && currentColor ? (
             <ShapeDisplay key={`${currentShape}-${shapeIndex}`} shape={currentShape} color={currentColor} />
@@ -196,7 +198,7 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
               animate={{ opacity: 1 }}
               className="text-slate-500 text-xl"
             >
-              Get ready...
+              {t('getReady')}
             </motion.div>
           )}
         </AnimatePresence>
@@ -204,7 +206,7 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
 
       {/* Instructions */}
       <p className="text-slate-400 text-center">
-        Press the button matching the <span className="text-white font-bold">COLOR</span> of the shape!
+        {t('pressColorButton')}
       </p>
 
       {/* Buttons */}

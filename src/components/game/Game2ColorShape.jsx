@@ -6,6 +6,7 @@ import ShapeDisplay from './ShapeDisplay';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
+import { useTranslation } from '../utils/translations';
 
 const COLORS = ['yellow', 'green', 'blue', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -13,6 +14,7 @@ const SHAPES = ['circle', 'square', 'triangle', 'star'];
 const SHAPE_COUNTS = { 1: 20, 2: 40, 3: 60, 4: 80 };
 
 export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) {
+  const t = useTranslation();
   const [gameState, setGameState] = useState('countdown');
   const [countdown, setCountdown] = useState(3);
   const [currentShape, setCurrentShape] = useState(null);
@@ -248,8 +250,8 @@ export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) 
           <span className="text-xl">/{totalShapes}</span>
         </div>
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white">Color + Shape</h2>
-          <p className="text-slate-400">{['Easy', 'Medium', 'Hard', 'Expert'][difficulty - 1]}</p>
+          <h2 className="text-2xl font-bold text-white">{t('colorShape')}</h2>
+          <p className="text-slate-400">{[t('easy'), t('medium'), t('hard'), t('expert')][difficulty - 1]}</p>
         </div>
         <div className="text-right text-sm">
           <p className="text-green-400">✓ {stats.correctHits + stats.correctShapes}</p>
@@ -268,7 +270,7 @@ export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) 
               exit={{ scale: 1.5, opacity: 0 }}
               className="text-9xl font-black text-white"
             >
-              {countdown || 'GO!'}
+              {countdown || t('go')}
             </motion.div>
           ) : currentShape && currentColor ? (
             <ShapeDisplay key={`${currentShape}-${shapeIndex}`} shape={currentShape} color={currentColor} />
@@ -278,7 +280,7 @@ export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) 
               animate={{ opacity: 1 }}
               className="text-slate-500 text-xl"
             >
-              Get ready...
+              {t('getReady')}
             </motion.div>
           )}
         </AnimatePresence>
@@ -287,20 +289,13 @@ export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) 
       {/* Rule Reminder */}
       <div className="bg-slate-800/30 rounded-xl p-4 max-w-2xl w-full text-center">
         <p className="text-slate-300 text-sm">
-          {targetType === 'shape' ? (
-            <>Press <span className="text-yellow-400 font-bold">SHAPE button</span> - color matches!</>
-          ) : (
-            <>Press <span className="text-blue-400 font-bold">COLOR button</span> - no match</>
-          )}
-        </p>
-        <p className="text-slate-500 text-xs mt-1">
-          Shape button color = screen color → press shape | Otherwise → press color
+          {t('colorShapeRule')}
         </p>
       </div>
 
       {/* Shape Buttons */}
       <div className="space-y-2">
-        <p className="text-center text-slate-400 text-sm">Shape Buttons (Q, W, E, R)</p>
+        <p className="text-center text-slate-400 text-sm">{t('shapeButtons')}</p>
         <ShapeButtons
           activeKey={activeShapeKey}
           onPress={handleShapePress}
@@ -311,7 +306,7 @@ export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) 
 
       {/* Color Buttons */}
       <div className="space-y-2">
-        <p className="text-center text-slate-400 text-sm">Color Buttons (1, 2, 3, 4)</p>
+        <p className="text-center text-slate-400 text-sm">{t('colorButtons')}</p>
         <ColorButtons
           activeKey={activeColorKey}
           onPress={handleColorPress}
