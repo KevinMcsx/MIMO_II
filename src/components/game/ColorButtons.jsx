@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 
 const buttons = [
   { key: '1', color: 'yellow', bg: 'bg-yellow-400', glow: 'shadow-yellow-400/50', label: '🟡', keyLabel: '1' },
-  { key: '2', color: 'blue', bg: 'bg-blue-500', glow: 'shadow-blue-500/50', label: '🔵', keyLabel: '2' },
-  { key: '3', color: 'green', bg: 'bg-green-500', glow: 'shadow-green-500/50', label: '🟢', keyLabel: '3' },
+  { key: '2', color: 'green', bg: 'bg-green-500', glow: 'shadow-green-500/50', label: '🟢', keyLabel: '2' },
+  { key: '3', color: 'blue', bg: 'bg-blue-500', glow: 'shadow-blue-500/50', label: '🔵', keyLabel: '3' },
   { key: '4', color: 'red', bg: 'bg-red-500', glow: 'shadow-red-500/50', label: '🔴', keyLabel: '4' },
 ];
 
