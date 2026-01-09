@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import ColorButtons from './ColorButtons';
 import ShapeDisplay from './ShapeDisplay';
 import ResultsScreen from './ResultsScreen';
+import { sounds } from '../../utils/sounds';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -32,9 +33,11 @@ export default function Game1ColorReaction({ difficulty, onMainMenu }) {
     if (gameState !== 'countdown') return;
     
     if (countdown > 0) {
+      sounds.countdown();
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else {
+      sounds.gameStart();
       setGameState('playing');
       setStats(prev => ({ ...prev, startTime: Date.now() }));
       generateNewShape();
@@ -55,6 +58,12 @@ export default function Game1ColorReaction({ difficulty, onMainMenu }) {
     const reactionTime = Date.now() - shapeStartTime.current;
     const isCorrect = pressedColor === currentColor;
 
+    if (isCorrect) {
+      sounds.correctHit();
+    } else {
+      sounds.wrongHit();
+    }
+
     setStats(prev => ({
       ...prev,
       reactionTimes: [...prev.reactionTimes, reactionTime],
@@ -69,6 +78,7 @@ export default function Game1ColorReaction({ difficulty, onMainMenu }) {
 
     // Next shape or end game
     if (shapeIndex + 1 >= totalShapes) {
+      sounds.gameEnd();
       setStats(prev => ({
         ...prev,
         totalTime: Date.now() - prev.startTime,

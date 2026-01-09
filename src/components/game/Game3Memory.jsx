@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Circle, Square, Triangle, Star } from 'lucide-react';
 import ResultsScreen from './ResultsScreen';
+import { sounds } from '../../utils/sounds';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -86,9 +87,11 @@ export default function Game3Memory({ difficulty, onMainMenu }) {
     if (gameState !== 'countdown') return;
     
     if (countdown > 0) {
+      sounds.countdown();
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else {
+      sounds.gameStart();
       setGameState('playing');
       const now = Date.now();
       setStats(prev => ({ ...prev, startTime: now, roundStartTime: now }));
@@ -111,6 +114,7 @@ export default function Game3Memory({ difficulty, onMainMenu }) {
 
     const newSelected = [...selectedCards, cardId];
     setSelectedCards(newSelected);
+    sounds.cardFlip();
 
     if (newSelected.length === 2) {
       const card1 = cards.find(c => c.id === newSelected[0]);
@@ -118,6 +122,7 @@ export default function Game3Memory({ difficulty, onMainMenu }) {
 
       setTimeout(() => {
         if (cardsMatch(card1, card2)) {
+          sounds.pairMatch();
           const pairTime = Date.now() - stats.roundStartTime;
           setMatchedPairs(prev => [...prev, newSelected[0], newSelected[1]]);
           setStats(prev => ({
@@ -128,6 +133,7 @@ export default function Game3Memory({ difficulty, onMainMenu }) {
           // Check if round complete
           if (matchedPairs.length + 2 >= cardCount) {
             if (currentRound >= ROUNDS) {
+              sounds.gameEnd();
               setStats(prev => ({
                 ...prev,
                 totalTime: Date.now() - prev.startTime,
@@ -138,10 +144,12 @@ export default function Game3Memory({ difficulty, onMainMenu }) {
               setMatchedPairs([]);
               setCards(generateCards());
               setStats(prev => ({ ...prev, roundStartTime: Date.now() }));
-            }
-          }
-        }
-        setSelectedCards([]);
+              }
+              }
+              } else {
+              sounds.wrongHit();
+              }
+              setSelectedCards([]);
       }, 600);
     }
   }, [gameState, selectedCards, cards, matchedPairs, cardCount, currentRound, stats.roundStartTime, generateCards]);

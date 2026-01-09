@@ -4,6 +4,7 @@ import { Circle, Square, Triangle, Star, Heart } from 'lucide-react';
 import ColorButtons from './ColorButtons';
 import ShapeButtons from './ShapeButtons';
 import ResultsScreen from './ResultsScreen';
+import { sounds } from '../../utils/sounds';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -68,9 +69,11 @@ export default function Game4ProChallenge({ difficulty, onMainMenu }) {
     if (gameState !== 'countdown') return;
     
     if (countdown > 0) {
+      sounds.countdown();
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else {
+      sounds.gameStart();
       setGameState('playing');
       const now = Date.now();
       setStats(prev => ({ ...prev, startTime: now }));
@@ -106,6 +109,7 @@ export default function Game4ProChallenge({ difficulty, onMainMenu }) {
         newLanes[laneIndex] = [...newLanes[laneIndex], item];
         return newLanes;
       });
+      sounds.itemSpawn();
     };
 
     const spawnInterval = Math.max(800, currentSpeedRef.current / 3);
@@ -141,7 +145,10 @@ export default function Game4ProChallenge({ difficulty, onMainMenu }) {
             if (item.y >= 100) {
               // Missed item
               if (difficulty === 4) {
+                sounds.loseLife();
                 setLives(l => l - 1);
+              } else {
+                sounds.wrongHit();
               }
               setStats(s => ({ ...s, wrongHits: s.wrongHits + 1 }));
               return false;
@@ -172,6 +179,7 @@ export default function Game4ProChallenge({ difficulty, onMainMenu }) {
   const endGame = useCallback(() => {
     clearInterval(gameLoopRef.current);
     clearInterval(spawnRef.current);
+    sounds.gameEnd();
     setStats(prev => ({
       ...prev,
       totalTime: Date.now() - prev.startTime,
@@ -193,7 +201,8 @@ export default function Game4ProChallenge({ difficulty, onMainMenu }) {
       if (itemIndex !== -1) {
         const item = lane[itemIndex];
         const reactionTime = Date.now() - item.spawnTime;
-        
+
+        sounds.itemHit();
         setStats(s => ({
           ...s,
           reactionTimes: [...s.reactionTimes, reactionTime],

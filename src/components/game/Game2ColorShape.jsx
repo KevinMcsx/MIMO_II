@@ -4,6 +4,7 @@ import ColorButtons from './ColorButtons';
 import ShapeButtons from './ShapeButtons';
 import ShapeDisplay from './ShapeDisplay';
 import ResultsScreen from './ResultsScreen';
+import { sounds } from '../../utils/sounds';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -47,9 +48,11 @@ export default function Game2ColorShape({ difficulty, onMainMenu }) {
     if (gameState !== 'countdown') return;
     
     if (countdown > 0) {
+      sounds.countdown();
       const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
       return () => clearTimeout(timer);
     } else {
+      sounds.gameStart();
       setGameState('playing');
       setStats(prev => ({ ...prev, startTime: Date.now() }));
       generateNewRound();
@@ -77,6 +80,12 @@ export default function Game2ColorShape({ difficulty, onMainMenu }) {
   const processAnswer = useCallback((isCorrect, isShapeButton) => {
     const reactionTime = Date.now() - shapeStartTime.current;
 
+    if (isCorrect) {
+      sounds.correctHit();
+    } else {
+      sounds.wrongHit();
+    }
+
     setStats(prev => {
       const newStats = {
         ...prev,
@@ -96,6 +105,7 @@ export default function Game2ColorShape({ difficulty, onMainMenu }) {
 
     // Next shape or end game
     if (shapeIndex + 1 >= totalShapes) {
+      sounds.gameEnd();
       setStats(prev => ({
         ...prev,
         totalTime: Date.now() - prev.startTime,
