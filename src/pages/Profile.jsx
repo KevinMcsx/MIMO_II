@@ -82,9 +82,9 @@ export default function Profile() {
         >
           <div className="flex flex-col md:flex-row items-center gap-6">
             <PlayerAvatar 
-              avatar={profile.equipped_avatar}
-              frame={profile.equipped_frame}
-              badge={profile.equipped_badge}
+              avatar={profile.equipped_avatar || 'default'}
+              frame={profile.equipped_frame || 'default'}
+              badge={profile.equipped_badge || null}
               size="lg"
             />
             
@@ -124,8 +124,8 @@ export default function Profile() {
           {activeTab === 'avatars' && (
             <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
               {Object.entries(AVATARS).map(([id, avatar]) => {
-                const isUnlocked = profile.unlocked_avatars.includes(id);
-                const isEquipped = profile.equipped_avatar === id;
+                const isUnlocked = (profile.unlocked_avatars || ['default']).includes(id);
+                const isEquipped = (profile.equipped_avatar || 'default') === id;
                 return (
                   <motion.button
                     key={id}
@@ -159,8 +159,8 @@ export default function Profile() {
           {activeTab === 'badges' && (
             <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
               {Object.entries(BADGES).map(([id, badge]) => {
-                const isUnlocked = profile.unlocked_badges.includes(id);
-                const isEquipped = profile.equipped_badge === id;
+                const isUnlocked = (profile.unlocked_badges || []).includes(id);
+                const isEquipped = (profile.equipped_badge || null) === id;
                 return (
                   <motion.button
                     key={id}
@@ -192,8 +192,8 @@ export default function Profile() {
           {activeTab === 'frames' && (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {Object.entries(FRAMES).map(([id, frame]) => {
-                const isUnlocked = profile.unlocked_frames.includes(id);
-                const isEquipped = profile.equipped_frame === id;
+                const isUnlocked = (profile.unlocked_frames || ['default']).includes(id);
+                const isEquipped = (profile.equipped_frame || 'default') === id;
                 return (
                   <motion.button
                     key={id}
@@ -227,8 +227,8 @@ export default function Profile() {
           {activeTab === 'themes' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Object.entries(THEMES).map(([id, theme]) => {
-                const isUnlocked = profile.unlocked_themes.includes(id);
-                const isEquipped = profile.cosmetic_theme === id;
+                const isUnlocked = (profile.unlocked_themes || ['default']).includes(id);
+                const isEquipped = (profile.cosmetic_theme || 'default') === id;
                 return (
                   <motion.button
                     key={id}
