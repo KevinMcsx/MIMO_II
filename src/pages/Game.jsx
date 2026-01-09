@@ -119,19 +119,36 @@ export default function Game() {
       {/* Overlay for better readability */}
       <div className="absolute inset-0 bg-black/10" />
 
-      {/* Sound Toggle Button */}
-      <Button
-        onClick={toggleSound}
-        variant="ghost"
-        size="icon"
-        className="absolute top-4 right-4 z-20 bg-white/60 hover:bg-white/80 backdrop-blur-sm"
-      >
-        {soundEnabled ? (
-          <Volume2 className="w-6 h-6 text-slate-700" />
-        ) : (
-          <VolumeX className="w-6 h-6 text-slate-700" />
-        )}
-      </Button>
+      {/* Top Navigation */}
+      <div className="absolute top-4 right-4 z-20 flex gap-2">
+        <Link to={createPageUrl('DailyChallenge')}>
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
+            <Calendar className="w-5 h-5 text-slate-700" />
+          </Button>
+        </Link>
+        <Link to={createPageUrl('Statistics')}>
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
+            <BarChart3 className="w-5 h-5 text-slate-700" />
+          </Button>
+        </Link>
+        <Link to={createPageUrl('Leaderboard')}>
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
+            <Trophy className="w-5 h-5 text-slate-700" />
+          </Button>
+        </Link>
+        <Button
+          onClick={toggleSound}
+          variant="ghost"
+          size="icon"
+          className="bg-white/60 hover:bg-white/80 backdrop-blur-sm"
+        >
+          {soundEnabled ? (
+            <Volume2 className="w-6 h-6 text-slate-700" />
+          ) : (
+            <VolumeX className="w-6 h-6 text-slate-700" />
+          )}
+        </Button>
+      </div>
 
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
