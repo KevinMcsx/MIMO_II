@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Shapes, Brain, Zap } from 'lucide-react';
+import { Palette, Shapes, Brain, Zap, Keyboard } from 'lucide-react';
 import { useTranslation } from '../utils/translations';
 
 export default function GameSelection({ onSelect, activeKey, unlockedGames = [1, 2, 3, 4] }) {
@@ -85,8 +85,9 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
               ${activeKey === game.key ? 'ring-4 ring-white scale-105' : ''}
             `}
           >
-            <div className="absolute top-2 right-2 bg-white/20 px-3 py-1 rounded-full text-sm font-bold text-white">
-              Key: {game.key}
+            <div className="absolute top-2 right-2 bg-white/20 px-3 py-1 rounded-full text-sm font-bold text-white flex items-center gap-1">
+              <Keyboard className="w-3 h-3" />
+              {game.key}
             </div>
             <game.Icon className="w-16 h-16 text-white/90 mb-4" strokeWidth={1.5} />
             <h3 className="text-2xl font-bold text-white mb-2">{game.title}</h3>

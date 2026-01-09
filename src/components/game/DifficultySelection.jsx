@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Baby, Smile, Flame, Skull, ArrowLeft } from 'lucide-react';
+import { Baby, Smile, Flame, Skull, ArrowLeft, Keyboard } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '../utils/translations';
 
@@ -121,8 +121,9 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
               ${activeKey === diff.key ? 'ring-4 ring-white scale-105' : ''}
             `}
           >
-            <div className="absolute top-2 right-2 bg-white/20 px-3 py-1 rounded-full text-sm font-bold text-white">
-              Key: {diff.key}
+            <div className="absolute top-2 right-2 bg-white/20 px-3 py-1 rounded-full text-sm font-bold text-white flex items-center gap-1">
+              <Keyboard className="w-3 h-3" />
+              {diff.key}
             </div>
             <diff.Icon className="w-14 h-14 text-white/90 mb-3" strokeWidth={1.5} />
             <h3 className="text-2xl font-bold text-white mb-2">{diff.title}</h3>
