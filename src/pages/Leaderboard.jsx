@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
 import { Trophy, Medal, Award, ChevronLeft } from 'lucide-react';
+import PlayerAvatar from '../components/profile/PlayerAvatar';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -123,6 +124,7 @@ export default function Leaderboard() {
           ) : (
             scores.map((score, index) => {
               const isCurrentPlayer = score.player_name === playerName;
+              const playerProfile = getPlayerProfile(score.player_name);
               return (
               <motion.div
                 key={score.id}
@@ -146,6 +148,15 @@ export default function Leaderboard() {
                     <span className="text-2xl font-bold text-slate-400">#{index + 1}</span>
                   )}
                 </div>
+
+                {playerProfile && (
+                  <PlayerAvatar 
+                    avatar={playerProfile.equipped_avatar}
+                    frame={playerProfile.equipped_frame}
+                    badge={playerProfile.equipped_badge}
+                    size="sm"
+                  />
+                )}
 
                 <div className="flex-1">
                   <p className="font-bold text-lg text-slate-800">{score.player_name}</p>
