@@ -64,28 +64,30 @@ export default function Statistics() {
   }).filter(p => p.games > 0).sort((a, b) => b.avgScore - a.avgScore);
 
   const downloadStats = () => {
-    let text = '=== MIMO GAME STATISTICS ===\n\n';
-    text += `Generated: ${new Date().toLocaleString()}\n`;
-    text += `Player Filter: ${selectedPlayer || 'All Players'}\n`;
-    text += `Game Filter: ${selectedGame ? gameNames[selectedGame - 1] : 'All Games'}\n`;
-    text += `Total Games: ${totalGames}\n\n`;
+    // CSV Header
+    let csv = 'Player Name,Game Type,Difficulty,Score,Avg Reaction Time (ms),Correct Hits,Wrong Hits,Total Time (ms),Date\n';
     
-    text += '--- RECORDS ---\n\n';
-    filteredScores.forEach((score, i) => {
-      text += `Game #${i + 1}\n`;
-      text += `  Player: ${score.player_name}\n`;
-      text += `  Game: ${gameNames[score.game_type - 1]}\n`;
-      text += `  Difficulty: ${difficultyNames[score.difficulty - 1]}\n`;
-      text += `  Score: ${score.score}\n`;
-      text += `  Avg Reaction: ${(score.avg_reaction_time || 0).toFixed(0)}ms\n`;
-      text += `  Date: ${new Date(score.created_date).toLocaleString()}\n\n`;
+    // CSV Data Rows
+    filteredScores.forEach((score) => {
+      const row = [
+        score.player_name,
+        gameNames[score.game_type - 1],
+        difficultyNames[score.difficulty - 1],
+        score.score,
+        (score.avg_reaction_time || 0).toFixed(0),
+        score.correct_hits || 0,
+        score.wrong_hits || 0,
+        score.total_time || 0,
+        new Date(score.created_date).toLocaleString()
+      ];
+      csv += row.map(field => `"${field}"`).join(',') + '\n';
     });
 
-    const blob = new Blob([text], { type: 'text/plain' });
+    const blob = new Blob([csv], { type: 'text/csv' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `mimo-statistics-${Date.now()}.txt`;
+    a.download = `mimo-statistics-${Date.now()}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
