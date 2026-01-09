@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Circle, Square, Triangle, Star } from 'lucide-react';
 import ResultsScreen from './ResultsScreen';
+import { sounds } from '../utils/sounds';
 import { sounds } from '../../utils/sounds';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];

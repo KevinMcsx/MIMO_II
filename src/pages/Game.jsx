@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Volume2, VolumeX } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import GameSelection from '../components/game/GameSelection';
 import DifficultySelection from '../components/game/DifficultySelection';
 import Game1ColorReaction from '../components/game/Game1ColorReaction';
 import Game2ColorShape from '../components/game/Game2ColorShape';
 import Game3Memory from '../components/game/Game3Memory';
 import Game4ProChallenge from '../components/game/Game4ProChallenge';
+import { sounds } from '../components/utils/sounds';
 
 export default function Game() {
   const [screen, setScreen] = useState('gameSelect'); // gameSelect, difficultySelect, playing
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
   const [activeKey, setActiveKey] = useState(null);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+
+  useEffect(() => {
+    setSoundEnabled(sounds.loadSoundPreference());
+  }, []);
+
+  const toggleSound = () => {
+    const newState = !soundEnabled;
+    setSoundEnabled(newState);
+    sounds.setSoundEnabled(newState);
+    sounds.buttonPress();
+  };
 
   // Keyboard handling for menus
   useEffect(() => {
