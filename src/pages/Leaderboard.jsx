@@ -16,6 +16,13 @@ export default function Leaderboard() {
   const [timeFilter, setTimeFilter] = useState('all-time');
   const playerName = localStorage.getItem('mimoPlayerName') || '';
 
+  const { data: allProfiles = [] } = useQuery({
+    queryKey: ['allProfiles'],
+    queryFn: () => base44.entities.PlayerProfile.list(),
+  });
+
+  const getPlayerProfile = (name) => allProfiles.find(p => p.player_name === name);
+
   const { data: scores = [], isLoading } = useQuery({
     queryKey: ['leaderboard', selectedGame, selectedDifficulty, timeFilter],
     queryFn: async () => {

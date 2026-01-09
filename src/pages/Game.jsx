@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, Trophy, BarChart3, Calendar } from 'lucide-react';
+import { Volume2, VolumeX, Trophy, BarChart3, Calendar, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -137,6 +137,11 @@ export default function Game() {
       </div>
 
       <div className="absolute top-4 right-4 z-20 flex gap-2">
+        <Link to={createPageUrl('Profile')}>
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
+            <User className="w-5 h-5 text-slate-700" />
+          </Button>
+        </Link>
         <Link to={createPageUrl('DailyChallenge')}>
           <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
             <Calendar className="w-5 h-5 text-slate-700" />

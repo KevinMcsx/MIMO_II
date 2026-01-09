@@ -72,17 +72,30 @@ export function getUnlocksForLevel(level) {
   if (level >= 10) unlocks.push({ type: 'difficulty', game: 1, id: 3, name: 'Hard Difficulty for Color Reaction' });
   if (level >= 10) unlocks.push({ type: 'difficulty', game: 2, id: 2, name: 'Medium Difficulty for Color + Shape' });
   if (level >= 10) unlocks.push({ type: 'difficulty', game: 3, id: 3, name: 'Hard Difficulty for Memory Match' });
+  if (level >= 4) unlocks.push({ type: 'avatar', id: 'star', name: '⭐ Star Avatar' });
+  if (level >= 6) unlocks.push({ type: 'badge', id: 'bronze', name: '🥉 Bronze Badge' });
+  if (level >= 8) unlocks.push({ type: 'avatar', id: 'fire', name: '🔥 Fire Avatar' });
   if (level >= 12) unlocks.push({ type: 'theme', id: 'ocean', name: 'Ocean Theme' });
+  if (level >= 12) unlocks.push({ type: 'badge', id: 'silver', name: '🥈 Silver Badge' });
+  if (level >= 14) unlocks.push({ type: 'frame', id: 'bronze', name: 'Bronze Frame' });
   if (level >= 15) unlocks.push({ type: 'game', id: 4, name: 'Pro Challenge' });
   if (level >= 15) unlocks.push({ type: 'difficulty', game: 2, id: 3, name: 'Hard Difficulty for Color + Shape' });
+  if (level >= 16) unlocks.push({ type: 'avatar', id: 'lightning', name: '⚡ Lightning Avatar' });
   if (level >= 18) unlocks.push({ type: 'theme', id: 'sunset', name: 'Sunset Theme' });
+  if (level >= 18) unlocks.push({ type: 'badge', id: 'gold', name: '🥇 Gold Badge' });
   if (level >= 20) unlocks.push({ type: 'difficulty', game: 1, id: 4, name: 'Expert Difficulty for Color Reaction' });
   if (level >= 20) unlocks.push({ type: 'difficulty', game: 2, id: 4, name: 'Expert Difficulty for Color + Shape' });
   if (level >= 20) unlocks.push({ type: 'difficulty', game: 3, id: 4, name: 'Expert Difficulty for Memory Match' });
   if (level >= 20) unlocks.push({ type: 'difficulty', game: 4, id: 2, name: 'Medium Difficulty for Pro Challenge' });
+  if (level >= 20) unlocks.push({ type: 'avatar', id: 'crown', name: '👑 Crown Avatar' });
+  if (level >= 22) unlocks.push({ type: 'frame', id: 'silver', name: 'Silver Frame' });
   if (level >= 25) unlocks.push({ type: 'difficulty', game: 4, id: 3, name: 'Hard Difficulty for Pro Challenge' });
   if (level >= 25) unlocks.push({ type: 'theme', id: 'neon', name: 'Neon Theme' });
+  if (level >= 25) unlocks.push({ type: 'avatar', id: 'gem', name: '💎 Gem Avatar' });
+  if (level >= 28) unlocks.push({ type: 'badge', id: 'platinum', name: '⚪ Platinum Badge' });
   if (level >= 30) unlocks.push({ type: 'difficulty', game: 4, id: 4, name: 'Expert Difficulty for Pro Challenge' });
+  if (level >= 30) unlocks.push({ type: 'frame', id: 'gold', name: 'Gold Frame' });
+  if (level >= 30) unlocks.push({ type: 'theme', id: 'galaxy', name: 'Galaxy Theme' });
   
   return unlocks;
 }
@@ -92,7 +105,10 @@ export function getAllUnlocksUpToLevel(level) {
   const allUnlocks = {
     games: [1],
     difficulties: { 1: [1], 2: [1], 3: [1], 4: [1] },
-    themes: ['default']
+    themes: ['default'],
+    avatars: ['default'],
+    badges: [],
+    frames: ['default']
   };
   
   for (let i = 2; i <= level; i++) {
@@ -106,6 +122,12 @@ export function getAllUnlocksUpToLevel(level) {
         }
       } else if (unlock.type === 'theme' && !allUnlocks.themes.includes(unlock.id)) {
         allUnlocks.themes.push(unlock.id);
+      } else if (unlock.type === 'avatar' && !allUnlocks.avatars.includes(unlock.id)) {
+        allUnlocks.avatars.push(unlock.id);
+      } else if (unlock.type === 'badge' && !allUnlocks.badges.includes(unlock.id)) {
+        allUnlocks.badges.push(unlock.id);
+      } else if (unlock.type === 'frame' && !allUnlocks.frames.includes(unlock.id)) {
+        allUnlocks.frames.push(unlock.id);
       }
     });
   }

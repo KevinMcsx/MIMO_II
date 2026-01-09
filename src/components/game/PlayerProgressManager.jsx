@@ -60,7 +60,10 @@ export async function awardXP(playerName, gameResult) {
       total_xp: newTotalXP,
       unlocked_games: allUnlocks.games,
       unlocked_difficulties: allUnlocks.difficulties,
-      unlocked_themes: allUnlocks.themes
+      unlocked_themes: allUnlocks.themes,
+      unlocked_avatars: allUnlocks.avatars,
+      unlocked_badges: allUnlocks.badges,
+      unlocked_frames: allUnlocks.frames
     });
   } else {
     await base44.entities.PlayerProfile.update(profile.id, {
