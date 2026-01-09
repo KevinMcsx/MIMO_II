@@ -6,7 +6,7 @@ import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
 
-const COLORS = ['yellow', 'blue', 'green', 'red'];
+const COLORS = ['yellow', 'green', 'blue', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
 
 const SHAPE_COUNTS = { 1: 20, 2: 40, 3: 60, 4: 80 };
@@ -73,7 +73,7 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
     }));
 
     // Visual feedback
-    const keyMap = { yellow: '1', blue: '2', green: '3', red: '4' };
+    const keyMap = { yellow: '1', green: '2', blue: '3', red: '4' };
     setActiveKey(keyMap[pressedColor]);
     setTimeout(() => setActiveKey(null), 150);
 
@@ -113,7 +113,7 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
-      const keyMap = { '1': 'yellow', '2': 'blue', '3': 'green', '4': 'red' };
+      const keyMap = { '1': 'yellow', '2': 'green', '3': 'blue', '4': 'red' };
       if (keyMap[e.key]) {
         handleColorPress(keyMap[e.key]);
       }

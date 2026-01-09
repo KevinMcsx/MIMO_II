@@ -7,7 +7,7 @@ import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
 
-const COLORS = ['yellow', 'blue', 'green', 'red'];
+const COLORS = ['yellow', 'green', 'blue', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
 
 const LANE_CONFIG = {
@@ -241,7 +241,7 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
   const handleColorPress = useCallback((pressedColor) => {
     if (gameState !== 'playing') return;
 
-    const keyMap = { yellow: '1', blue: '2', green: '3', red: '4' };
+    const keyMap = { yellow: '1', green: '2', blue: '3', red: '4' };
     setActiveColorKey(keyMap[pressedColor]);
     setTimeout(() => setActiveColorKey(null), 100);
 
@@ -267,7 +267,7 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
-      const colorMap = { '1': 'yellow', '2': 'blue', '3': 'green', '4': 'red' };
+      const colorMap = { '1': 'yellow', '2': 'green', '3': 'blue', '4': 'red' };
       const shapeMap = { 'q': 'circle', 'w': 'square', 'e': 'triangle', 'r': 'star' };
       
       if (colorMap[e.key]) {

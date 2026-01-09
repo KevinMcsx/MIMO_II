@@ -5,7 +5,7 @@ import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
 
-const COLORS = ['yellow', 'blue', 'green', 'red'];
+const COLORS = ['yellow', 'green', 'blue', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
 
 const CARD_COUNTS = { 1: 4, 2: 6, 3: 8, 4: 8 };
