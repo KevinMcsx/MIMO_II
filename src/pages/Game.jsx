@@ -137,11 +137,6 @@ export default function Game() {
       </div>
 
       <div className="absolute top-4 right-4 z-20 flex gap-2">
-        <Link to={createPageUrl('Store')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
-            <ShoppingBag className="w-5 h-5 text-slate-700" />
-          </Button>
-        </Link>
         <Link to={createPageUrl('Profile')}>
           <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
             <User className="w-5 h-5 text-slate-700" />
