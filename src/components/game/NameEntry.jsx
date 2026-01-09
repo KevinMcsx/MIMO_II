@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { User } from 'lucide-react';
 
 export default function NameEntry({ onSubmit }) {
+  const t = useTranslation();
   const [name, setName] = useState('');
 
   const handleSubmit = (e) => {

@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import GameSelection from '../components/game/GameSelection';
 import DifficultySelection from '../components/game/DifficultySelection';
+import LanguageSelector from '../components/game/LanguageSelector';
+import { useTranslation } from '../components/utils/translations';
 import Game1ColorReaction from '../components/game/Game1ColorReaction';
 import Game2ColorShape from '../components/game/Game2ColorShape';
 import Game3Memory from '../components/game/Game3Memory';
@@ -17,6 +19,7 @@ import { getPlayerProfile } from '../components/game/PlayerProgressManager';
 import { useQuery } from '@tanstack/react-query';
 
 export default function Game() {
+  const t = useTranslation();
   const [screen, setScreen] = useState('nameEntry'); // nameEntry, gameSelect, difficultySelect, playing
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
@@ -137,6 +140,7 @@ export default function Game() {
       </div>
 
       <div className="absolute top-4 right-4 z-20 flex gap-2">
+        <LanguageSelector />
         <Link to={createPageUrl('Profile')}>
           <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
             <User className="w-5 h-5 text-slate-700" />
@@ -243,10 +247,10 @@ export default function Game() {
             className="absolute bottom-8 text-center"
           >
             <p className="text-slate-700 text-sm font-medium drop-shadow-sm">
-              Use <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">1</span> 
+              {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">1</span> 
               <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1">2</span>
               <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1">3</span>
-              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">4</span> keys to select
+              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">4</span> {t('keysToSelect')}
             </p>
           </motion.div>
         )}
