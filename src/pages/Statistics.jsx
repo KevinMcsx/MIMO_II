@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
@@ -12,30 +12,56 @@ const gameNames = ['Color Reaction', 'Color + Shape', 'Memory Match', 'Pro Chall
 const difficultyNames = ['Easy', 'Medium', 'Hard', 'Expert'];
 
 export default function Statistics() {
-  const playerName = localStorage.getItem('mimoPlayerName') || 'Player';
+  const currentPlayerName = localStorage.getItem('mimoPlayerName') || 'Player';
+  const [selectedPlayer, setSelectedPlayer] = useState(currentPlayerName);
+  const [selectedGame, setSelectedGame] = useState(null);
 
-  const { data: myScores = [] } = useQuery({
-    queryKey: ['myScores', playerName],
-    queryFn: () => base44.entities.GameScore.filter({ player_name: playerName }, '-created_date', 100),
+  const { data: allScores = [] } = useQuery({
+    queryKey: ['allScores'],
+    queryFn: () => base44.entities.GameScore.list('-created_date', 500),
+  });
+
+  // Get unique players
+  const uniquePlayers = [...new Set(allScores.map(s => s.player_name))].filter(Boolean);
+
+  // Filter scores
+  const filteredScores = allScores.filter(score => {
+    const playerMatch = !selectedPlayer || score.player_name === selectedPlayer;
+    const gameMatch = !selectedGame || score.game_type === selectedGame;
+    return playerMatch && gameMatch;
   });
 
   // Calculate stats
-  const totalGames = myScores.length;
-  const avgScore = totalGames > 0 ? Math.round(myScores.reduce((sum, s) => sum + (s.score || 0), 0) / totalGames) : 0;
-  const bestScore = totalGames > 0 ? Math.max(...myScores.map(s => s.score || 0)) : 0;
-  const avgReaction = totalGames > 0 ? Math.round(myScores.reduce((sum, s) => sum + (s.avg_reaction_time || 0), 0) / totalGames) : 0;
+  const totalGames = filteredScores.length;
+  const avgScore = totalGames > 0 ? Math.round(filteredScores.reduce((sum, s) => sum + (s.score || 0), 0) / totalGames) : 0;
+  const bestScore = totalGames > 0 ? Math.max(...filteredScores.map(s => s.score || 0)) : 0;
+  const avgReaction = totalGames > 0 ? Math.round(filteredScores.reduce((sum, s) => sum + (s.avg_reaction_time || 0), 0) / totalGames) : 0;
+  const bestReaction = totalGames > 0 ? Math.min(...filteredScores.filter(s => s.avg_reaction_time > 0).map(s => s.avg_reaction_time || Infinity)) : 0;
 
   // Games by type
   const gamesByType = gameNames.map((name, i) => ({
     name: name.split(' ')[0],
-    games: myScores.filter(s => s.game_type === i + 1).length,
+    games: filteredScores.filter(s => s.game_type === i + 1).length,
   }));
 
-  // Score progression (last 10 games)
-  const recentScores = myScores.slice(0, 10).reverse().map((s, i) => ({
+  // Reaction time progression
+  const reactionProgression = filteredScores.slice(0, 20).reverse().map((s, i) => ({
     game: `#${i + 1}`,
-    score: s.score || 0,
+    reaction: s.avg_reaction_time || 0,
   }));
+
+  // Stats by player
+  const playerStats = uniquePlayers.map(player => {
+    const playerScores = allScores.filter(s => s.player_name === player);
+    const gameFilter = selectedGame ? playerScores.filter(s => s.game_type === selectedGame) : playerScores;
+    return {
+      name: player,
+      games: gameFilter.length,
+      avgScore: gameFilter.length > 0 ? Math.round(gameFilter.reduce((sum, s) => sum + (s.score || 0), 0) / gameFilter.length) : 0,
+      bestScore: gameFilter.length > 0 ? Math.max(...gameFilter.map(s => s.score || 0)) : 0,
+      avgReaction: gameFilter.length > 0 ? Math.round(gameFilter.reduce((sum, s) => sum + (s.avg_reaction_time || 0), 0) / gameFilter.length) : 0,
+    };
+  }).filter(p => p.games > 0).sort((a, b) => b.avgScore - a.avgScore);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
@@ -50,14 +76,39 @@ export default function Statistics() {
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-center mb-8"
+          className="text-center mb-6"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">📊 Your Statistics</h1>
-          <p className="text-slate-600 text-lg">{playerName}'s Performance</p>
+          <h1 className="text-5xl font-black text-slate-800 mb-2">📊 Statistics</h1>
+          <p className="text-slate-600 text-lg">Game Performance Analytics</p>
         </motion.div>
 
+        {/* Filters */}
+        <div className="flex gap-3 mb-6 flex-wrap justify-center">
+          <select
+            value={selectedPlayer || ''}
+            onChange={(e) => setSelectedPlayer(e.target.value || null)}
+            className="px-4 py-2 rounded-lg bg-white border-2 border-purple-300 font-semibold text-purple-700"
+          >
+            <option value="">All Players</option>
+            {uniquePlayers.map((player) => (
+              <option key={player} value={player}>{player}</option>
+            ))}
+          </select>
+
+          <select
+            value={selectedGame || ''}
+            onChange={(e) => setSelectedGame(e.target.value ? Number(e.target.value) : null)}
+            className="px-4 py-2 rounded-lg bg-white border-2 border-blue-300 font-semibold text-blue-700"
+          >
+            <option value="">All Games</option>
+            {gameNames.map((name, i) => (
+              <option key={i} value={i + 1}>{name}</option>
+            ))}
+          </select>
+        </div>
+
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -100,10 +151,21 @@ export default function Statistics() {
             <p className="text-3xl font-black text-slate-800">{avgReaction}ms</p>
             <p className="text-slate-600 text-sm">Avg Reaction</p>
           </motion.div>
+
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.4 }}
+            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+          >
+            <Zap className="w-8 h-8 mx-auto mb-2 text-green-500 fill-green-500" />
+            <p className="text-3xl font-black text-slate-800">{bestReaction === Infinity ? 0 : bestReaction.toFixed(0)}ms</p>
+            <p className="text-slate-600 text-sm">Best Reaction</p>
+          </motion.div>
         </div>
 
         {/* Charts */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
           <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
@@ -126,35 +188,70 @@ export default function Statistics() {
             animate={{ x: 0, opacity: 1 }}
             className="bg-white rounded-2xl p-6 border-2 border-slate-200"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Score Progression</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Avg Reaction Time Progression</h3>
             <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={recentScores}>
+              <LineChart data={reactionProgression}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="game" />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="score" stroke="#3b82f6" strokeWidth={3} />
+                <Line type="monotone" dataKey="reaction" stroke="#10b981" strokeWidth={3} name="Reaction (ms)" />
               </LineChart>
             </ResponsiveContainer>
           </motion.div>
         </div>
 
+        {/* Player Comparison */}
+        {!selectedPlayer && (
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="mb-8 bg-white rounded-2xl p-6 border-2 border-slate-200"
+          >
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Player Rankings</h3>
+            <div className="space-y-2">
+              {playerStats.slice(0, 10).map((player, i) => (
+                <div key={player.name} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-200">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                      i === 0 ? 'bg-yellow-400 text-white' : 
+                      i === 1 ? 'bg-slate-400 text-white' : 
+                      i === 2 ? 'bg-amber-600 text-white' : 
+                      'bg-slate-200 text-slate-600'
+                    }`}>
+                      {i + 1}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-slate-800">{player.name}</p>
+                      <p className="text-xs text-slate-500">{player.games} games played</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xl font-bold text-purple-600">{player.avgScore}</p>
+                    <p className="text-xs text-slate-500">Avg: {player.avgReaction}ms</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
         {/* Recent Games */}
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="mt-8 bg-white rounded-2xl p-6 border-2 border-slate-200"
+          className="bg-white rounded-2xl p-6 border-2 border-slate-200"
         >
           <h3 className="text-xl font-bold text-slate-800 mb-4">Recent Games</h3>
           <div className="space-y-2">
-            {myScores.slice(0, 5).map((score, i) => (
+            {filteredScores.slice(0, 10).map((score, i) => (
               <div key={score.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
                 <div>
                   <p className="font-semibold text-slate-800">
                     {gameNames[score.game_type - 1]} - {difficultyNames[score.difficulty - 1]}
                   </p>
                   <p className="text-xs text-slate-500">
-                    {new Date(score.created_date).toLocaleDateString()}
+                    {score.player_name} • {new Date(score.created_date).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="text-right">
