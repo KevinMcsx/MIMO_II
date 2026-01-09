@@ -16,9 +16,16 @@ const difficultyNames = ['Easy', 'Medium', 'Hard', 'Expert'];
 
 export default function DailyChallenge() {
   const [playing, setPlaying] = useState(false);
-  const playerName = localStorage.getItem('mimoPlayerName') || 'Player';
+  const playerName = localStorage.getItem('mimoPlayerName');
   const today = new Date().toISOString().split('T')[0];
   const queryClient = useQueryClient();
+
+  // Redirect to game if no player name
+  useEffect(() => {
+    if (!playerName) {
+      window.location.href = createPageUrl('Game');
+    }
+  }, [playerName]);
 
   const { data: challenge } = useQuery({
     queryKey: ['dailyChallenge', today],
@@ -44,6 +51,7 @@ export default function DailyChallenge() {
   const { data: completion } = useQuery({
     queryKey: ['challengeCompletion', today, playerName],
     queryFn: async () => {
+      if (!playerName) return null;
       const completions = await base44.entities.ChallengeCompletion.filter(
         { challenge_date: today, player_name: playerName },
         '-created_date',
@@ -51,6 +59,7 @@ export default function DailyChallenge() {
       );
       return completions.length > 0 ? completions[0] : null;
     },
+    enabled: !!playerName,
   });
 
   const completeMutation = useMutation({
@@ -108,6 +117,10 @@ export default function DailyChallenge() {
         </div>
       </div>
     );
+  }
+
+  if (!playerName) {
+    return null;
   }
 
   return (
