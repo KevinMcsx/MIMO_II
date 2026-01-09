@@ -37,7 +37,9 @@ export async function awardXP(playerName, gameResult) {
   if (!profile) return null;
   
   const xpGained = calculateXP(gameResult);
+  const coinsGained = Math.floor(gameResult.score / 2);
   const newTotalXP = profile.total_xp + xpGained;
+  const newCoins = (profile.coins || 0) + coinsGained;
   const oldLevel = profile.level;
   const newLevel = getLevelFromXP(newTotalXP);
   
@@ -58,26 +60,31 @@ export async function awardXP(playerName, gameResult) {
       level: newLevel,
       xp: newTotalXP,
       total_xp: newTotalXP,
+      coins: newCoins,
       unlocked_games: allUnlocks.games,
       unlocked_difficulties: allUnlocks.difficulties,
       unlocked_themes: allUnlocks.themes,
       unlocked_avatars: allUnlocks.avatars,
       unlocked_badges: allUnlocks.badges,
-      unlocked_frames: allUnlocks.frames
+      unlocked_frames: allUnlocks.frames,
+      unlocked_sound_packs: allUnlocks.sound_packs,
+      unlocked_cursors: allUnlocks.cursors
     });
   } else {
     await base44.entities.PlayerProfile.update(profile.id, {
       xp: newTotalXP,
-      total_xp: newTotalXP
+      total_xp: newTotalXP,
+      coins: newCoins
     });
   }
   
   return {
     xpGained,
+    coinsGained,
     leveledUp,
     oldLevel,
     newLevel,
     newUnlocks,
-    profile: { ...profile, level: newLevel, xp: newTotalXP, total_xp: newTotalXP }
+    profile: { ...profile, level: newLevel, xp: newTotalXP, total_xp: newTotalXP, coins: newCoins }
   };
 }

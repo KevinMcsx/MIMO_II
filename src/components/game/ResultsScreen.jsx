@@ -187,18 +187,32 @@ export default function ResultsScreen({
       </Button>
       
       {progressionData && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl p-4 w-full max-w-md text-center"
-        >
-          <p className="text-sm opacity-90">XP Earned</p>
-          <p className="text-3xl font-black">+{progressionData.xpGained} XP</p>
-          {progressionData.leveledUp && (
-            <p className="text-sm mt-1">🎉 Level {progressionData.oldLevel} → {progressionData.newLevel}!</p>
+        <div className="flex gap-3 w-full max-w-md">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl p-4 flex-1 text-center"
+          >
+            <p className="text-sm opacity-90">XP Earned</p>
+            <p className="text-3xl font-black">+{progressionData.xpGained}</p>
+            {progressionData.leveledUp && (
+              <p className="text-sm mt-1">🎉 Level {progressionData.oldLevel} → {progressionData.newLevel}!</p>
+            )}
+          </motion.div>
+          
+          {progressionData.coinsGained > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-xl p-4 flex-1 text-center"
+            >
+              <p className="text-sm opacity-90">Coins Earned</p>
+              <p className="text-3xl font-black">+{progressionData.coinsGained} 🪙</p>
+            </motion.div>
           )}
-        </motion.div>
+        </div>
       )}
     </motion.div>
     </>
