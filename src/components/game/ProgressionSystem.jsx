@@ -92,7 +92,11 @@ export function getUnlocksForLevel(level) {
   if (level >= 25) unlocks.push({ type: 'difficulty', game: 4, id: 3, name: 'Hard Difficulty for Pro Challenge' });
   if (level >= 25) unlocks.push({ type: 'theme', id: 'neon', name: 'Neon Theme' });
   if (level >= 25) unlocks.push({ type: 'avatar', id: 'gem', name: '💎 Gem Avatar' });
+  if (level >= 10) unlocks.push({ type: 'sound_pack', id: 'retro', name: '🕹️ Retro Sound Pack' });
+  if (level >= 17) unlocks.push({ type: 'cursor', id: 'glow', name: '✨ Glow Cursor' });
+  if (level >= 23) unlocks.push({ type: 'sound_pack', id: 'nature', name: '🌿 Nature Sound Pack' });
   if (level >= 28) unlocks.push({ type: 'badge', id: 'platinum', name: '⚪ Platinum Badge' });
+  if (level >= 28) unlocks.push({ type: 'cursor', id: 'stars', name: '⭐ Stars Cursor' });
   if (level >= 30) unlocks.push({ type: 'difficulty', game: 4, id: 4, name: 'Expert Difficulty for Pro Challenge' });
   if (level >= 30) unlocks.push({ type: 'frame', id: 'gold', name: 'Gold Frame' });
   if (level >= 30) unlocks.push({ type: 'theme', id: 'galaxy', name: 'Galaxy Theme' });
@@ -108,7 +112,9 @@ export function getAllUnlocksUpToLevel(level) {
     themes: ['default'],
     avatars: ['default'],
     badges: [],
-    frames: ['default']
+    frames: ['default'],
+    sound_packs: ['default'],
+    cursors: ['default']
   };
   
   for (let i = 2; i <= level; i++) {
@@ -128,6 +134,10 @@ export function getAllUnlocksUpToLevel(level) {
         allUnlocks.badges.push(unlock.id);
       } else if (unlock.type === 'frame' && !allUnlocks.frames.includes(unlock.id)) {
         allUnlocks.frames.push(unlock.id);
+      } else if (unlock.type === 'sound_pack' && !allUnlocks.sound_packs.includes(unlock.id)) {
+        allUnlocks.sound_packs.push(unlock.id);
+      } else if (unlock.type === 'cursor' && !allUnlocks.cursors.includes(unlock.id)) {
+        allUnlocks.cursors.push(unlock.id);
       }
     });
   }

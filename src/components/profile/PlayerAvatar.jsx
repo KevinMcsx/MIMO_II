@@ -26,6 +26,7 @@ export default function PlayerAvatar({
         ${s.container} rounded-full ${avatarData.color} 
         flex items-center justify-center
         ${frameData.border} ${frameData.shadow}
+        ${avatarData.animated ? 'animate-bounce' : ''}
       `}>
         <span className={s.emoji}>{avatarData.emoji}</span>
       </div>

@@ -9,7 +9,7 @@ import { createPageUrl } from '@/utils';
 import { getPlayerProfile } from '../components/game/PlayerProgressManager';
 import LevelDisplay from '../components/game/LevelDisplay';
 import PlayerAvatar from '../components/profile/PlayerAvatar';
-import { AVATARS, BADGES, FRAMES, THEMES } from '../components/profile/CosmeticData';
+import { AVATARS, BADGES, FRAMES, THEMES, SOUND_PACKS, CURSORS } from '../components/profile/CosmeticData';
 
 export default function Profile() {
   const playerName = localStorage.getItem('mimoPlayerName') || 'Player';
@@ -51,6 +51,15 @@ export default function Profile() {
 
   const equipTheme = (themeId) => {
     updateProfileMutation.mutate({ cosmetic_theme: themeId });
+  };
+
+  const equipSoundPack = (packId) => {
+    updateProfileMutation.mutate({ equipped_sound_pack: packId });
+    localStorage.setItem('mimoSoundPack', packId);
+  };
+
+  const equipCursor = (cursorId) => {
+    updateProfileMutation.mutate({ equipped_cursor: cursorId });
   };
 
   const currentTheme = THEMES[profile.cosmetic_theme] || THEMES.default;
@@ -95,6 +104,15 @@ export default function Profile() {
           </div>
         </motion.div>
 
+        {/* Coins Display */}
+        <div className="text-center mb-4">
+          <div className="inline-flex items-center gap-2 bg-yellow-100 border-2 border-yellow-300 rounded-full px-4 py-2">
+            <span className="text-2xl">🪙</span>
+            <span className="text-xl font-black text-yellow-700">{profile.coins || 0}</span>
+            <span className="text-slate-600 text-sm">Coins</span>
+          </div>
+        </div>
+
         {/* Tabs */}
         <div className="flex gap-2 mb-4 overflow-x-auto">
           {[
@@ -102,6 +120,8 @@ export default function Profile() {
             { id: 'badges', label: '🏅 Badges' },
             { id: 'frames', label: '🖼️ Frames' },
             { id: 'themes', label: '🎨 Themes' },
+            { id: 'sounds', label: '🎵 Sounds' },
+            { id: 'cursors', label: '✨ Cursors' },
           ].map((tab) => (
             <Button
               key={tab.id}
@@ -248,6 +268,78 @@ export default function Profile() {
                     <div className="text-left">
                       <p className="font-bold text-lg text-slate-800">{theme.name}</p>
                       <p className="text-xs text-slate-500">Background Theme</p>
+                    </div>
+                    {isEquipped && (
+                      <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        ✓
+                      </div>
+                    )}
+                  </motion.button>
+                );
+              })}
+            </div>
+          )}
+
+          {activeTab === 'sounds' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(SOUND_PACKS).map(([id, pack]) => {
+                const isUnlocked = (profile.unlocked_sound_packs || ['default']).includes(id);
+                const isEquipped = (profile.equipped_sound_pack || 'default') === id;
+                return (
+                  <motion.button
+                    key={id}
+                    whileHover={{ scale: isUnlocked ? 1.02 : 1 }}
+                    whileTap={{ scale: isUnlocked ? 0.98 : 1 }}
+                    onClick={() => isUnlocked && equipSoundPack(id)}
+                    className={`
+                      relative p-6 rounded-xl border-2 flex items-center gap-4
+                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
+                    `}
+                  >
+                    {!isUnlocked && (
+                      <Lock className="absolute top-2 right-2 w-4 h-4 text-slate-400" />
+                    )}
+                    <div className="text-5xl">{pack.icon}</div>
+                    <div className="text-left flex-1">
+                      <p className="font-bold text-lg text-slate-800">{pack.name}</p>
+                      <p className="text-xs text-slate-500">{pack.description}</p>
+                    </div>
+                    {isEquipped && (
+                      <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        ✓
+                      </div>
+                    )}
+                  </motion.button>
+                );
+              })}
+            </div>
+          )}
+
+          {activeTab === 'cursors' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {Object.entries(CURSORS).map(([id, cursor]) => {
+                const isUnlocked = (profile.unlocked_cursors || ['default']).includes(id);
+                const isEquipped = (profile.equipped_cursor || 'default') === id;
+                return (
+                  <motion.button
+                    key={id}
+                    whileHover={{ scale: isUnlocked ? 1.02 : 1 }}
+                    whileTap={{ scale: isUnlocked ? 0.98 : 1 }}
+                    onClick={() => isUnlocked && equipCursor(id)}
+                    className={`
+                      relative p-6 rounded-xl border-2 flex items-center gap-4
+                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
+                    `}
+                  >
+                    {!isUnlocked && (
+                      <Lock className="absolute top-2 right-2 w-4 h-4 text-slate-400" />
+                    )}
+                    <div className="text-5xl">{cursor.icon}</div>
+                    <div className="text-left flex-1">
+                      <p className="font-bold text-lg text-slate-800">{cursor.name}</p>
+                      <p className="text-xs text-slate-500">{cursor.description}</p>
                     </div>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">

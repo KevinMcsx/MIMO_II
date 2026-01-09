@@ -1,12 +1,16 @@
 // Cosmetic items configuration
 
 export const AVATARS = {
-  default: { emoji: '😊', name: 'Default', color: 'bg-slate-200' },
-  star: { emoji: '⭐', name: 'Star', color: 'bg-yellow-200' },
-  fire: { emoji: '🔥', name: 'Fire', color: 'bg-orange-200' },
-  lightning: { emoji: '⚡', name: 'Lightning', color: 'bg-yellow-300' },
-  crown: { emoji: '👑', name: 'Crown', color: 'bg-yellow-400' },
-  gem: { emoji: '💎', name: 'Gem', color: 'bg-blue-300' },
+  default: { emoji: '😊', name: 'Default', color: 'bg-slate-200', animated: false },
+  star: { emoji: '⭐', name: 'Star', color: 'bg-yellow-200', animated: true },
+  fire: { emoji: '🔥', name: 'Fire', color: 'bg-orange-200', animated: true },
+  lightning: { emoji: '⚡', name: 'Lightning', color: 'bg-yellow-300', animated: true },
+  crown: { emoji: '👑', name: 'Crown', color: 'bg-yellow-400', animated: false },
+  gem: { emoji: '💎', name: 'Gem', color: 'bg-blue-300', animated: true },
+  rocket: { emoji: '🚀', name: 'Rocket', color: 'bg-purple-300', animated: true, price: 150 },
+  rainbow: { emoji: '🌈', name: 'Rainbow', color: 'bg-pink-200', animated: true, price: 200 },
+  alien: { emoji: '👾', name: 'Alien', color: 'bg-green-300', animated: true, price: 175 },
+  wizard: { emoji: '🧙', name: 'Wizard', color: 'bg-indigo-300', animated: false, price: 100 },
 };
 
 export const BADGES = {
@@ -49,4 +53,20 @@ export const THEMES = {
     gradient: 'from-indigo-200 via-purple-300 to-pink-200',
     primaryColor: 'indigo',
   },
+};
+
+export const SOUND_PACKS = {
+  default: { name: 'Classic', description: 'Original game sounds', icon: '🎵' },
+  retro: { name: 'Retro', description: '8-bit arcade sounds', icon: '🕹️', price: 100 },
+  nature: { name: 'Nature', description: 'Calm nature sounds', icon: '🌿', price: 125 },
+  space: { name: 'Space', description: 'Futuristic space sounds', icon: '🚀', price: 150 },
+  drums: { name: 'Drums', description: 'Percussion sounds', icon: '🥁', price: 100 },
+};
+
+export const CURSORS = {
+  default: { name: 'Default', description: 'Standard cursor', icon: '↖️', effect: 'none' },
+  glow: { name: 'Glow', description: 'Glowing trail effect', icon: '✨', effect: 'glow', price: 75 },
+  rainbow: { name: 'Rainbow', description: 'Rainbow trail', icon: '🌈', effect: 'rainbow', price: 100 },
+  fire: { name: 'Fire', description: 'Fire particles', icon: '🔥', effect: 'fire', price: 125 },
+  stars: { name: 'Stars', description: 'Starry trail', icon: '⭐', effect: 'stars', price: 100 },
 };
