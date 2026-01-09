@@ -5,7 +5,6 @@ import ColorButtons from './ColorButtons';
 import ShapeButtons from './ShapeButtons';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
-import { sounds } from '../../utils/sounds';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
