@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { useTranslation } from '../components/utils/translations';
+import { getAllResults } from '../components/game/GameResultSaver';
 
 export default function Statistics() {
   const t = useTranslation();
@@ -20,7 +21,7 @@ export default function Statistics() {
 
   const { data: allScores = [] } = useQuery({
     queryKey: ['allScores'],
-    queryFn: () => base44.entities.GameScore.list('-created_date', 500),
+    queryFn: getAllResults,
   });
 
   // Get unique players
