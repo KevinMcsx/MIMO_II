@@ -1,51 +1,53 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Palette, Shapes, Brain, Zap } from 'lucide-react';
-
-const games = [
-  {
-    id: 1,
-    color: 'yellow',
-    title: 'Color Reaction',
-    description: 'React to colors as fast as possible!',
-    Icon: Palette,
-    bg: 'from-yellow-500 to-yellow-600',
-    glow: 'shadow-yellow-500/50',
-    key: '1',
-  },
-  {
-    id: 2,
-    color: 'green',
-    title: 'Color + Shape',
-    description: 'Match colors and shapes together!',
-    Icon: Shapes,
-    bg: 'from-green-500 to-green-600',
-    glow: 'shadow-green-500/50',
-    key: '3',
-  },
-  {
-    id: 3,
-    color: 'blue',
-    title: 'Memory Match',
-    description: 'Find matching pairs of cards!',
-    Icon: Brain,
-    bg: 'from-blue-500 to-blue-600',
-    glow: 'shadow-blue-500/50',
-    key: '2',
-  },
-  {
-    id: 4,
-    color: 'red',
-    title: 'Pro Challenge',
-    description: 'Ultimate speed challenge mode!',
-    Icon: Zap,
-    bg: 'from-red-500 to-red-600',
-    glow: 'shadow-red-500/50',
-    key: '4',
-  },
-];
+import { useTranslation } from '../utils/translations';
 
 export default function GameSelection({ onSelect, activeKey, unlockedGames = [1, 2, 3, 4] }) {
+  const t = useTranslation();
+  
+  const games = [
+    {
+      id: 1,
+      color: 'yellow',
+      title: t('colorReaction'),
+      description: t('game1Desc'),
+      Icon: Palette,
+      bg: 'from-yellow-500 to-yellow-600',
+      glow: 'shadow-yellow-500/50',
+      key: '1',
+    },
+    {
+      id: 2,
+      color: 'green',
+      title: t('colorShape'),
+      description: t('game2Desc'),
+      Icon: Shapes,
+      bg: 'from-green-500 to-green-600',
+      glow: 'shadow-green-500/50',
+      key: '3',
+    },
+    {
+      id: 3,
+      color: 'blue',
+      title: t('memoryMatch'),
+      description: t('game3Desc'),
+      Icon: Brain,
+      bg: 'from-blue-500 to-blue-600',
+      glow: 'shadow-blue-500/50',
+      key: '2',
+    },
+    {
+      id: 4,
+      color: 'red',
+      title: t('proChallenge'),
+      description: t('game4Desc'),
+      Icon: Zap,
+      bg: 'from-red-500 to-red-600',
+      glow: 'shadow-red-500/50',
+      key: '4',
+    },
+  ];
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -57,11 +59,11 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
         animate={{ y: 0 }}
         className="text-5xl font-black text-white tracking-tight text-center drop-shadow-lg"
       >
-        Choose a Game!
+        {t('chooseGame')}
       </motion.h1>
       
       <p className="text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
-        Press the color button or click to select
+        {t('useKeys')} 1-4 {t('keysToSelect')}
       </p>
 
       <div className="grid grid-cols-2 gap-6 max-w-2xl w-full px-4">
@@ -114,5 +116,3 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
     </motion.div>
   );
 }
-
-export { games };
