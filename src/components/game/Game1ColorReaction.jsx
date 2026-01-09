@@ -4,13 +4,14 @@ import ColorButtons from './ColorButtons';
 import ShapeDisplay from './ShapeDisplay';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
+import { saveGameResult } from './GameResultSaver';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
 
 const SHAPE_COUNTS = { 1: 20, 2: 40, 3: 60, 4: 80 };
 
-export default function Game1ColorReaction({ difficulty, onMainMenu }) {
+export default function Game1ColorReaction({ difficulty, onMainMenu, playerName }) {
   const [gameState, setGameState] = useState('countdown'); // countdown, playing, finished
   const [countdown, setCountdown] = useState(3);
   const [currentShape, setCurrentShape] = useState(null);
@@ -79,10 +80,26 @@ export default function Game1ColorReaction({ difficulty, onMainMenu }) {
     // Next shape or end game
     if (shapeIndex + 1 >= totalShapes) {
       sounds.gameEnd();
+      const finalTime = Date.now() - stats.startTime;
+      const finalAvgReactionTime = [...stats.reactionTimes, reactionTime].reduce((a, b) => a + b, 0) / (stats.reactionTimes.length + 1);
+      
       setStats(prev => ({
         ...prev,
-        totalTime: Date.now() - prev.startTime,
+        totalTime: finalTime,
       }));
+      
+      // Save result
+      saveGameResult({
+        game_type: 1,
+        difficulty: difficulty,
+        total_time: finalTime,
+        avg_reaction_time: finalAvgReactionTime,
+        correct_hits: stats.correctHits + (isCorrect ? 1 : 0),
+        wrong_hits: stats.wrongHits + (isCorrect ? 0 : 1),
+        score: stats.correctHits + (isCorrect ? 1 : 0),
+        player_name: playerName || 'Player',
+      });
+      
       setGameState('finished');
     } else {
       setShapeIndex(prev => prev + 1);

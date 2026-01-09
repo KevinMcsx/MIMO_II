@@ -5,13 +5,14 @@ import ShapeButtons from './ShapeButtons';
 import ShapeDisplay from './ShapeDisplay';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
+import { saveGameResult } from './GameResultSaver';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
 
 const SHAPE_COUNTS = { 1: 20, 2: 40, 3: 60, 4: 80 };
 
-export default function Game2ColorShape({ difficulty, onMainMenu }) {
+export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) {
   const [gameState, setGameState] = useState('countdown');
   const [countdown, setCountdown] = useState(3);
   const [currentShape, setCurrentShape] = useState(null);
@@ -106,10 +107,32 @@ export default function Game2ColorShape({ difficulty, onMainMenu }) {
     // Next shape or end game
     if (shapeIndex + 1 >= totalShapes) {
       sounds.gameEnd();
+      const finalTime = Date.now() - stats.startTime;
+      const finalAvgReactionTime = [...stats.reactionTimes, reactionTime].reduce((a, b) => a + b, 0) / (stats.reactionTimes.length + 1);
+      const finalCorrectHits = stats.correctHits + (isCorrect && !isShapeButton ? 1 : 0);
+      const finalWrongHits = stats.wrongHits + (!isCorrect && !isShapeButton ? 1 : 0);
+      const finalCorrectShapes = stats.correctShapes + (isCorrect && isShapeButton ? 1 : 0);
+      const finalWrongShapes = stats.wrongShapes + (!isCorrect && isShapeButton ? 1 : 0);
+      
       setStats(prev => ({
         ...prev,
-        totalTime: Date.now() - prev.startTime,
+        totalTime: finalTime,
       }));
+      
+      // Save result
+      saveGameResult({
+        game_type: 2,
+        difficulty: difficulty,
+        total_time: finalTime,
+        avg_reaction_time: finalAvgReactionTime,
+        correct_hits: finalCorrectHits,
+        wrong_hits: finalWrongHits,
+        correct_shapes: finalCorrectShapes,
+        wrong_shapes: finalWrongShapes,
+        score: finalCorrectHits + finalCorrectShapes,
+        player_name: playerName || 'Player',
+      });
+      
       setGameState('finished');
     } else {
       setShapeIndex(prev => prev + 1);

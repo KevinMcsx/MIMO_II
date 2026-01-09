@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Circle, Square, Triangle, Star } from 'lucide-react';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
+import { saveGameResult } from './GameResultSaver';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -23,7 +24,7 @@ const ShapeIcon = ({ shape, size = 'w-12 h-12' }) => {
   return Icon ? <Icon className={`${size} text-white`} strokeWidth={2} fill="currentColor" /> : null;
 };
 
-export default function Game3Memory({ difficulty, onMainMenu }) {
+export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
   const [gameState, setGameState] = useState('countdown');
   const [countdown, setCountdown] = useState(3);
   const [cards, setCards] = useState([]);
@@ -134,10 +135,27 @@ export default function Game3Memory({ difficulty, onMainMenu }) {
           if (matchedPairs.length + 2 >= cardCount) {
             if (currentRound >= ROUNDS) {
               sounds.gameEnd();
+              const finalTime = Date.now() - stats.startTime;
+              const finalPairTimes = [...stats.pairTimes, pairTime];
+              const finalAvgPairTime = finalPairTimes.reduce((a, b) => a + b, 0) / finalPairTimes.length;
+              
               setStats(prev => ({
                 ...prev,
-                totalTime: Date.now() - prev.startTime,
+                totalTime: finalTime,
               }));
+              
+              // Save result
+              saveGameResult({
+                game_type: 3,
+                difficulty: difficulty,
+                total_time: finalTime,
+                avg_reaction_time: finalAvgPairTime,
+                correct_hits: finalPairTimes.length,
+                wrong_hits: 0,
+                score: finalPairTimes.length,
+                player_name: playerName || 'Player',
+              });
+              
               setGameState('finished');
             } else {
               setCurrentRound(prev => prev + 1);

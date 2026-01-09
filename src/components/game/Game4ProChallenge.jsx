@@ -5,6 +5,7 @@ import ColorButtons from './ColorButtons';
 import ShapeButtons from './ShapeButtons';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
+import { saveGameResult } from './GameResultSaver';
 
 const COLORS = ['yellow', 'blue', 'green', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -30,7 +31,7 @@ const ShapeIcon = ({ shape, size = 'w-10 h-10', color }) => {
   return Icon ? <Icon className={`${size} ${colorClass}`} strokeWidth={2} fill="currentColor" /> : null;
 };
 
-export default function Game4ProChallenge({ difficulty, onMainMenu }) {
+export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }) {
   const [gameState, setGameState] = useState('countdown');
   const [countdown, setCountdown] = useState(3);
   const [lanes, setLanes] = useState([[], [], [], []]);
@@ -180,12 +181,31 @@ export default function Game4ProChallenge({ difficulty, onMainMenu }) {
     clearInterval(gameLoopRef.current);
     clearInterval(spawnRef.current);
     sounds.gameEnd();
+    
+    const finalTime = Date.now() - stats.startTime;
+    const finalAvgReactionTime = stats.reactionTimes.length > 0
+      ? stats.reactionTimes.reduce((a, b) => a + b, 0) / stats.reactionTimes.length
+      : 0;
+    
     setStats(prev => ({
       ...prev,
-      totalTime: Date.now() - prev.startTime,
+      totalTime: finalTime,
     }));
+    
+    // Save result
+    saveGameResult({
+      game_type: 4,
+      difficulty: difficulty,
+      total_time: finalTime,
+      avg_reaction_time: finalAvgReactionTime,
+      correct_hits: stats.correctHits,
+      wrong_hits: stats.wrongHits,
+      score: score,
+      player_name: playerName || 'Player',
+    });
+    
     setGameState('finished');
-  }, []);
+  }, [stats, score, difficulty, playerName]);
 
   const hitItem = useCallback((laneIndex, itemType, value) => {
     setLanes(prev => {

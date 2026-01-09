@@ -8,17 +8,24 @@ import Game1ColorReaction from '../components/game/Game1ColorReaction';
 import Game2ColorShape from '../components/game/Game2ColorShape';
 import Game3Memory from '../components/game/Game3Memory';
 import Game4ProChallenge from '../components/game/Game4ProChallenge';
+import NameEntry from '../components/game/NameEntry';
 import { sounds } from '../components/utils/sounds';
 
 export default function Game() {
-  const [screen, setScreen] = useState('gameSelect'); // gameSelect, difficultySelect, playing
+  const [screen, setScreen] = useState('nameEntry'); // nameEntry, gameSelect, difficultySelect, playing
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
   const [activeKey, setActiveKey] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [playerName, setPlayerName] = useState('');
 
   useEffect(() => {
     setSoundEnabled(sounds.loadSoundPreference());
+    const savedName = localStorage.getItem('mimoPlayerName');
+    if (savedName) {
+      setPlayerName(savedName);
+      setScreen('gameSelect');
+    }
   }, []);
 
   const toggleSound = () => {
@@ -26,6 +33,12 @@ export default function Game() {
     setSoundEnabled(newState);
     sounds.setSoundEnabled(newState);
     sounds.buttonPress();
+  };
+
+  const handleNameSubmit = (name) => {
+    setPlayerName(name);
+    localStorage.setItem('mimoPlayerName', name);
+    setScreen('gameSelect');
   };
 
   // Keyboard handling for menus
@@ -79,13 +92,13 @@ export default function Game() {
   const renderGame = () => {
     switch (selectedGame) {
       case 1:
-        return <Game1ColorReaction difficulty={selectedDifficulty} onMainMenu={handleMainMenu} />;
+        return <Game1ColorReaction difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 2:
-        return <Game2ColorShape difficulty={selectedDifficulty} onMainMenu={handleMainMenu} />;
+        return <Game2ColorShape difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 3:
-        return <Game3Memory difficulty={selectedDifficulty} onMainMenu={handleMainMenu} />;
+        return <Game3Memory difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 4:
-        return <Game4ProChallenge difficulty={selectedDifficulty} onMainMenu={handleMainMenu} />;
+        return <Game4ProChallenge difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       default:
         return null;
     }
@@ -121,6 +134,17 @@ export default function Game() {
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
         <AnimatePresence mode="wait">
+          {screen === 'nameEntry' && (
+            <motion.div
+              key="nameEntry"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <NameEntry onSubmit={handleNameSubmit} />
+            </motion.div>
+          )}
+
           {screen === 'gameSelect' && (
             <motion.div
               key="gameSelect"
