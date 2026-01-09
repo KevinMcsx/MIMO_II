@@ -6,6 +6,7 @@ import { downloadResultsAsText } from './GameResultSaver';
 import { awardXP } from './PlayerProgressManager';
 import LevelUpModal from './LevelUpModal';
 import XPGainPopup from './XPGainPopup';
+import { useTranslation } from '../utils/translations';
 
 export default function ResultsScreen({ 
   stats, 
@@ -15,6 +16,7 @@ export default function ResultsScreen({
   gameResult,
   playerName
 }) {
+  const t = useTranslation();
   const [showLevelUp, setShowLevelUp] = React.useState(false);
   const [showXP, setShowXP] = React.useState(false);
   const [progressionData, setProgressionData] = React.useState(null);
@@ -71,7 +73,7 @@ export default function ResultsScreen({
       </motion.div>
 
       <h2 className="text-4xl font-black text-white tracking-tight">
-        Game Complete!
+        {t('gameComplete')}
       </h2>
       <p className="text-xl text-slate-400">{gameTitle}</p>
 
@@ -84,7 +86,7 @@ export default function ResultsScreen({
         >
           <div className="flex items-center gap-2 text-slate-400 mb-2">
             <Clock className="w-5 h-5" />
-            <span>Total Time</span>
+            <span>{t('totalTime')}</span>
           </div>
           <p className="text-3xl font-bold text-white">
             {(totalTime / 1000).toFixed(1)}s
@@ -99,7 +101,7 @@ export default function ResultsScreen({
         >
           <div className="flex items-center gap-2 text-slate-400 mb-2">
             <Zap className="w-5 h-5" />
-            <span>Avg Reaction</span>
+            <span>{t('avgReaction')}</span>
           </div>
           <p className="text-3xl font-bold text-yellow-400">
             {avgReactionTime.toFixed(0)}ms
@@ -114,7 +116,7 @@ export default function ResultsScreen({
         >
           <div className="flex items-center gap-2 text-slate-400 mb-2">
             <Target className="w-5 h-5" />
-            <span>Accuracy</span>
+            <span>{t('accuracy')}</span>
           </div>
           <p className="text-3xl font-bold text-green-400">
             {accuracy}%
@@ -129,7 +131,7 @@ export default function ResultsScreen({
         >
           <div className="flex items-center gap-2 text-slate-400 mb-2">
             <span>✓/✗</span>
-            <span>Colors</span>
+            <span>{t('colors')}</span>
           </div>
           <p className="text-3xl font-bold">
             <span className="text-green-400">{correctHits}</span>
@@ -147,13 +149,13 @@ export default function ResultsScreen({
           >
             <div className="flex items-center gap-2 text-slate-400 mb-2">
               <span>◯ □ △ ★</span>
-              <span>Shapes</span>
+              <span>{t('shapes')}</span>
             </div>
             <p className="text-3xl font-bold">
               <span className="text-green-400">{correctShapes}</span>
-              <span className="text-slate-500"> correct / </span>
+              <span className="text-slate-500"> {t('correct')} / </span>
               <span className="text-red-400">{wrongShapes}</span>
-              <span className="text-slate-500"> wrong</span>
+              <span className="text-slate-500"> {t('wrong')}</span>
             </p>
           </motion.div>
         )}
@@ -165,7 +167,7 @@ export default function ResultsScreen({
           className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg rounded-xl"
         >
           <RotateCcw className="w-5 h-5 mr-2" />
-          Play Again
+          {t('playAgain')}
         </Button>
         <Button
           onClick={onMainMenu}
@@ -173,7 +175,7 @@ export default function ResultsScreen({
           className="border-slate-600 text-slate-300 hover:bg-slate-800 px-8 py-6 text-lg rounded-xl"
         >
           <Home className="w-5 h-5 mr-2" />
-          Main Menu
+          {t('mainMenu')}
         </Button>
       </div>
 
@@ -183,7 +185,7 @@ export default function ResultsScreen({
         className="mt-4 text-slate-400 hover:text-white"
       >
         <Download className="w-4 h-4 mr-2" />
-        Download All Results as TXT
+        {t('downloadResults')}
       </Button>
       
       {progressionData && (
@@ -194,10 +196,10 @@ export default function ResultsScreen({
             transition={{ delay: 0.5 }}
             className="bg-gradient-to-r from-purple-500 to-blue-500 text-white rounded-xl p-4 flex-1 text-center"
           >
-            <p className="text-sm opacity-90">XP Earned</p>
+            <p className="text-sm opacity-90">{t('xpEarned')}</p>
             <p className="text-3xl font-black">+{progressionData.xpGained}</p>
             {progressionData.leveledUp && (
-              <p className="text-sm mt-1">🎉 Level {progressionData.oldLevel} → {progressionData.newLevel}!</p>
+              <p className="text-sm mt-1">🎉 {t('level')} {progressionData.oldLevel} → {progressionData.newLevel}!</p>
             )}
           </motion.div>
           
@@ -208,7 +210,7 @@ export default function ResultsScreen({
               transition={{ delay: 0.6 }}
               className="bg-gradient-to-r from-yellow-400 to-yellow-600 text-white rounded-xl p-4 flex-1 text-center"
             >
-              <p className="text-sm opacity-90">Coins Earned</p>
+              <p className="text-sm opacity-90">{t('coinsEarned')}</p>
               <p className="text-3xl font-black">+{progressionData.coinsGained} 🪙</p>
             </motion.div>
           )}
