@@ -1,7 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Trophy, Clock, Target, Zap, RotateCcw, Home } from 'lucide-react';
+import { Trophy, Clock, Target, Zap, RotateCcw, Home, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { downloadResultsAsText } from './GameResultSaver';
 
 export default function ResultsScreen({ 
   stats, 
@@ -142,6 +143,15 @@ export default function ResultsScreen({
           Main Menu
         </Button>
       </div>
+
+      <Button
+        onClick={downloadResultsAsText}
+        variant="ghost"
+        className="mt-4 text-slate-400 hover:text-white"
+      >
+        <Download className="w-4 h-4 mr-2" />
+        Download All Results as TXT
+      </Button>
     </motion.div>
   );
 }
