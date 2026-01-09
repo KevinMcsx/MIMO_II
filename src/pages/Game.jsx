@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX } from 'lucide-react';
+import { Volume2, VolumeX, Trophy, BarChart3, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '@/utils';
 import GameSelection from '../components/game/GameSelection';
 import DifficultySelection from '../components/game/DifficultySelection';
 import Game1ColorReaction from '../components/game/Game1ColorReaction';

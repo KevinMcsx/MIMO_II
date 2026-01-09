@@ -20,7 +20,7 @@ const difficulties = [
     Icon: Smile,
     bg: 'from-green-500 to-green-600',
     glow: 'shadow-green-500/50',
-    key: '3',
+    key: '2',
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ const difficulties = [
     Icon: Flame,
     bg: 'from-blue-500 to-blue-600',
     glow: 'shadow-blue-500/50',
-    key: '2',
+    key: '3',
   },
   {
     id: 4,
@@ -131,13 +131,13 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
           <span className="text-2xl">🟡</span>
           <span className="text-yellow-400 font-bold">Easy</span>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full">
-          <span className="text-2xl">🔵</span>
-          <span className="text-blue-400 font-bold">Hard</span>
-        </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 rounded-full">
           <span className="text-2xl">🟢</span>
           <span className="text-green-400 font-bold">Medium</span>
+        </div>
+        <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full">
+          <span className="text-2xl">🔵</span>
+          <span className="text-blue-400 font-bold">Hard</span>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-red-500/20 rounded-full">
           <span className="text-2xl">🔴</span>
