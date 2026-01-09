@@ -4,6 +4,7 @@ import { Circle, Square, Triangle, Star } from 'lucide-react';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
+import { useTranslation } from '../utils/translations';
 
 const COLORS = ['yellow', 'green', 'blue', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -25,6 +26,7 @@ const ShapeIcon = ({ shape, size = 'w-12 h-12' }) => {
 };
 
 export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
+  const t = useTranslation();
   const [gameState, setGameState] = useState('countdown');
   const [countdown, setCountdown] = useState(3);
   const [cards, setCards] = useState([]);
@@ -254,11 +256,11 @@ export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
           <span className="text-xl">/{ROUNDS}</span>
         </div>
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white">Memory Match</h2>
-          <p className="text-slate-400">{['Easy', 'Medium', 'Hard', 'Expert'][difficulty - 1]}</p>
+          <h2 className="text-2xl font-bold text-white">{t('memoryMatch')}</h2>
+          <p className="text-slate-400">{[t('easy'), t('medium'), t('hard'), t('expert')][difficulty - 1]}</p>
         </div>
         <div className="text-right">
-          <p className="text-slate-400 text-sm">Pairs Found</p>
+          <p className="text-slate-400 text-sm">{t('pairsFound')}</p>
           <p className="text-2xl font-bold text-green-400">{matchedPairs.length / 2}/{cardCount / 2}</p>
         </div>
       </div>
@@ -274,7 +276,7 @@ export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
               exit={{ scale: 1.5, opacity: 0 }}
               className="text-9xl font-black text-white"
             >
-              {countdown || 'GO!'}
+              {countdown || t('go')}
             </motion.div>
           ) : (
             <div 
@@ -342,11 +344,10 @@ export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
       {/* Instructions */}
       <div className="bg-slate-800/30 rounded-xl p-4 max-w-lg w-full text-center">
         <p className="text-slate-300 text-sm">
-          Use <span className="text-white font-bold">Arrow Keys</span> to navigate, 
-          <span className="text-white font-bold"> Space/Enter</span> to flip
+          {t('memoryInstructions')}
         </p>
         <p className="text-slate-500 text-xs mt-1">
-          Find matching pairs!
+          {t('findPairs')}
         </p>
       </div>
     </div>

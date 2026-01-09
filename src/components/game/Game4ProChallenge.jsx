@@ -6,6 +6,7 @@ import ShapeButtons from './ShapeButtons';
 import ResultsScreen from './ResultsScreen';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
+import { useTranslation } from '../utils/translations';
 
 const COLORS = ['yellow', 'green', 'blue', 'red'];
 const SHAPES = ['circle', 'square', 'triangle', 'star'];
@@ -32,6 +33,7 @@ const ShapeIcon = ({ shape, size = 'w-10 h-10', color }) => {
 };
 
 export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }) {
+  const t = useTranslation();
   const [gameState, setGameState] = useState('countdown');
   const [countdown, setCountdown] = useState(3);
   const [lanes, setLanes] = useState([[], [], [], []]);
@@ -335,12 +337,12 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
       {/* Header */}
       <div className="flex items-center justify-between w-full max-w-3xl">
         <div className="text-slate-400">
-          <span className="text-xl">Score: </span>
+          <span className="text-xl">{t('score')}: </span>
           <span className="text-3xl font-bold text-white">{score}</span>
         </div>
         <div className="text-center">
-          <h2 className="text-2xl font-bold text-white">Pro Challenge</h2>
-          <p className="text-slate-400">{['Easy', 'Medium', 'Hard', 'Expert'][difficulty - 1]}</p>
+          <h2 className="text-2xl font-bold text-white">{t('proChallenge')}</h2>
+          <p className="text-slate-400">{[t('easy'), t('medium'), t('hard'), t('expert')][difficulty - 1]}</p>
         </div>
         <div className="text-right">
           {difficulty === 4 ? (
@@ -369,7 +371,7 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
               exit={{ scale: 1.5, opacity: 0 }}
               className="w-full flex items-center justify-center text-9xl font-black text-white"
             >
-              {countdown || 'GO!'}
+              {countdown || t('go')}
             </motion.div>
           ) : (
             lanes.map((lane, laneIndex) => (
@@ -409,7 +411,7 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
       {/* Instructions */}
       <div className="bg-slate-800/30 rounded-xl p-3 max-w-lg w-full text-center">
         <p className="text-slate-300 text-sm">
-          Press buttons when items reach the <span className="text-white font-bold">bottom zone</span>!
+          {t('proInstructions')}
         </p>
       </div>
 
