@@ -33,7 +33,24 @@ export default function Profile() {
   });
 
   const updateProfileMutation = useMutation({
-    mutationFn: (updates) => base44.entities.PlayerProfile.update(profile.id, updates),
+    mutationFn: async (updates) => {
+      try {
+        await base44.entities.PlayerProfile.update(profile.id, updates);
+      } catch (error) {
+        console.error('Failed to update profile in database, updating localStorage only:', error);
+      }
+      
+      // Always update localStorage
+      const PROFILE_STORAGE_KEY = 'mimo_player_profiles';
+      try {
+        const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
+        const profiles = stored ? JSON.parse(stored) : {};
+        profiles[profile.player_name] = { ...profile, ...updates };
+        localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profiles));
+      } catch (error) {
+        console.error('Failed to save profile to localStorage:', error);
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['playerProfile'] });
     },
