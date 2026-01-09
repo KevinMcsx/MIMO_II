@@ -37,7 +37,7 @@ export async function awardXP(playerName, gameResult) {
   if (!profile) return null;
   
   const xpGained = calculateXP(gameResult);
-  const coinsGained = Math.floor(gameResult.score / 2);
+  const coinsGained = gameResult.score;
   const newTotalXP = profile.total_xp + xpGained;
   const newCoins = (profile.coins || 0) + coinsGained;
   const oldLevel = profile.level;

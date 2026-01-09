@@ -147,7 +147,7 @@ export default function Store() {
                         disabled={profile.coins < avatar.price}
                         className="bg-purple-600"
                       >
-                        {profile.coins < avatar.price ? <Lock className="w-4 h-4" /> : 'Buy'}
+                        {profile.coins < avatar.price ? <Lock className="w-4 h-4" /> : 'Get'}
                       </Button>
                     )}
                   </motion.div>
@@ -188,7 +188,7 @@ export default function Store() {
                         disabled={profile.coins < pack.price}
                         className="bg-purple-600"
                       >
-                        {profile.coins < pack.price ? <Lock className="w-4 h-4" /> : 'Buy'}
+                        {profile.coins < pack.price ? <Lock className="w-4 h-4" /> : 'Get'}
                       </Button>
                     )}
                   </motion.div>
@@ -229,7 +229,7 @@ export default function Store() {
                         disabled={profile.coins < cursor.price}
                         className="bg-purple-600"
                       >
-                        {profile.coins < cursor.price ? <Lock className="w-4 h-4" /> : 'Buy'}
+                        {profile.coins < cursor.price ? <Lock className="w-4 h-4" /> : 'Get'}
                       </Button>
                     )}
                   </motion.div>
