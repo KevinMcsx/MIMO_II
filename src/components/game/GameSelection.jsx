@@ -55,12 +55,12 @@ export default function GameSelection({ onSelect, activeKey }) {
       <motion.h1
         initial={{ y: -30 }}
         animate={{ y: 0 }}
-        className="text-5xl font-black text-white tracking-tight text-center"
+        className="text-5xl font-black text-white tracking-tight text-center drop-shadow-lg"
       >
         Choose a Game!
       </motion.h1>
       
-      <p className="text-xl text-slate-400 text-center">
+      <p className="text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
         Press the color button or click to select
       </p>
 

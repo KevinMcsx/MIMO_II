@@ -77,36 +77,33 @@ export default function Game() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute -top-40 -right-40 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6960edafe7400f149624e055/0292e81f1_MIMOBackground.png)',
+        }}
+      />
+      
+      {/* Overlay for better readability */}
+      <div className="absolute inset-0 bg-black/10" />
+
+      {/* MIMO Logo */}
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="absolute top-8 left-1/2 -translate-x-1/2 z-20"
+      >
+        <img 
+          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6960edafe7400f149624e055/87b3ed5ff_MIMO.jpg"
+          alt="MIMO"
+          className="h-24 md:h-32 w-auto drop-shadow-2xl"
         />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            rotate: [360, 180, 0],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-          className="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
-        />
-        <motion.div
-          animate={{
-            y: [0, -20, 0],
-          }}
-          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-yellow-500/5 rounded-full blur-3xl"
-        />
-      </div>
+      </motion.div>
 
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 pt-32">
         <AnimatePresence mode="wait">
           {screen === 'gameSelect' && (
             <motion.div
@@ -160,11 +157,11 @@ export default function Game() {
             transition={{ delay: 0.5 }}
             className="absolute bottom-8 text-center"
           >
-            <p className="text-slate-500 text-sm">
-              Use <span className="text-slate-400 font-mono bg-slate-800 px-2 py-1 rounded">1</span> 
-              <span className="text-slate-400 font-mono bg-slate-800 px-2 py-1 rounded mx-1">2</span>
-              <span className="text-slate-400 font-mono bg-slate-800 px-2 py-1 rounded mx-1">3</span>
-              <span className="text-slate-400 font-mono bg-slate-800 px-2 py-1 rounded">4</span> keys to select
+            <p className="text-slate-700 text-sm font-medium drop-shadow-sm">
+              Use <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">1</span> 
+              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1">2</span>
+              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1">3</span>
+              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">4</span> keys to select
             </p>
           </motion.div>
         )}

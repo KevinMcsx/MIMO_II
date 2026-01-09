@@ -79,7 +79,7 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
       <Button
         onClick={onBack}
         variant="ghost"
-        className="absolute top-4 left-4 text-slate-400 hover:text-white"
+        className="absolute top-4 left-4 text-slate-700 hover:text-slate-900 font-semibold bg-white/50 hover:bg-white/70"
       >
         <ArrowLeft className="w-5 h-5 mr-2" />
         Back
@@ -88,12 +88,12 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
       <motion.h1
         initial={{ y: -30 }}
         animate={{ y: 0 }}
-        className="text-5xl font-black text-white tracking-tight text-center"
+        className="text-5xl font-black text-white tracking-tight text-center drop-shadow-lg"
       >
         Choose Difficulty!
       </motion.h1>
       
-      <p className="text-xl text-slate-400 text-center">
+      <p className="text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
         Press the color button or click to select
       </p>
 
