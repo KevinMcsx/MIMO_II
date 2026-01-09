@@ -11,7 +11,10 @@ import Game2ColorShape from '../components/game/Game2ColorShape';
 import Game3Memory from '../components/game/Game3Memory';
 import Game4ProChallenge from '../components/game/Game4ProChallenge';
 import NameEntry from '../components/game/NameEntry';
+import LevelDisplay from '../components/game/LevelDisplay';
 import { sounds } from '../components/utils/sounds';
+import { getPlayerProfile } from '../components/game/PlayerProgressManager';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Game() {
   const [screen, setScreen] = useState('nameEntry'); // nameEntry, gameSelect, difficultySelect, playing
@@ -20,6 +23,12 @@ export default function Game() {
   const [activeKey, setActiveKey] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [playerName, setPlayerName] = useState('');
+  
+  const { data: playerProfile, refetch: refetchProfile } = useQuery({
+    queryKey: ['playerProfile', playerName],
+    queryFn: () => getPlayerProfile(playerName),
+    enabled: !!playerName,
+  });
 
   useEffect(() => {
     setSoundEnabled(sounds.loadSoundPreference());
@@ -89,6 +98,7 @@ export default function Game() {
     setScreen('gameSelect');
     setSelectedGame(null);
     setSelectedDifficulty(null);
+    refetchProfile();
   };
 
   const renderGame = () => {
@@ -120,6 +130,12 @@ export default function Game() {
       <div className="absolute inset-0 bg-black/10" />
 
       {/* Top Navigation */}
+      <div className="absolute top-4 left-4 z-20">
+        {playerProfile && screen !== 'nameEntry' && (
+          <LevelDisplay level={playerProfile.level} xp={playerProfile.xp} compact={false} />
+        )}
+      </div>
+
       <div className="absolute top-4 right-4 z-20 flex gap-2">
         <Link to={createPageUrl('DailyChallenge')}>
           <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
@@ -171,7 +187,11 @@ export default function Game() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
             >
-              <GameSelection onSelect={handleGameSelect} activeKey={activeKey} />
+              <GameSelection 
+                onSelect={handleGameSelect} 
+                activeKey={activeKey}
+                unlockedGames={playerProfile?.unlocked_games || [1]}
+              />
             </motion.div>
           )}
 
@@ -191,6 +211,7 @@ export default function Game() {
                   setSelectedGame(null);
                 }}
                 activeKey={activeKey}
+                unlockedDifficulties={playerProfile?.unlocked_difficulties?.[selectedGame] || [1]}
               />
             </motion.div>
           )}

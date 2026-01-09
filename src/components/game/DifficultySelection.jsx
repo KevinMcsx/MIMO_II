@@ -69,7 +69,7 @@ const gameDescriptions = {
   },
 };
 
-export default function DifficultySelection({ gameId, onSelect, onBack, activeKey }) {
+export default function DifficultySelection({ gameId, onSelect, onBack, activeKey, unlockedDifficulties = [1, 2, 3, 4] }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}

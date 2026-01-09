@@ -221,6 +221,14 @@ export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
           totalAttempts: stats.pairTimes.length,
         }}
         gameTitle={`Memory Match - ${['Easy', 'Medium', 'Hard', 'Expert'][difficulty - 1]}`}
+        gameResult={{
+          game_type: 3,
+          difficulty,
+          score: stats.pairTimes.length,
+          correct_hits: stats.pairTimes.length,
+          avg_reaction_time: avgPairTime,
+        }}
+        playerName={playerName}
         onPlayAgain={() => {
           setGameState('countdown');
           setCountdown(3);

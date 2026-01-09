@@ -138,6 +138,14 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
           totalAttempts: stats.correctHits + stats.wrongHits,
         }}
         gameTitle={`Color Reaction - ${['Easy', 'Medium', 'Hard', 'Expert'][difficulty - 1]}`}
+        gameResult={{
+          game_type: 1,
+          difficulty,
+          score: stats.correctHits,
+          correct_hits: stats.correctHits,
+          avg_reaction_time: avgReactionTime,
+        }}
+        playerName={playerName}
         onPlayAgain={() => {
           setGameState('countdown');
           setCountdown(3);

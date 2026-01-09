@@ -45,7 +45,7 @@ const games = [
   },
 ];
 
-export default function GameSelection({ onSelect, activeKey }) {
+export default function GameSelection({ onSelect, activeKey, unlockedGames = [1, 2, 3, 4] }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}

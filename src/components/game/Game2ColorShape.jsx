@@ -212,6 +212,14 @@ export default function Game2ColorShape({ difficulty, onMainMenu, playerName }) 
           showShapeStats: true,
         }}
         gameTitle={`Color + Shape - ${['Easy', 'Medium', 'Hard', 'Expert'][difficulty - 1]}`}
+        gameResult={{
+          game_type: 2,
+          difficulty,
+          score: stats.correctHits + stats.correctShapes,
+          correct_hits: stats.correctHits + stats.correctShapes,
+          avg_reaction_time: avgReactionTime,
+        }}
+        playerName={playerName}
         onPlayAgain={() => {
           setGameState('countdown');
           setCountdown(3);

@@ -3,6 +3,9 @@ import { motion } from 'framer-motion';
 import { Trophy, Clock, Target, Zap, RotateCcw, Home, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { downloadResultsAsText } from './GameResultSaver';
+import { awardXP } from './PlayerProgressManager';
+import LevelUpModal from './LevelUpModal';
+import XPGainPopup from './XPGainPopup';
 
 export default function ResultsScreen({ 
   stats, 
