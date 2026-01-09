@@ -2,9 +2,12 @@ import { base44 } from '@/api/base44Client';
 
 export const saveGameResult = async (gameData) => {
   try {
-    await base44.entities.GameScore.create(gameData);
+    const result = await base44.entities.GameScore.create(gameData);
+    console.log('Game result saved successfully:', result);
+    return result;
   } catch (error) {
     console.error('Failed to save game result:', error);
+    throw error;
   }
 };
 
