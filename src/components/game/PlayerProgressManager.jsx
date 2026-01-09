@@ -17,10 +17,21 @@ export async function getPlayerProfile(playerName) {
         level: 1,
         xp: 0,
         total_xp: 0,
+        coins: 0,
         unlocked_games: [1],
         unlocked_difficulties: { 1: [1], 2: [1], 3: [1], 4: [1] },
         cosmetic_theme: 'default',
         unlocked_themes: ['default'],
+        unlocked_avatars: ['default'],
+        unlocked_badges: [],
+        unlocked_frames: ['default'],
+        unlocked_sound_packs: ['default'],
+        unlocked_cursors: ['default'],
+        equipped_avatar: 'default',
+        equipped_badge: null,
+        equipped_frame: 'default',
+        equipped_sound_pack: 'default',
+        equipped_cursor: 'default',
         achievements: []
       });
       return newProfile;
