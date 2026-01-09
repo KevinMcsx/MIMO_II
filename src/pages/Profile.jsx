@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tantml/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
 import { ChevronLeft, Star, Lock } from 'lucide-react';
@@ -14,14 +14,22 @@ import { useTranslation } from '../components/utils/translations';
 
 export default function Profile() {
   const t = useTranslation();
-  const playerName = localStorage.getItem('mimoPlayerName') || 'Player';
+  const playerName = localStorage.getItem('mimoPlayerName');
   const [activeTab, setActiveTab] = useState('avatars');
 
   const queryClient = useQueryClient();
 
+  // Redirect to game if no player name
+  useEffect(() => {
+    if (!playerName) {
+      window.location.href = createPageUrl('Game');
+    }
+  }, [playerName]);
+
   const { data: profile, isLoading } = useQuery({
     queryKey: ['playerProfile', playerName],
     queryFn: () => getPlayerProfile(playerName),
+    enabled: !!playerName,
   });
 
   const updateProfileMutation = useMutation({
@@ -30,6 +38,10 @@ export default function Profile() {
       queryClient.invalidateQueries({ queryKey: ['playerProfile'] });
     },
   });
+
+  if (!playerName) {
+    return null;
+  }
 
   if (isLoading || !profile) {
     return (
