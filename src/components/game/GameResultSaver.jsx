@@ -1,22 +1,70 @@
 import { base44 } from '@/api/base44Client';
 
+const STORAGE_KEY = 'mimo_game_scores';
+
+// Save to localStorage
+const saveToLocalStorage = (gameData) => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    const scores = stored ? JSON.parse(stored) : [];
+    
+    const newScore = {
+      ...gameData,
+      id: Date.now() + Math.random(),
+      created_date: new Date().toISOString()
+    };
+    
+    scores.push(newScore);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
+    return newScore;
+  } catch (error) {
+    console.error('Failed to save to localStorage:', error);
+    return null;
+  }
+};
+
+// Get from localStorage
+const getFromLocalStorage = () => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+  } catch (error) {
+    console.error('Failed to get from localStorage:', error);
+    return [];
+  }
+};
+
 export const saveGameResult = async (gameData) => {
+  // Always save to localStorage
+  const localResult = saveToLocalStorage(gameData);
+  
+  // Try to save to database
   try {
     const result = await base44.entities.GameScore.create(gameData);
-    console.log('Game result saved successfully:', result);
+    console.log('Game result saved to database:', result);
     return result;
   } catch (error) {
-    console.error('Failed to save game result:', error);
-    throw error;
+    console.error('Failed to save to database, using localStorage only:', error);
+    return localResult;
   }
 };
 
 export const getAllResults = async () => {
   try {
-    return await base44.entities.GameScore.list('-created_date', 1000);
+    // Get from both sources
+    const dbResults = await base44.entities.GameScore.list('-created_date', 1000);
+    const localResults = getFromLocalStorage();
+    
+    // Merge and deduplicate
+    const allResults = [...dbResults, ...localResults];
+    
+    // Sort by date (newest first)
+    allResults.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
+    
+    return allResults;
   } catch (error) {
-    console.error('Failed to fetch results:', error);
-    return [];
+    console.error('Failed to fetch from database, using localStorage only:', error);
+    return getFromLocalStorage();
   }
 };
 
