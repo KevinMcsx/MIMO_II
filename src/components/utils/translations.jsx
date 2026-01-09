@@ -534,6 +534,140 @@ export const translations = {
     getReady: "Mach dich bereit...",
     go: "LOS!",
   },
+  
+  hu: {
+    // Main Menu
+    chooseGame: "Válassz Játékot!",
+    useKeys: "Használd a",
+    keysToSelect: "billentyűket a választáshoz",
+    
+    // Games
+    colorReaction: "Szín Reakció",
+    colorShape: "Szín + Forma",
+    memoryMatch: "Memória Játék",
+    proChallenge: "Profi Kihívás",
+    
+    // Game Descriptions
+    game1Desc: "Illeszd a színt a lehető leggyorsabban!",
+    game2Desc: "Illeszd a színt ÉS a formát!",
+    game3Desc: "Jegyezd meg és illeszd a párokat!",
+    game4Desc: "Végső multitasking kihívás!",
+    
+    // Difficulty
+    chooseDifficulty: "Válassz Nehézséget",
+    easy: "Könnyű",
+    medium: "Közepes",
+    hard: "Nehéz",
+    expert: "Szakértő",
+    back: "Vissza",
+    
+    // Difficulty Descriptions
+    easyRelaxed: "Lassú tempó, tökéletes kezdőknek",
+    mediumBalanced: "Kiegyensúlyozott kihívás a legtöbbek számára",
+    hardIntense: "Gyors tempó, gyors reflexeket igényel",
+    expertExtreme: "Extrém sebesség, csak mestereknek",
+    
+    // Game Instructions
+    pressColorButton: "Nyomd meg a SZÍNÉNEK megfelelő gombot!",
+    pressShapeOrColor: "Forma gomb színe = képernyő színe → nyomd a formát | Egyébként → nyomd a színt",
+    rememberPairs: "Jegyezd meg a párokat és illeszd össze őket!",
+    matchLanes: "Illeszd az eső tárgyakat a sáv gombokhoz!",
+    
+    // Stats
+    correct: "Helyes",
+    wrong: "Helytelen",
+    time: "Idő",
+    avgReaction: "Átlag Reakció",
+    accuracy: "Pontosság",
+    correctHits: "Helyes Találatok",
+    wrongHits: "Helytelen Találatok",
+    correctShapes: "Helyes Formák",
+    wrongShapes: "Helytelen Formák",
+    score: "Pontszám",
+    totalTime: "Teljes Idő",
+    
+    // Results
+    gameComplete: "Játék Befejezve!",
+    playAgain: "Újra Játszom",
+    mainMenu: "Főmenü",
+    downloadResults: "Eredmények Letöltése",
+    levelUp: "Szint Emelkedés!",
+    xpGained: "Szerzett XP",
+    newUnlocks: "Új Feloldások",
+    
+    // Navigation
+    backToGame: "Vissza a Játékhoz",
+    profile: "Profil",
+    statistics: "Statisztikák",
+    leaderboard: "Ranglista",
+    dailyChallenge: "Napi Kihívás",
+    store: "Bolt",
+    
+    // Profile
+    level: "Szint",
+    coins: "Érmék",
+    totalXP: "Összes XP",
+    gamesPlayed: "Játszott Játékok",
+    customize: "Testreszabás",
+    avatars: "Avatarok",
+    badges: "Jelvények",
+    frames: "Keretek",
+    themes: "Témák",
+    soundPacks: "Hangcsomagok",
+    cursors: "Kurzorok",
+    equip: "Felszerel",
+    equipped: "Felszerelve",
+    locked: "Zárolt",
+    unlockAtLevel: "Feloldás szinten",
+    
+    // Store
+    buyWithCoins: "Szerezd meg",
+    notEnoughCoins: "Nincs elég érme",
+    owned: "Tulajdonban",
+    earnCoinsPlaying: "Szerezz érméket játékkal!",
+    
+    // Daily Challenge
+    completeTodaysChallenge: "Teljesítsd a mai kihívást!",
+    targetScore: "Cél Pontszám",
+    startChallenge: "Kihívás Indítása",
+    challengeComplete: "Kihívás Teljesítve!",
+    challengeAttempted: "Kihívás Megkísérelve",
+    comeBackTomorrow: "Gyere vissza holnap egy új kihívásért!",
+    
+    // Leaderboard
+    topPlayers: "Legjobb Játékosok",
+    allGames: "Minden Játék",
+    allDifficulties: "Minden Nehézség",
+    daily: "Napi",
+    weekly: "Heti",
+    monthly: "Havi",
+    allTime: "Minden Idők",
+    you: "Te",
+    
+    // Statistics
+    statisticsTitle: "Statisztikák",
+    gamePerformance: "Játék Teljesítmény Elemzés",
+    allPlayers: "Minden Játékos",
+    gamesPlayed: "Játszott Játékok",
+    bestScore: "Legjobb Pontszám",
+    avgScore: "Átlag Pontszám",
+    bestReaction: "Legjobb Reakció",
+    gamesByType: "Játékok Típus Szerint",
+    reactionProgression: "Átlag Reakcióidő Fejlődés",
+    playerRankings: "Játékos Rangsor",
+    recentGames: "Legutóbbi Játékok",
+    downloadRecords: "Rekordok Letöltése",
+    
+    // Name Entry
+    welcomeToMIMO: "Üdvözöl a MIMO!",
+    enterName: "Add meg a neved a kezdéshez",
+    yourName: "Neved",
+    letsPlay: "Játsszunk!",
+    
+    // Misc
+    getReady: "Készülj...",
+    go: "RAJT!",
+  },
 };
 
 export const languages = [
@@ -541,6 +675,7 @@ export const languages = [
   { code: 'es', name: 'Español', flag: '🇪🇸' },
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'hu', name: 'Magyar', flag: '🇭🇺' },
 ];
 
 export const getLanguage = () => {
