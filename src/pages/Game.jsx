@@ -82,28 +82,15 @@ export default function Game() {
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6960edafe7400f149624e055/0292e81f1_MIMOBackground.png)',
+          backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6960edafe7400f149624e055/0cbaa8d79_MIMOBackground.png)',
         }}
       />
       
       {/* Overlay for better readability */}
       <div className="absolute inset-0 bg-black/10" />
 
-      {/* MIMO Logo */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="absolute top-8 left-1/2 -translate-x-1/2 z-20"
-      >
-        <img 
-          src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6960edafe7400f149624e055/87b3ed5ff_MIMO.jpg"
-          alt="MIMO"
-          className="h-24 md:h-32 w-auto drop-shadow-2xl"
-        />
-      </motion.div>
-
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 pt-32">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
         <AnimatePresence mode="wait">
           {screen === 'gameSelect' && (
             <motion.div
