@@ -10,15 +10,17 @@ import Game1ColorReaction from '../components/game/Game1ColorReaction';
 import Game2ColorShape from '../components/game/Game2ColorShape';
 import Game3Memory from '../components/game/Game3Memory';
 import Game4ProChallenge from '../components/game/Game4ProChallenge';
-
-const gameNames = ['Color Reaction', 'Color + Shape', 'Memory Match', 'Pro Challenge'];
-const difficultyNames = ['Easy', 'Medium', 'Hard', 'Expert'];
+import { useTranslation } from '../components/utils/translations';
 
 export default function DailyChallenge() {
+  const t = useTranslation();
   const [playing, setPlaying] = useState(false);
   const playerName = localStorage.getItem('mimoPlayerName');
   const today = new Date().toISOString().split('T')[0];
   const queryClient = useQueryClient();
+  
+  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge')];
+  const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
   // Redirect to game if no player name
   useEffect(() => {
@@ -129,7 +131,7 @@ export default function DailyChallenge() {
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
             <ChevronLeft className="w-5 h-5 mr-2" />
-            Back to Game
+            {t('backToGame')}
           </Button>
         </Link>
 
@@ -138,8 +140,8 @@ export default function DailyChallenge() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-8"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">📅 Daily Challenge</h1>
-          <p className="text-slate-600 text-lg">Complete today's challenge!</p>
+          <h1 className="text-5xl font-black text-slate-800 mb-2">📅 {t('dailyChallenge')}</h1>
+          <p className="text-slate-600 text-lg">{t('completeTodaysChallenge')}</p>
         </motion.div>
 
         {challenge && (
@@ -167,7 +169,7 @@ export default function DailyChallenge() {
 
             <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl p-6 mb-6">
               <p className="text-slate-700 text-center text-lg">
-                <span className="font-bold">Target Score:</span>{' '}
+                <span className="font-bold">{t('targetScore')}:</span>{' '}
                 <span className="text-3xl font-black text-purple-600">{challenge.target_score}</span>
               </p>
             </div>
@@ -187,28 +189,28 @@ export default function DailyChallenge() {
                     <>
                       <CheckCircle className="w-8 h-8 text-green-600" />
                       <div className="text-left">
-                        <p className="font-black text-green-700 text-xl">Challenge Complete!</p>
-                        <p className="text-green-600">Score: {completion.score}</p>
+                        <p className="font-black text-green-700 text-xl">{t('challengeComplete')}</p>
+                        <p className="text-green-600">{t('score')}: {completion.score}</p>
                       </div>
                     </>
                   ) : (
                     <>
                       <Trophy className="w-8 h-8 text-slate-500" />
                       <div className="text-left">
-                        <p className="font-black text-slate-700 text-xl">Challenge Attempted</p>
-                        <p className="text-slate-600">Score: {completion.score} (Target: {challenge.target_score})</p>
+                        <p className="font-black text-slate-700 text-xl">{t('challengeAttempted')}</p>
+                        <p className="text-slate-600">{t('score')}: {completion.score} ({t('targetScore')}: {challenge.target_score})</p>
                       </div>
                     </>
                   )}
                 </motion.div>
-                <p className="text-slate-500">Come back tomorrow for a new challenge!</p>
+                <p className="text-slate-500">{t('comeBackTomorrow')}</p>
               </div>
             ) : (
               <Button
                 onClick={() => setPlaying(true)}
                 className="w-full h-14 text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
               >
-                Start Challenge
+                {t('startChallenge')}
               </Button>
             )}
           </motion.div>

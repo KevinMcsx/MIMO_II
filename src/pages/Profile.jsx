@@ -10,8 +10,10 @@ import { getPlayerProfile } from '../components/game/PlayerProgressManager';
 import LevelDisplay from '../components/game/LevelDisplay';
 import PlayerAvatar from '../components/profile/PlayerAvatar';
 import { AVATARS, BADGES, FRAMES, THEMES, SOUND_PACKS, CURSORS } from '../components/profile/CosmeticData';
+import { useTranslation } from '../components/utils/translations';
 
 export default function Profile() {
+  const t = useTranslation();
   const playerName = localStorage.getItem('mimoPlayerName') || 'Player';
   const [activeTab, setActiveTab] = useState('avatars');
 
@@ -70,7 +72,7 @@ export default function Profile() {
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
             <ChevronLeft className="w-5 h-5 mr-2" />
-            Back to Game
+            {t('backToGame')}
           </Button>
         </Link>
 
@@ -79,7 +81,7 @@ export default function Profile() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-6"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">👤 Player Profile</h1>
+          <h1 className="text-5xl font-black text-slate-800 mb-2">👤 {t('profile')}</h1>
           <p className="text-slate-600 text-lg">{playerName}</p>
         </motion.div>
 
@@ -109,19 +111,19 @@ export default function Profile() {
           <div className="inline-flex items-center gap-2 bg-yellow-100 border-2 border-yellow-300 rounded-full px-4 py-2">
             <span className="text-2xl">🪙</span>
             <span className="text-xl font-black text-yellow-700">{profile.coins || 0}</span>
-            <span className="text-slate-600 text-sm">Coins</span>
+            <span className="text-slate-600 text-sm">{t('coins')}</span>
           </div>
         </div>
 
         {/* Tabs */}
         <div className="flex gap-2 mb-4 overflow-x-auto">
           {[
-            { id: 'avatars', label: '😊 Avatars' },
-            { id: 'badges', label: '🏅 Badges' },
-            { id: 'frames', label: '🖼️ Frames' },
-            { id: 'themes', label: '🎨 Themes' },
-            { id: 'sounds', label: '🎵 Sounds' },
-            { id: 'cursors', label: '✨ Cursors' },
+            { id: 'avatars', label: `😊 ${t('avatars')}` },
+            { id: 'badges', label: `🏅 ${t('badges')}` },
+            { id: 'frames', label: `🖼️ ${t('frames')}` },
+            { id: 'themes', label: `🎨 ${t('themes')}` },
+            { id: 'sounds', label: `🎵 ${t('soundPacks')}` },
+            { id: 'cursors', label: `✨ ${t('cursors')}` },
           ].map((tab) => (
             <Button
               key={tab.id}

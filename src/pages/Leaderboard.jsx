@@ -7,15 +7,17 @@ import PlayerAvatar from '../components/profile/PlayerAvatar';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-
-const gameNames = ['Color Reaction', 'Color + Shape', 'Memory Match', 'Pro Challenge'];
-const difficultyNames = ['Easy', 'Medium', 'Hard', 'Expert'];
+import { useTranslation } from '../components/utils/translations';
 
 export default function Leaderboard() {
+  const t = useTranslation();
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
   const [timeFilter, setTimeFilter] = useState('all-time');
   const playerName = localStorage.getItem('mimoPlayerName') || '';
+  
+  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge')];
+  const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
   const { data: allProfiles = [] } = useQuery({
     queryKey: ['allProfiles'],
@@ -66,7 +68,7 @@ export default function Leaderboard() {
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
             <ChevronLeft className="w-5 h-5 mr-2" />
-            Back to Game
+            {t('backToGame')}
           </Button>
         </Link>
 
@@ -75,8 +77,8 @@ export default function Leaderboard() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-8"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">🏆 Leaderboard</h1>
-          <p className="text-slate-600 text-lg">Top players worldwide</p>
+          <h1 className="text-5xl font-black text-slate-800 mb-2">🏆 {t('leaderboard')}</h1>
+          <p className="text-slate-600 text-lg">{t('topPlayers')}</p>
         </motion.div>
 
         {/* Filters */}
@@ -86,10 +88,10 @@ export default function Leaderboard() {
             onChange={(e) => setTimeFilter(e.target.value)}
             className="px-4 py-2 rounded-lg bg-white border-2 border-purple-300 font-semibold text-purple-700"
           >
-            <option value="daily">Today</option>
-            <option value="weekly">This Week</option>
-            <option value="monthly">This Month</option>
-            <option value="all-time">All Time</option>
+            <option value="daily">{t('daily')}</option>
+            <option value="weekly">{t('weekly')}</option>
+            <option value="monthly">{t('monthly')}</option>
+            <option value="all-time">{t('allTime')}</option>
           </select>
 
           <select
@@ -97,7 +99,7 @@ export default function Leaderboard() {
             onChange={(e) => setSelectedGame(e.target.value ? Number(e.target.value) : null)}
             className="px-4 py-2 rounded-lg bg-white border-2 border-slate-300 font-semibold"
           >
-            <option value="">All Games</option>
+            <option value="">{t('allGames')}</option>
             {gameNames.map((name, i) => (
               <option key={i} value={i + 1}>{name}</option>
             ))}
@@ -108,7 +110,7 @@ export default function Leaderboard() {
             onChange={(e) => setSelectedDifficulty(e.target.value ? Number(e.target.value) : null)}
             className="px-4 py-2 rounded-lg bg-white border-2 border-slate-300 font-semibold"
           >
-            <option value="">All Difficulties</option>
+            <option value="">{t('allDifficulties')}</option>
             {difficultyNames.map((name, i) => (
               <option key={i} value={i + 1}>{name}</option>
             ))}
@@ -140,7 +142,7 @@ export default function Leaderboard() {
               >
                 {isCurrentPlayer && (
                   <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-                    YOU
+                    {t('you').toUpperCase()}
                   </div>
                 )}
                 <div className="w-12 flex justify-center">

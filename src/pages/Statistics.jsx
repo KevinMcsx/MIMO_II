@@ -7,14 +7,16 @@ import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download } from 'lucide-re
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
-
-const gameNames = ['Color Reaction', 'Color + Shape', 'Memory Match', 'Pro Challenge'];
-const difficultyNames = ['Easy', 'Medium', 'Hard', 'Expert'];
+import { useTranslation } from '../components/utils/translations';
 
 export default function Statistics() {
+  const t = useTranslation();
   const currentPlayerName = localStorage.getItem('mimoPlayerName') || 'Player';
   const [selectedPlayer, setSelectedPlayer] = useState(currentPlayerName);
   const [selectedGame, setSelectedGame] = useState(null);
+  
+  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge')];
+  const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
   const { data: allScores = [] } = useQuery({
     queryKey: ['allScores'],
@@ -100,7 +102,7 @@ export default function Statistics() {
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
             <ChevronLeft className="w-5 h-5 mr-2" />
-            Back to Game
+            {t('backToGame')}
           </Button>
         </Link>
 
@@ -109,15 +111,15 @@ export default function Statistics() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-6"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">📊 Statistics</h1>
-          <p className="text-slate-600 text-lg">Game Performance Analytics</p>
+          <h1 className="text-5xl font-black text-slate-800 mb-2">📊 {t('statisticsTitle')}</h1>
+          <p className="text-slate-600 text-lg">{t('gamePerformance')}</p>
           <Button
             onClick={downloadStats}
             variant="outline"
             className="mt-3"
           >
             <Download className="w-4 h-4 mr-2" />
-            Download Records
+            {t('downloadRecords')}
           </Button>
         </motion.div>
 
@@ -128,7 +130,7 @@ export default function Statistics() {
             onChange={(e) => setSelectedPlayer(e.target.value || null)}
             className="px-4 py-2 rounded-lg bg-white border-2 border-purple-300 font-semibold text-purple-700"
           >
-            <option value="">All Players</option>
+            <option value="">{t('allPlayers')}</option>
             {uniquePlayers.map((player) => (
               <option key={player} value={player}>{player}</option>
             ))}
@@ -139,7 +141,7 @@ export default function Statistics() {
             onChange={(e) => setSelectedGame(e.target.value ? Number(e.target.value) : null)}
             className="px-4 py-2 rounded-lg bg-white border-2 border-blue-300 font-semibold text-blue-700"
           >
-            <option value="">All Games</option>
+            <option value="">{t('allGames')}</option>
             {gameNames.map((name, i) => (
               <option key={i} value={i + 1}>{name}</option>
             ))}
@@ -155,7 +157,7 @@ export default function Statistics() {
           >
             <TrendingUp className="w-8 h-8 mx-auto mb-2 text-blue-500" />
             <p className="text-3xl font-black text-slate-800">{totalGames}</p>
-            <p className="text-slate-600 text-sm">Games Played</p>
+            <p className="text-slate-600 text-sm">{t('gamesPlayed')}</p>
           </motion.div>
 
           <motion.div
@@ -166,7 +168,7 @@ export default function Statistics() {
           >
             <Target className="w-8 h-8 mx-auto mb-2 text-green-500" />
             <p className="text-3xl font-black text-slate-800">{bestScore}</p>
-            <p className="text-slate-600 text-sm">Best Score</p>
+            <p className="text-slate-600 text-sm">{t('bestScore')}</p>
           </motion.div>
 
           <motion.div
@@ -177,7 +179,7 @@ export default function Statistics() {
           >
             <Zap className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
             <p className="text-3xl font-black text-slate-800">{avgScore}</p>
-            <p className="text-slate-600 text-sm">Avg Score</p>
+            <p className="text-slate-600 text-sm">{t('avgScore')}</p>
           </motion.div>
 
           <motion.div
@@ -188,7 +190,7 @@ export default function Statistics() {
           >
             <Clock className="w-8 h-8 mx-auto mb-2 text-purple-500" />
             <p className="text-3xl font-black text-slate-800">{avgReaction}ms</p>
-            <p className="text-slate-600 text-sm">Avg Reaction</p>
+            <p className="text-slate-600 text-sm">{t('avgReaction')}</p>
           </motion.div>
 
           <motion.div
@@ -199,7 +201,7 @@ export default function Statistics() {
           >
             <Zap className="w-8 h-8 mx-auto mb-2 text-green-500 fill-green-500" />
             <p className="text-3xl font-black text-slate-800">{bestReaction === Infinity ? 0 : bestReaction.toFixed(0)}ms</p>
-            <p className="text-slate-600 text-sm">Best Reaction</p>
+            <p className="text-slate-600 text-sm">{t('bestReaction')}</p>
           </motion.div>
         </div>
 
@@ -210,7 +212,7 @@ export default function Statistics() {
             animate={{ x: 0, opacity: 1 }}
             className="bg-white rounded-2xl p-6 border-2 border-slate-200"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Games by Type</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">{t('gamesByType')}</h3>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={gamesByType}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -227,7 +229,7 @@ export default function Statistics() {
             animate={{ x: 0, opacity: 1 }}
             className="bg-white rounded-2xl p-6 border-2 border-slate-200"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Avg Reaction Time Progression</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">{t('reactionProgression')}</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={reactionProgression}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -247,7 +249,7 @@ export default function Statistics() {
             animate={{ y: 0, opacity: 1 }}
             className="mb-8 bg-white rounded-2xl p-6 border-2 border-slate-200"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Player Rankings</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">{t('playerRankings')}</h3>
             <div className="space-y-2">
               {playerStats.slice(0, 10).map((player, i) => (
                 <div key={player.name} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-200">
@@ -281,7 +283,7 @@ export default function Statistics() {
           animate={{ y: 0, opacity: 1 }}
           className="bg-white rounded-2xl p-6 border-2 border-slate-200"
         >
-          <h3 className="text-xl font-bold text-slate-800 mb-4">Recent Games</h3>
+          <h3 className="text-xl font-bold text-slate-800 mb-4">{t('recentGames')}</h3>
           <div className="space-y-2">
             {filteredScores.slice(0, 10).map((score, i) => (
               <div key={score.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
