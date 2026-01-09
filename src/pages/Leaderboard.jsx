@@ -13,15 +13,35 @@ const difficultyNames = ['Easy', 'Medium', 'Hard', 'Expert'];
 export default function Leaderboard() {
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+  const [timeFilter, setTimeFilter] = useState('all-time');
+  const playerName = localStorage.getItem('mimoPlayerName') || '';
 
   const { data: scores = [], isLoading } = useQuery({
-    queryKey: ['leaderboard', selectedGame, selectedDifficulty],
+    queryKey: ['leaderboard', selectedGame, selectedDifficulty, timeFilter],
     queryFn: async () => {
       const filters = {};
       if (selectedGame) filters.game_type = selectedGame;
       if (selectedDifficulty) filters.difficulty = selectedDifficulty;
       
-      return await base44.entities.GameScore.filter(filters, '-score', 50);
+      const allScores = await base44.entities.GameScore.filter(filters, '-score', 500);
+      
+      // Filter by time
+      if (timeFilter !== 'all-time') {
+        const now = new Date();
+        const cutoffDate = new Date();
+        
+        if (timeFilter === 'daily') {
+          cutoffDate.setHours(0, 0, 0, 0);
+        } else if (timeFilter === 'weekly') {
+          cutoffDate.setDate(now.getDate() - 7);
+        } else if (timeFilter === 'monthly') {
+          cutoffDate.setMonth(now.getMonth() - 1);
+        }
+        
+        return allScores.filter(score => new Date(score.created_date) >= cutoffDate).slice(0, 50);
+      }
+      
+      return allScores.slice(0, 50);
     },
   });
 
@@ -52,7 +72,18 @@ export default function Leaderboard() {
         </motion.div>
 
         {/* Filters */}
-        <div className="flex gap-4 mb-6 flex-wrap justify-center">
+        <div className="flex gap-3 mb-6 flex-wrap justify-center">
+          <select
+            value={timeFilter}
+            onChange={(e) => setTimeFilter(e.target.value)}
+            className="px-4 py-2 rounded-lg bg-white border-2 border-purple-300 font-semibold text-purple-700"
+          >
+            <option value="daily">Today</option>
+            <option value="weekly">This Week</option>
+            <option value="monthly">This Month</option>
+            <option value="all-time">All Time</option>
+          </select>
+
           <select
             value={selectedGame || ''}
             onChange={(e) => setSelectedGame(e.target.value ? Number(e.target.value) : null)}
@@ -83,17 +114,26 @@ export default function Leaderboard() {
           ) : scores.length === 0 ? (
             <div className="text-center py-12 text-slate-500">No scores yet!</div>
           ) : (
-            scores.map((score, index) => (
+            scores.map((score, index) => {
+              const isCurrentPlayer = score.player_name === playerName;
+              return (
               <motion.div
                 key={score.id}
                 initial={{ x: -50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: index * 0.05 }}
                 className={`
-                  flex items-center gap-4 p-4 rounded-xl border-2
-                  ${index < 3 ? 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-300' : 'bg-white border-slate-200'}
+                  flex items-center gap-4 p-4 rounded-xl border-2 relative
+                  ${isCurrentPlayer ? 'bg-gradient-to-r from-purple-100 to-blue-100 border-purple-400 ring-2 ring-purple-400' : 
+                    index < 3 ? 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-300' : 
+                    'bg-white border-slate-200'}
                 `}
               >
+                {isCurrentPlayer && (
+                  <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    YOU
+                  </div>
+                )}
                 <div className="w-12 flex justify-center">
                   {getMedalIcon(index) || (
                     <span className="text-2xl font-bold text-slate-400">#{index + 1}</span>
@@ -114,7 +154,8 @@ export default function Leaderboard() {
                   </p>
                 </div>
               </motion.div>
-            ))
+            );
+            })
           )}
         </div>
       </div>
