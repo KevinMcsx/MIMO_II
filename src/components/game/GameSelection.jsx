@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Shapes, Brain, Zap, Keyboard } from 'lucide-react';
+import { Palette, Shapes, Brain, Zap, Keyboard, Info } from 'lucide-react';
 import { useTranslation } from '../utils/translations';
+import TutorialModal from './TutorialModal';
 
 export default function GameSelection({ onSelect, activeKey, unlockedGames = [1, 2, 3, 4] }) {
   const t = useTranslation();
+  const [tutorialGame, setTutorialGame] = useState(null);
   
   const games = [
     {
@@ -85,6 +87,15 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
               ${activeKey === game.key ? 'ring-2 sm:ring-4 ring-white scale-105' : ''}
             `}
           >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setTutorialGame(game.id);
+              }}
+              className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-white/20 hover:bg-white/30 p-1.5 sm:p-2 rounded-full transition-colors"
+            >
+              <Info className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+            </button>
             <div className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-white/20 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-bold text-white flex items-center gap-1">
               <Keyboard className="w-2 h-2 sm:w-3 sm:h-3" />
               {game.key}
@@ -114,6 +125,12 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
           <span className="text-red-400 font-bold text-xs sm:text-sm md:text-base">4</span>
         </div>
       </div>
+
+      <TutorialModal
+        isOpen={tutorialGame !== null}
+        onClose={() => setTutorialGame(null)}
+        gameId={tutorialGame}
+      />
     </motion.div>
   );
 }

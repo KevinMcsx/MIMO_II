@@ -7,6 +7,7 @@ import { createPageUrl } from '@/utils';
 import GameSelection from '../components/game/GameSelection';
 import DifficultySelection from '../components/game/DifficultySelection';
 import LanguageSelector from '../components/game/LanguageSelector';
+import TutorialModal from '../components/game/TutorialModal';
 import { useTranslation } from '../components/utils/translations';
 import Game1ColorReaction from '../components/game/Game1ColorReaction';
 import Game2ColorShape from '../components/game/Game2ColorShape';
@@ -26,6 +27,7 @@ export default function Game() {
   const [activeKey, setActiveKey] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [playerName, setPlayerName] = useState('');
+  const [showTutorial, setShowTutorial] = useState(false);
   
   const { data: playerProfile, refetch: refetchProfile } = useQuery({
     queryKey: ['playerProfile', playerName],
@@ -94,6 +96,21 @@ export default function Game() {
 
   const handleDifficultySelect = (difficultyId) => {
     setSelectedDifficulty(difficultyId);
+    
+    // Check if this is first time playing this game
+    const tutorialKey = `loopybrain_tutorial_game${selectedGame}`;
+    const hasSeenTutorial = localStorage.getItem(tutorialKey);
+    
+    if (!hasSeenTutorial) {
+      setShowTutorial(true);
+      localStorage.setItem(tutorialKey, 'true');
+    } else {
+      setScreen('playing');
+    }
+  };
+
+  const handleTutorialClose = () => {
+    setShowTutorial(false);
     setScreen('playing');
   };
 
@@ -252,9 +269,15 @@ export default function Game() {
               <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">3</span>
               <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">4</span> {t('keysToSelect')}
             </p>
-          </motion.div>
-        )}
-      </div>
-    </div>
-  );
-}
+            </motion.div>
+            )}
+
+            <TutorialModal
+            isOpen={showTutorial}
+            onClose={handleTutorialClose}
+            gameId={selectedGame}
+            />
+            </div>
+            </div>
+            );
+            }
