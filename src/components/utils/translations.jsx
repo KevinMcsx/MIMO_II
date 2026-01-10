@@ -668,6 +668,148 @@ export const translations = {
     getReady: "Készülj...",
     go: "RAJT!",
   },
+
+  ar: {
+    // Main Menu
+    chooseGame: "اختر لعبة!",
+    useKeys: "استخدم المفاتيح",
+    keysToSelect: "للاختيار",
+    
+    // Games
+    colorReaction: "رد فعل الألوان",
+    colorShape: "اللون + الشكل",
+    memoryMatch: "مطابقة الذاكرة",
+    proChallenge: "التحدي الاحترافي",
+    
+    // Game Descriptions
+    game1Desc: "طابق اللون بأسرع ما يمكن!",
+    game2Desc: "طابق اللون والشكل معاً!",
+    game3Desc: "تذكر وطابق الأزواج!",
+    game4Desc: "تحدي تعدد المهام النهائي!",
+    
+    // Difficulty
+    chooseDifficulty: "اختر المستوى",
+    easy: "سهل",
+    medium: "متوسط",
+    hard: "صعب",
+    expert: "خبير",
+    back: "رجوع",
+    
+    // Difficulty Descriptions
+    easyRelaxed: "إيقاع مريح، مثالي للمبتدئين",
+    mediumBalanced: "تحدي متوازن لمعظم اللاعبين",
+    hardIntense: "سريع الإيقاع، يتطلب ردود فعل سريعة",
+    expertExtreme: "سرعة فائقة، للمحترفين فقط",
+    
+    // Game Instructions
+    pressColorButton: "اضغط على الزر المطابق للون الشكل!",
+    pressShapeOrColor: "لون زر الشكل = لون الشاشة ← اضغط الشكل | خلاف ذلك ← اضغط اللون",
+    rememberPairs: "تذكر الأزواج وطابقها!",
+    matchLanes: "طابق العناصر الساقطة مع أزرار المسارات!",
+    
+    // Stats
+    correct: "صحيح",
+    wrong: "خاطئ",
+    time: "الوقت",
+    avgReaction: "متوسط رد الفعل",
+    accuracy: "الدقة",
+    correctHits: "الإصابات الصحيحة",
+    wrongHits: "الإصابات الخاطئة",
+    correctShapes: "الأشكال الصحيحة",
+    wrongShapes: "الأشكال الخاطئة",
+    score: "النقاط",
+    totalTime: "الوقت الإجمالي",
+    
+    // Results
+    gameComplete: "اكتملت اللعبة!",
+    playAgain: "العب مرة أخرى",
+    mainMenu: "القائمة الرئيسية",
+    downloadResults: "تنزيل النتائج",
+    levelUp: "ارتقاء المستوى!",
+    xpGained: "النقاط المكتسبة",
+    newUnlocks: "فتحات جديدة",
+    
+    // Navigation
+    backToGame: "العودة للعبة",
+    profile: "الملف الشخصي",
+    statistics: "الإحصائيات",
+    leaderboard: "لوحة المتصدرين",
+    dailyChallenge: "التحدي اليومي",
+    store: "المتجر",
+    
+    // Profile
+    level: "المستوى",
+    coins: "العملات",
+    totalXP: "إجمالي النقاط",
+    gamesPlayed: "الألعاب الملعوبة",
+    customize: "تخصيص",
+    avatars: "الصور الرمزية",
+    badges: "الشارات",
+    frames: "الإطارات",
+    themes: "المواضيع",
+    soundPacks: "حزم الأصوات",
+    cursors: "المؤشرات",
+    equip: "تجهيز",
+    equipped: "مجهز",
+    locked: "مقفل",
+    unlockAtLevel: "فتح عند المستوى",
+    
+    // Store
+    buyWithCoins: "احصل عليه",
+    notEnoughCoins: "لا توجد عملات كافية",
+    owned: "مملوك",
+    earnCoinsPlaying: "اكسب العملات من اللعب!",
+    
+    // Daily Challenge
+    completeTodaysChallenge: "أكمل تحدي اليوم!",
+    targetScore: "النقاط المستهدفة",
+    startChallenge: "ابدأ التحدي",
+    challengeComplete: "اكتمل التحدي!",
+    challengeAttempted: "تمت المحاولة",
+    comeBackTomorrow: "عد غداً لتحدي جديد!",
+    
+    // Leaderboard
+    topPlayers: "أفضل اللاعبين",
+    allGames: "كل الألعاب",
+    allDifficulties: "كل المستويات",
+    daily: "يومي",
+    weekly: "أسبوعي",
+    monthly: "شهري",
+    allTime: "كل الأوقات",
+    you: "أنت",
+    
+    // Statistics
+    statisticsTitle: "الإحصائيات",
+    gamePerformance: "تحليل أداء اللعبة",
+    allPlayers: "كل اللاعبين",
+    gamesPlayed: "الألعاب الملعوبة",
+    bestScore: "أفضل نقاط",
+    avgScore: "متوسط النقاط",
+    bestReaction: "أفضل رد فعل",
+    gamesByType: "الألعاب حسب النوع",
+    reactionProgression: "تطور متوسط وقت رد الفعل",
+    playerRankings: "تصنيف اللاعبين",
+    recentGames: "الألعاب الأخيرة",
+    downloadRecords: "تنزيل السجلات",
+    
+    // Name Entry
+    welcomeToMIMO: "مرحباً بك في Loopy Brain!",
+    enterName: "أدخل اسمك للبدء",
+    yourName: "اسمك",
+    letsPlay: "لنلعب!",
+    
+    // Misc
+    getReady: "استعد...",
+    go: "ابدأ!",
+    
+    // Additional game-specific translations
+    colorButtons: "أزرار الألوان",
+    shapeButtons: "أزرار الأشكال",
+    colorShapeRule: "إذا كان لون زر الشكل = لون الشاشة ← اضغط الشكل، وإلا ← اضغط اللون",
+    memoryInstructions: "استخدم الأسهم للتنقل والمسافة/Enter للاختيار",
+    findPairs: "ابحث عن جميع الأزواج المتطابقة!",
+    pairsFound: "الأزواج المكتشفة",
+  },
 };
 
 export const languages = [
@@ -676,6 +818,7 @@ export const languages = [
   { code: 'fr', name: 'Français', flag: '🇫🇷' },
   { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
   { code: 'hu', name: 'Magyar', flag: '🇭🇺' },
+  { code: 'ar', name: 'العربية', flag: '🇸🇦' },
 ];
 
 export const getLanguage = () => {
