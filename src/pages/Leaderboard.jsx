@@ -14,7 +14,7 @@ export default function Leaderboard() {
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
   const [timeFilter, setTimeFilter] = useState('all-time');
-  const playerName = localStorage.getItem('mimoPlayerName') || '';
+  const playerName = localStorage.getItem('loopybrainPlayerName') || '';
   
   const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge')];
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];

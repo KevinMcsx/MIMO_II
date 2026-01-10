@@ -123,7 +123,7 @@ export const translations = {
     downloadRecords: "Download Records",
     
     // Name Entry
-    welcomeToMIMO: "Welcome to MIMO!",
+    welcomeToMIMO: "Welcome to Loopy Brain!",
     enterName: "Enter your name to begin",
     yourName: "Your Name",
     letsPlay: "Let's Play!",
@@ -257,7 +257,7 @@ export const translations = {
     downloadRecords: "Descargar Registros",
     
     // Name Entry
-    welcomeToMIMO: "¡Bienvenido a MIMO!",
+    welcomeToMIMO: "¡Bienvenido a Loopy Brain!",
     enterName: "Ingresa tu nombre para comenzar",
     yourName: "Tu Nombre",
     letsPlay: "¡A Jugar!",
@@ -391,7 +391,7 @@ export const translations = {
     downloadRecords: "Télécharger Enregistrements",
     
     // Name Entry
-    welcomeToMIMO: "Bienvenue à MIMO !",
+    welcomeToMIMO: "Bienvenue à Loopy Brain !",
     enterName: "Entrez votre nom pour commencer",
     yourName: "Votre Nom",
     letsPlay: "Jouons !",
@@ -525,7 +525,7 @@ export const translations = {
     downloadRecords: "Aufzeichnungen Herunterladen",
     
     // Name Entry
-    welcomeToMIMO: "Willkommen bei MIMO!",
+    welcomeToMIMO: "Willkommen bei Loopy Brain!",
     enterName: "Gib deinen Namen ein, um zu beginnen",
     yourName: "Dein Name",
     letsPlay: "Lass uns Spielen!",
@@ -659,7 +659,7 @@ export const translations = {
     downloadRecords: "Rekordok Letöltése",
     
     // Name Entry
-    welcomeToMIMO: "Üdvözöl a MIMO!",
+    welcomeToMIMO: "Üdvözöl a Loopy Brain!",
     enterName: "Add meg a neved a kezdéshez",
     yourName: "Neved",
     letsPlay: "Játsszunk!",
@@ -679,11 +679,11 @@ export const languages = [
 ];
 
 export const getLanguage = () => {
-  return localStorage.getItem('mimoLanguage') || 'en';
+  return localStorage.getItem('loopybrainLanguage') || 'en';
 };
 
 export const setLanguage = (lang) => {
-  localStorage.setItem('mimoLanguage', lang);
+  localStorage.setItem('loopybrainLanguage', lang);
 };
 
 export const useTranslation = () => {

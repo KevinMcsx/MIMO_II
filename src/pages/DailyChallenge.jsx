@@ -15,7 +15,7 @@ import { useTranslation } from '../components/utils/translations';
 export default function DailyChallenge() {
   const t = useTranslation();
   const [playing, setPlaying] = useState(false);
-  const playerName = localStorage.getItem('mimoPlayerName');
+  const playerName = localStorage.getItem('loopybrainPlayerName');
   const today = new Date().toISOString().split('T')[0];
   const queryClient = useQueryClient();
   

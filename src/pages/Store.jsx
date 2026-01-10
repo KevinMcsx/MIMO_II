@@ -11,7 +11,7 @@ import { AVATARS, SOUND_PACKS, CURSORS } from '../components/profile/CosmeticDat
 import { toast } from 'sonner';
 
 export default function Store() {
-  const playerName = localStorage.getItem('mimoPlayerName') || 'Player';
+  const playerName = localStorage.getItem('loopybrainPlayerName') || 'Player';
   const [activeTab, setActiveTab] = useState('avatars');
 
   const queryClient = useQueryClient();
