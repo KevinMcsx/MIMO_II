@@ -131,6 +131,7 @@ export const translations = {
     // Misc
     getReady: "Get ready...",
     go: "GO!",
+    toNextLevel: "to next level",
   },
   
   es: {
@@ -265,6 +266,7 @@ export const translations = {
     // Misc
     getReady: "Prepárate...",
     go: "¡YA!",
+    toNextLevel: "al siguiente nivel",
   },
   
   fr: {
@@ -399,6 +401,7 @@ export const translations = {
     // Misc
     getReady: "Préparez-vous...",
     go: "PARTEZ !",
+    toNextLevel: "au niveau suivant",
   },
   
   de: {
@@ -533,6 +536,7 @@ export const translations = {
     // Misc
     getReady: "Mach dich bereit...",
     go: "LOS!",
+    toNextLevel: "bis zum nächsten Level",
   },
   
   hu: {
@@ -667,6 +671,7 @@ export const translations = {
     // Misc
     getReady: "Készülj...",
     go: "RAJT!",
+    toNextLevel: "a következő szintig",
   },
 
   ar: {
@@ -801,6 +806,7 @@ export const translations = {
     // Misc
     getReady: "استعد...",
     go: "ابدأ!",
+    toNextLevel: "للمستوى التالي",
     
     // Additional game-specific translations
     colorButtons: "أزرار الألوان",

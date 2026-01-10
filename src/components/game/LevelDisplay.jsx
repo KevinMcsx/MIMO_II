@@ -2,15 +2,17 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Star, Zap } from 'lucide-react';
 import { getCurrentLevelProgress } from './ProgressionSystem';
+import { useTranslation } from '../utils/translations';
 
 export default function LevelDisplay({ level, xp, compact = false }) {
+  const t = useTranslation();
   const progress = getCurrentLevelProgress(xp, level);
   
   if (compact) {
     return (
       <div className="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-blue-600 text-white px-3 py-1.5 rounded-full">
         <Star className="w-4 h-4 fill-white" />
-        <span className="font-bold text-sm">Level {level}</span>
+        <span className="font-bold text-sm">{t('level')} {level}</span>
       </div>
     );
   }
@@ -23,7 +25,7 @@ export default function LevelDisplay({ level, xp, compact = false }) {
             {level}
           </div>
           <div>
-            <p className="font-bold text-slate-800">Level {level}</p>
+            <p className="font-bold text-slate-800">{t('level')} {level}</p>
             <p className="text-xs text-slate-600">{progress.current} / {progress.needed} XP</p>
           </div>
         </div>
@@ -38,7 +40,7 @@ export default function LevelDisplay({ level, xp, compact = false }) {
           className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full"
         />
       </div>
-      <p className="text-xs text-slate-500 text-center mt-1">{progress.percentage}% to next level</p>
+      <p className="text-xs text-slate-500 text-center mt-1">{progress.percentage}% {t('toNextLevel')}</p>
     </div>
   );
 }
