@@ -133,50 +133,50 @@ export default function Game() {
       <div className="absolute inset-0 bg-black/10" />
 
       {/* Top Navigation */}
-      <div className="absolute top-4 left-4 z-20">
+      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20">
         {playerProfile && screen !== 'nameEntry' && (
           <LevelDisplay level={playerProfile.level} xp={playerProfile.xp} compact={false} />
         )}
       </div>
 
-      <div className="absolute top-4 right-4 z-20 flex gap-2">
+      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end max-w-[50%] sm:max-w-none">
         <LanguageSelector />
         <Link to={createPageUrl('Profile')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
-            <User className="w-5 h-5 text-slate-700" />
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+            <User className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
           </Button>
         </Link>
         <Link to={createPageUrl('DailyChallenge')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
-            <Calendar className="w-5 h-5 text-slate-700" />
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
           </Button>
         </Link>
         <Link to={createPageUrl('Statistics')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
-            <BarChart3 className="w-5 h-5 text-slate-700" />
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
           </Button>
         </Link>
         <Link to={createPageUrl('Leaderboard')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm">
-            <Trophy className="w-5 h-5 text-slate-700" />
+          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+            <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
           </Button>
         </Link>
         <Button
           onClick={toggleSound}
           variant="ghost"
           size="icon"
-          className="bg-white/60 hover:bg-white/80 backdrop-blur-sm"
+          className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10"
         >
           {soundEnabled ? (
-            <Volume2 className="w-6 h-6 text-slate-700" />
+            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
           ) : (
-            <VolumeX className="w-6 h-6 text-slate-700" />
+            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
           )}
         </Button>
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4">
         <AnimatePresence mode="wait">
           {screen === 'nameEntry' && (
             <motion.div
@@ -244,13 +244,13 @@ export default function Game() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="absolute bottom-8 text-center"
+            className="absolute bottom-4 sm:bottom-8 text-center px-2"
           >
-            <p className="text-slate-700 text-sm font-medium drop-shadow-sm">
-              {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">1</span> 
-              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1">2</span>
-              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1">3</span>
-              <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded">4</span> {t('keysToSelect')}
+            <p className="text-slate-700 text-xs sm:text-sm font-medium drop-shadow-sm">
+              {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">1</span> 
+              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">2</span>
+              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">3</span>
+              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">4</span> {t('keysToSelect')}
             </p>
           </motion.div>
         )}

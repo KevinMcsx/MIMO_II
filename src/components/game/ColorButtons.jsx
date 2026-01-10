@@ -10,7 +10,7 @@ const buttons = [
 
 export default function ColorButtons({ activeKey, onPress, disabled, showLabels = true }) {
   return (
-    <div className="flex gap-4 justify-center">
+    <div className="flex gap-2 sm:gap-4 justify-center flex-wrap">
       {buttons.map((btn) => (
         <motion.button
           key={btn.key}
@@ -21,17 +21,17 @@ export default function ColorButtons({ activeKey, onPress, disabled, showLabels 
             boxShadow: activeKey === btn.key ? `0 0 30px 10px` : '0 0 15px 3px',
           }}
           className={`
-            w-20 h-20 rounded-2xl ${btn.bg} 
+            w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl ${btn.bg} 
             shadow-lg ${btn.glow}
             flex flex-col items-center justify-center
-            border-4 border-white/30
+            border-2 sm:border-4 border-white/30
             transition-all duration-100
             ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:scale-105'}
           `}
         >
-          <span className="text-3xl">{btn.label}</span>
+          <span className="text-2xl sm:text-3xl">{btn.label}</span>
           {showLabels && (
-            <span className="text-xs font-bold text-white/80 mt-1">Key: {btn.keyLabel}</span>
+            <span className="text-[10px] sm:text-xs font-bold text-white/80 mt-0.5 sm:mt-1">Key: {btn.keyLabel}</span>
           )}
         </motion.button>
       ))}

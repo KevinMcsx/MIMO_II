@@ -21,7 +21,7 @@ export default function ShapeDisplay({ shape, color, size = 'large' }) {
   
   if (!ShapeIcon) return null;
 
-  const sizeClass = size === 'large' ? 'w-40 h-40' : size === 'medium' ? 'w-24 h-24' : 'w-12 h-12';
+  const sizeClass = size === 'large' ? 'w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40' : size === 'medium' ? 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24' : 'w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12';
 
   return (
     <motion.div

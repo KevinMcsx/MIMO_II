@@ -18,7 +18,7 @@ const colorMap = {
 
 export default function ShapeButtons({ activeKey, onPress, disabled, shapeColors = {} }) {
   return (
-    <div className="flex gap-4 justify-center">
+    <div className="flex gap-2 sm:gap-4 justify-center flex-wrap">
       {shapes.map((btn) => {
         const buttonColor = shapeColors[btn.shape] || 'slate';
         const colorStyle = colorMap[buttonColor] || { bg: 'bg-slate-600', border: 'border-slate-500', glow: 'shadow-slate-500/50' };
@@ -33,16 +33,16 @@ export default function ShapeButtons({ activeKey, onPress, disabled, shapeColors
               boxShadow: activeKey === btn.key ? `0 0 30px 10px` : '0 0 15px 3px',
             }}
             className={`
-              w-20 h-20 rounded-2xl ${colorStyle.bg}
+              w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl ${colorStyle.bg}
               shadow-lg ${colorStyle.glow}
               flex flex-col items-center justify-center
-              border-4 ${colorStyle.border}
+              border-2 sm:border-4 ${colorStyle.border}
               transition-all duration-100
               ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:scale-105'}
             `}
           >
-            <btn.Icon className="w-8 h-8 text-white" strokeWidth={2.5} />
-            <span className="text-xs font-bold text-white/80 mt-1">Key: {btn.keyLabel}</span>
+            <btn.Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" strokeWidth={2.5} />
+            <span className="text-[10px] sm:text-xs font-bold text-white/80 mt-0.5 sm:mt-1">Key: {btn.keyLabel}</span>
           </motion.button>
         );
       })}
