@@ -1,7 +1,7 @@
 import { base44 } from '@/api/base44Client';
 import { calculateXP, getLevelFromXP, getUnlocksForLevel, getAllUnlocksUpToLevel } from './ProgressionSystem';
 
-const PROFILE_STORAGE_KEY = 'mimo_player_profiles';
+const PROFILE_STORAGE_KEY = 'loopybrain_player_profiles';
 
 // LocalStorage helpers
 const saveProfileToLocalStorage = (profile) => {

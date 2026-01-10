@@ -12,7 +12,7 @@ import { getAllResults } from '../components/game/GameResultSaver';
 
 export default function Statistics() {
   const t = useTranslation();
-  const currentPlayerName = localStorage.getItem('mimoPlayerName') || 'Player';
+  const currentPlayerName = localStorage.getItem('loopybrainPlayerName') || 'Player';
   const [selectedPlayer, setSelectedPlayer] = useState(currentPlayerName);
   const [selectedGame, setSelectedGame] = useState(null);
   
@@ -90,7 +90,7 @@ export default function Statistics() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `mimo-statistics-${Date.now()}.csv`;
+    a.download = `loopybrain-statistics-${Date.now()}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

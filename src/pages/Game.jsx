@@ -35,7 +35,7 @@ export default function Game() {
 
   useEffect(() => {
     setSoundEnabled(sounds.loadSoundPreference());
-    const savedName = localStorage.getItem('mimoPlayerName');
+    const savedName = localStorage.getItem('loopybrainPlayerName');
     if (savedName) {
       setPlayerName(savedName);
       setScreen('gameSelect');
@@ -51,7 +51,7 @@ export default function Game() {
 
   const handleNameSubmit = (name) => {
     setPlayerName(name);
-    localStorage.setItem('mimoPlayerName', name);
+    localStorage.setItem('loopybrainPlayerName', name);
     setScreen('gameSelect');
   };
 

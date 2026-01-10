@@ -14,7 +14,7 @@ import { useTranslation } from '../components/utils/translations';
 
 export default function Profile() {
   const t = useTranslation();
-  const playerName = localStorage.getItem('mimoPlayerName');
+  const playerName = localStorage.getItem('loopybrainPlayerName');
   const [activeTab, setActiveTab] = useState('avatars');
 
   const queryClient = useQueryClient();
@@ -41,7 +41,7 @@ export default function Profile() {
       }
       
       // Always update localStorage
-      const PROFILE_STORAGE_KEY = 'mimo_player_profiles';
+      const PROFILE_STORAGE_KEY = 'loopybrain_player_profiles';
       try {
         const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
         const profiles = stored ? JSON.parse(stored) : {};
@@ -86,7 +86,7 @@ export default function Profile() {
 
   const equipSoundPack = (packId) => {
     updateProfileMutation.mutate({ equipped_sound_pack: packId });
-    localStorage.setItem('mimoSoundPack', packId);
+    localStorage.setItem('loopybrainSoundPack', packId);
   };
 
   const equipCursor = (cursorId) => {

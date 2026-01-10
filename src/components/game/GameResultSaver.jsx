@@ -1,6 +1,6 @@
 import { base44 } from '@/api/base44Client';
 
-const STORAGE_KEY = 'mimo_game_scores';
+const STORAGE_KEY = 'loopybrain_game_scores';
 
 // Save to localStorage
 const saveToLocalStorage = (gameData) => {
