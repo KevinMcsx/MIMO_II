@@ -92,7 +92,8 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
                 e.stopPropagation();
                 setTutorialGame(game.id);
               }}
-              className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-white/20 hover:bg-white/30 p-1.5 sm:p-2 rounded-full transition-colors"
+              className="absolute top-1 left-1 sm:top-2 sm:left-2 bg-white/30 hover:bg-white/40 p-1.5 sm:p-2 rounded-full transition-colors z-10"
+              aria-label="How to play"
             >
               <Info className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
             </button>
