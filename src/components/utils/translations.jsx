@@ -186,6 +186,13 @@ export const translations = {
     itemPurchased: "Item purchased successfully!",
     purchaseFailed: "Purchase failed",
     notEnoughCoins: "Not enough coins",
+
+    // Daily Challenge
+    dailyLeaderboard: "Today's Leaderboard",
+    dayStreak: "Day Streak",
+    best: "Best",
+    completed: "Completed",
+    noCompletions: "No one has completed today's challenge yet. Be the first!",
   },
   
   es: {
@@ -375,6 +382,13 @@ export const translations = {
     itemPurchased: "¡Artículo comprado con éxito!",
     purchaseFailed: "Compra fallida",
     notEnoughCoins: "No hay suficientes monedas",
+
+    // Daily Challenge
+    dailyLeaderboard: "Tabla de Hoy",
+    dayStreak: "Días Seguidos",
+    best: "Mejor",
+    completed: "Completado",
+    noCompletions: "Nadie ha completado el desafío de hoy aún. ¡Sé el primero!",
   },
   
   fr: {
@@ -564,6 +578,13 @@ export const translations = {
     itemPurchased: "Article acheté avec succès!",
     purchaseFailed: "Achat échoué",
     notEnoughCoins: "Pas assez de pièces",
+
+    // Daily Challenge
+    dailyLeaderboard: "Classement du Jour",
+    dayStreak: "Jours Consécutifs",
+    best: "Meilleur",
+    completed: "Terminé",
+    noCompletions: "Personne n'a encore terminé le défi d'aujourd'hui. Soyez le premier!",
   },
   
   de: {
@@ -753,6 +774,13 @@ export const translations = {
     itemPurchased: "Artikel erfolgreich gekauft!",
     purchaseFailed: "Kauf fehlgeschlagen",
     notEnoughCoins: "Nicht genug Münzen",
+
+    // Daily Challenge
+    dailyLeaderboard: "Heutige Bestenliste",
+    dayStreak: "Tage Streak",
+    best: "Beste",
+    completed: "Abgeschlossen",
+    noCompletions: "Niemand hat die heutige Herausforderung noch abgeschlossen. Sei der Erste!",
   },
   
   hu: {
@@ -942,6 +970,13 @@ export const translations = {
     itemPurchased: "Tárgy sikeresen megvásárolva!",
     purchaseFailed: "Vásárlás sikertelen",
     notEnoughCoins: "Nincs elég érme",
+
+    // Daily Challenge
+    dailyLeaderboard: "Mai Ranglista",
+    dayStreak: "Napi Sorozat",
+    best: "Legjobb",
+    completed: "Teljesítve",
+    noCompletions: "Még senki sem teljesítette a mai kihívást. Légy te az első!",
   },
 
   ar: {
@@ -1131,6 +1166,13 @@ export const translations = {
     itemPurchased: "تم شراء العنصر بنجاح!",
     purchaseFailed: "فشل الشراء",
     notEnoughCoins: "لا توجد عملات كافية",
+
+    // Daily Challenge
+    dailyLeaderboard: "لوحة اليوم",
+    dayStreak: "أيام متتالية",
+    best: "الأفضل",
+    completed: "مكتمل",
+    noCompletions: "لم يكمل أحد تحدي اليوم بعد. كن الأول!",
     
     // Additional game-specific translations
     colorButtons: "أزرار الألوان",

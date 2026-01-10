@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Star, Trophy, ChevronLeft, CheckCircle } from 'lucide-react';
+import { Calendar, Star, Trophy, ChevronLeft, CheckCircle, Flame, Medal } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -10,6 +10,8 @@ import Game1ColorReaction from '../components/game/Game1ColorReaction';
 import Game2ColorShape from '../components/game/Game2ColorShape';
 import Game3Memory from '../components/game/Game3Memory';
 import Game4ProChallenge from '../components/game/Game4ProChallenge';
+import PlayerAvatar from '../components/profile/PlayerAvatar';
+import { getPlayerProfile } from '../components/game/PlayerProgressManager';
 import { useTranslation } from '../components/utils/translations';
 
 export default function DailyChallenge() {
@@ -64,12 +66,39 @@ export default function DailyChallenge() {
     enabled: !!playerName,
   });
 
+  const { data: leaderboard } = useQuery({
+    queryKey: ['dailyLeaderboard', today],
+    queryFn: async () => {
+      const completions = await base44.entities.ChallengeCompletion.filter(
+        { challenge_date: today },
+        '-score',
+        50
+      );
+      return completions;
+    },
+  });
+
+  const { data: playerProfile } = useQuery({
+    queryKey: ['playerProfile', playerName],
+    queryFn: () => getPlayerProfile(playerName),
+    enabled: !!playerName,
+  });
+
   const completeMutation = useMutation({
     mutationFn: async (data) => {
       return await base44.entities.ChallengeCompletion.create(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['challengeCompletion']);
+    },
+  });
+
+  const updateStreakMutation = useMutation({
+    mutationFn: async ({ profileId, updates }) => {
+      await base44.entities.PlayerProfile.update(profileId, updates);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['playerProfile']);
     },
   });
 
@@ -85,6 +114,29 @@ export default function DailyChallenge() {
       score: finalScore,
       stars_earned: completed ? challenge.reward_stars : 0,
     });
+
+    // Update streak if completed
+    if (completed && playerProfile) {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayStr = yesterday.toISOString().split('T')[0];
+      
+      let newStreak = 1;
+      if (playerProfile.last_daily_challenge === yesterdayStr) {
+        newStreak = (playerProfile.daily_streak || 0) + 1;
+      }
+      
+      const longestStreak = Math.max(newStreak, playerProfile.longest_streak || 0);
+      
+      await updateStreakMutation.mutateAsync({
+        profileId: playerProfile.id,
+        updates: {
+          daily_streak: newStreak,
+          last_daily_challenge: today,
+          longest_streak: longestStreak,
+        },
+      });
+    }
 
     setPlaying(false);
   };
@@ -127,7 +179,7 @@ export default function DailyChallenge() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
             <ChevronLeft className="w-5 h-5 mr-2" />
@@ -142,14 +194,35 @@ export default function DailyChallenge() {
         >
           <h1 className="text-5xl font-black text-slate-800 mb-2">📅 {t('dailyChallenge')}</h1>
           <p className="text-slate-600 text-lg">{t('completeTodaysChallenge')}</p>
+          
+          {/* Streak Display */}
+          {playerProfile && (playerProfile.daily_streak > 0 || playerProfile.longest_streak > 0) && (
+            <div className="flex justify-center gap-4 mt-4">
+              {playerProfile.daily_streak > 0 && (
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-red-500 text-white px-4 py-2 rounded-full">
+                  <Flame className="w-5 h-5" />
+                  <span className="font-bold">{playerProfile.daily_streak} {t('dayStreak')}</span>
+                </div>
+              )}
+              {playerProfile.longest_streak > 1 && (
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-4 py-2 rounded-full">
+                  <Medal className="w-5 h-5" />
+                  <span className="font-bold">{t('best')}: {playerProfile.longest_streak}</span>
+                </div>
+              )}
+            </div>
+          )}
         </motion.div>
 
-        {challenge && (
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className="bg-white rounded-3xl p-8 border-4 border-slate-300 shadow-xl"
-          >
+        <div className="grid md:grid-cols-2 gap-6">
+
+          {/* Challenge Card */}
+          {challenge && (
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="bg-white rounded-3xl p-8 border-4 border-slate-300 shadow-xl"
+            >
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <Calendar className="w-8 h-8 text-blue-500" />
@@ -213,8 +286,75 @@ export default function DailyChallenge() {
                 {t('startChallenge')}
               </Button>
             )}
+            </motion.div>
+          )}
+
+          {/* Daily Leaderboard */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-3xl p-8 border-4 border-slate-300 shadow-xl"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <Trophy className="w-8 h-8 text-yellow-500" />
+              <h2 className="text-2xl font-black text-slate-800">{t('dailyLeaderboard')}</h2>
+            </div>
+
+            {leaderboard && leaderboard.length > 0 ? (
+              <div className="space-y-2">
+                {leaderboard.slice(0, 10).map((entry, index) => {
+                  const isCurrentPlayer = entry.player_name === playerName;
+                  const medalColors = ['🥇', '🥈', '🥉'];
+                  
+                  return (
+                    <motion.div
+                      key={entry.id}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: index * 0.05 }}
+                      className={`flex items-center justify-between p-3 rounded-xl ${
+                        isCurrentPlayer 
+                          ? 'bg-gradient-to-r from-purple-100 to-blue-100 border-2 border-purple-400' 
+                          : 'bg-slate-50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-8 text-center text-lg font-bold">
+                          {index < 3 ? medalColors[index] : `#${index + 1}`}
+                        </div>
+                        <div>
+                          <p className={`font-bold ${isCurrentPlayer ? 'text-purple-700' : 'text-slate-800'}`}>
+                            {entry.player_name}
+                            {isCurrentPlayer && <span className="ml-2 text-xs">({t('you')})</span>}
+                          </p>
+                          {entry.completed && (
+                            <div className="flex items-center gap-1">
+                              <CheckCircle className="w-3 h-3 text-green-600" />
+                              <span className="text-xs text-green-600">{t('completed')}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-black text-purple-600">{entry.score}</p>
+                        {entry.stars_earned > 0 && (
+                          <div className="flex gap-0.5">
+                            {[...Array(entry.stars_earned)].map((_, i) => (
+                              <Star key={i} className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            ) : (
+              <p className="text-center text-slate-500 py-8">{t('noCompletions')}</p>
+            )}
           </motion.div>
-        )}
+        </div>
       </div>
     </div>
   );
