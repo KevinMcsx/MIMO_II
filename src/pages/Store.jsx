@@ -9,8 +9,10 @@ import { createPageUrl } from '@/utils';
 import { getPlayerProfile } from '../components/game/PlayerProgressManager';
 import { AVATARS, SOUND_PACKS, CURSORS } from '../components/profile/CosmeticData';
 import { toast } from 'sonner';
+import { useTranslation } from '../components/utils/translations';
 
 export default function Store() {
+  const t = useTranslation();
   const playerName = localStorage.getItem('loopybrainPlayerName') || 'Player';
   const [activeTab, setActiveTab] = useState('avatars');
 
@@ -25,7 +27,7 @@ export default function Store() {
     mutationFn: async ({ itemType, itemId, price }) => {
       const currentCoins = profile.coins || 0;
       if (currentCoins < price) {
-        throw new Error('Not enough coins');
+        throw new Error(t('notEnoughCoins'));
       }
 
       const updates = { coins: currentCoins - price };
@@ -42,10 +44,10 @@ export default function Store() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['playerProfile'] });
-      toast.success('Item purchased successfully!');
+      toast.success(t('itemPurchased'));
     },
     onError: (error) => {
-      toast.error(error.message || 'Purchase failed');
+      toast.error(error.message || t('purchaseFailed'));
     },
   });
 
@@ -56,7 +58,7 @@ export default function Store() {
   if (isLoading || !profile) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 flex items-center justify-center">
-        <div className="text-2xl font-bold text-slate-800">Loading...</div>
+        <div className="text-2xl font-bold text-slate-800">{t('loading')}</div>
       </div>
     );
   }
@@ -71,7 +73,7 @@ export default function Store() {
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
             <ChevronLeft className="w-5 h-5 mr-2" />
-            Back to Game
+            {t('backToGame')}
           </Button>
         </Link>
 
@@ -80,22 +82,22 @@ export default function Store() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-6"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">🛍️ Cosmetic Store</h1>
-          <p className="text-slate-600 text-lg">Use coins to unlock exclusive items</p>
+          <h1 className="text-5xl font-black text-slate-800 mb-2">🛍️ {t('cosmeticStore')}</h1>
+          <p className="text-slate-600 text-lg">{t('useCoinsToUnlock')}</p>
           
           <div className="inline-flex items-center gap-2 mt-4 bg-yellow-100 border-2 border-yellow-300 rounded-full px-6 py-3">
             <Coins className="w-6 h-6 text-yellow-600" />
             <span className="text-2xl font-black text-yellow-700">{profile.coins || 0}</span>
-            <span className="text-slate-600">Coins</span>
+            <span className="text-slate-600">{t('coins')}</span>
           </div>
         </motion.div>
 
         {/* Tabs */}
         <div className="flex gap-2 mb-4 overflow-x-auto">
           {[
-            { id: 'avatars', label: '😊 Avatars', count: purchasableAvatars.length },
-            { id: 'sounds', label: '🎵 Sounds', count: purchasableSoundPacks.length },
-            { id: 'cursors', label: '✨ Cursors', count: purchasableCursors.length },
+            { id: 'avatars', label: `😊 ${t('avatarsCount')}`, count: purchasableAvatars.length },
+            { id: 'sounds', label: `🎵 ${t('soundsCount')}`, count: purchasableSoundPacks.length },
+            { id: 'cursors', label: `✨ ${t('cursorsCount')}`, count: purchasableCursors.length },
           ].map((tab) => (
             <Button
               key={tab.id}
@@ -130,7 +132,7 @@ export default function Store() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-slate-800">{avatar.name}</h3>
-                      <p className="text-sm text-slate-500">{avatar.animated ? '✨ Animated' : 'Static Avatar'}</p>
+                      <p className="text-sm text-slate-500">{avatar.animated ? `✨ ${t('animated')}` : t('staticAvatar')}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Coins className="w-4 h-4 text-yellow-600" />
                         <span className="font-bold text-yellow-700">{avatar.price}</span>
@@ -139,7 +141,7 @@ export default function Store() {
                     {isOwned ? (
                       <div className="flex items-center gap-2 text-green-600 font-semibold">
                         <Check className="w-5 h-5" />
-                        Owned
+                        {t('owned')}
                       </div>
                     ) : (
                       <Button
@@ -147,7 +149,7 @@ export default function Store() {
                         disabled={profile.coins < avatar.price}
                         className="bg-purple-600"
                       >
-                        {profile.coins < avatar.price ? <Lock className="w-4 h-4" /> : 'Get'}
+                        {profile.coins < avatar.price ? <Lock className="w-4 h-4" /> : t('get')}
                       </Button>
                     )}
                   </motion.div>
@@ -180,7 +182,7 @@ export default function Store() {
                     {isOwned ? (
                       <div className="flex items-center gap-2 text-green-600 font-semibold">
                         <Check className="w-5 h-5" />
-                        Owned
+                        {t('owned')}
                       </div>
                     ) : (
                       <Button
@@ -188,7 +190,7 @@ export default function Store() {
                         disabled={profile.coins < pack.price}
                         className="bg-purple-600"
                       >
-                        {profile.coins < pack.price ? <Lock className="w-4 h-4" /> : 'Get'}
+                        {profile.coins < pack.price ? <Lock className="w-4 h-4" /> : t('get')}
                       </Button>
                     )}
                   </motion.div>
@@ -221,7 +223,7 @@ export default function Store() {
                     {isOwned ? (
                       <div className="flex items-center gap-2 text-green-600 font-semibold">
                         <Check className="w-5 h-5" />
-                        Owned
+                        {t('owned')}
                       </div>
                     ) : (
                       <Button
@@ -229,7 +231,7 @@ export default function Store() {
                         disabled={profile.coins < cursor.price}
                         className="bg-purple-600"
                       >
-                        {profile.coins < cursor.price ? <Lock className="w-4 h-4" /> : 'Get'}
+                        {profile.coins < cursor.price ? <Lock className="w-4 h-4" /> : t('get')}
                       </Button>
                     )}
                   </motion.div>
@@ -241,7 +243,7 @@ export default function Store() {
 
         {/* Tips */}
         <div className="mt-8 bg-blue-50 border-2 border-blue-200 rounded-xl p-4 text-center">
-          <p className="text-blue-800 font-semibold">💡 Tip: Earn coins by playing games! Score higher to earn more coins.</p>
+          <p className="text-blue-800 font-semibold">{t('tipEarnCoins')}</p>
         </div>
       </div>
     </div>

@@ -63,7 +63,7 @@ export default function Profile() {
   if (isLoading || !profile) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 flex items-center justify-center">
-        <div className="text-2xl font-bold text-slate-800">Loading...</div>
+        <div className="text-2xl font-bold text-slate-800">{t('loading')}</div>
       </div>
     );
   }
@@ -298,7 +298,7 @@ export default function Profile() {
                     <div className={`w-20 h-20 rounded-lg bg-gradient-to-br ${theme.gradient}`} />
                     <div className="text-left">
                       <p className="font-bold text-lg text-slate-800">{theme.name}</p>
-                      <p className="text-xs text-slate-500">Background Theme</p>
+                      <p className="text-xs text-slate-500">{t('backgroundTheme')}</p>
                     </div>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
