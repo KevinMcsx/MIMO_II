@@ -52,21 +52,21 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col items-center gap-8"
+      className="flex flex-col items-center gap-3 sm:gap-6 md:gap-8 w-full max-w-4xl px-2 sm:px-4"
     >
       <motion.h1
         initial={{ y: -30 }}
         animate={{ y: 0 }}
-        className="text-5xl font-black text-white tracking-tight text-center drop-shadow-lg"
+        className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight text-center drop-shadow-lg"
       >
         {t('chooseGame')}
       </motion.h1>
       
-      <p className="text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
+      <p className="text-sm sm:text-lg md:text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
         {t('useKeys')} 1-4 {t('keysToSelect')}
       </p>
 
-      <div className="grid grid-cols-2 gap-6 max-w-2xl w-full px-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 w-full max-w-2xl">
         {games.map((game, index) => (
           <motion.button
             key={game.id}
@@ -77,41 +77,41 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
             whileTap={{ scale: 0.95 }}
             onClick={() => onSelect(game.id)}
             className={`
-              relative overflow-hidden rounded-3xl p-6
+              relative overflow-hidden rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6
               bg-gradient-to-br ${game.bg}
-              shadow-xl ${game.glow}
-              border-4 border-white/20
+              shadow-lg sm:shadow-xl ${game.glow}
+              border-2 sm:border-3 md:border-4 border-white/20
               transition-all duration-200
-              ${activeKey === game.key ? 'ring-4 ring-white scale-105' : ''}
+              ${activeKey === game.key ? 'ring-2 sm:ring-4 ring-white scale-105' : ''}
             `}
           >
-            <div className="absolute top-2 right-2 bg-white/20 px-3 py-1 rounded-full text-sm font-bold text-white flex items-center gap-1">
-              <Keyboard className="w-3 h-3" />
+            <div className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-white/20 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-bold text-white flex items-center gap-1">
+              <Keyboard className="w-2 h-2 sm:w-3 sm:h-3" />
               {game.key}
             </div>
-            <game.Icon className="w-16 h-16 text-white/90 mb-4" strokeWidth={1.5} />
-            <h3 className="text-2xl font-bold text-white mb-2">{game.title}</h3>
-            <p className="text-white/80 text-sm">{game.description}</p>
+            <game.Icon className="w-8 h-8 sm:w-12 sm:h-12 md:w-16 md:h-16 text-white/90 mb-2 sm:mb-3 md:mb-4" strokeWidth={1.5} />
+            <h3 className="text-sm sm:text-lg md:text-2xl font-bold text-white mb-1 sm:mb-2">{game.title}</h3>
+            <p className="text-white/80 text-[10px] sm:text-xs md:text-sm">{game.description}</p>
           </motion.button>
         ))}
       </div>
 
-      <div className="flex gap-4 mt-4">
-        <div className="flex items-center gap-2 px-4 py-2 bg-yellow-400/20 rounded-full">
-          <span className="text-2xl">🟡</span>
-          <span className="text-yellow-400 font-bold">1</span>
+      <div className="flex gap-2 sm:gap-3 md:gap-4 mt-2 sm:mt-3 md:mt-4 flex-wrap justify-center">
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-yellow-400/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🟡</span>
+          <span className="text-yellow-400 font-bold text-xs sm:text-sm md:text-base">1</span>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full">
-          <span className="text-2xl">🔵</span>
-          <span className="text-blue-400 font-bold">2</span>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-blue-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🔵</span>
+          <span className="text-blue-400 font-bold text-xs sm:text-sm md:text-base">2</span>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 rounded-full">
-          <span className="text-2xl">🟢</span>
-          <span className="text-green-400 font-bold">3</span>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-green-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🟢</span>
+          <span className="text-green-400 font-bold text-xs sm:text-sm md:text-base">3</span>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-red-500/20 rounded-full">
-          <span className="text-2xl">🔴</span>
-          <span className="text-red-400 font-bold">4</span>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-red-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🔴</span>
+          <span className="text-red-400 font-bold text-xs sm:text-sm md:text-base">4</span>
         </div>
       </div>
     </motion.div>

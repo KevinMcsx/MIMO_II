@@ -79,30 +79,30 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="flex flex-col items-center gap-8"
+      className="flex flex-col items-center gap-3 sm:gap-6 md:gap-8 w-full max-w-4xl px-2 sm:px-4"
     >
       <Button
         onClick={onBack}
         variant="ghost"
-        className="absolute top-4 left-4 text-slate-700 hover:text-slate-900 font-semibold bg-white/50 hover:bg-white/70"
+        className="absolute top-2 left-2 sm:top-4 sm:left-4 text-slate-700 hover:text-slate-900 font-semibold bg-white/50 hover:bg-white/70 h-8 sm:h-10 text-xs sm:text-sm"
       >
-        <ArrowLeft className="w-5 h-5 mr-2" />
+        <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
         {t('back')}
       </Button>
 
       <motion.h1
         initial={{ y: -30 }}
         animate={{ y: 0 }}
-        className="text-5xl font-black text-white tracking-tight text-center drop-shadow-lg"
+        className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight text-center drop-shadow-lg"
       >
         {t('chooseDifficulty')}
       </motion.h1>
       
-      <p className="text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
+      <p className="text-sm sm:text-lg md:text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
         {t('useKeys')} 1-4 {t('keysToSelect')}
       </p>
 
-      <div className="grid grid-cols-2 gap-6 max-w-2xl w-full px-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 w-full max-w-2xl">
         {difficulties.map((diff, index) => (
           <motion.button
             key={diff.id}
@@ -113,41 +113,41 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
             whileTap={{ scale: 0.95 }}
             onClick={() => onSelect(diff.id)}
             className={`
-              relative overflow-hidden rounded-3xl p-6
+              relative overflow-hidden rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6
               bg-gradient-to-br ${diff.bg}
-              shadow-xl ${diff.glow}
-              border-4 border-white/20
+              shadow-lg sm:shadow-xl ${diff.glow}
+              border-2 sm:border-3 md:border-4 border-white/20
               transition-all duration-200
-              ${activeKey === diff.key ? 'ring-4 ring-white scale-105' : ''}
+              ${activeKey === diff.key ? 'ring-2 sm:ring-4 ring-white scale-105' : ''}
             `}
           >
-            <div className="absolute top-2 right-2 bg-white/20 px-3 py-1 rounded-full text-sm font-bold text-white flex items-center gap-1">
-              <Keyboard className="w-3 h-3" />
+            <div className="absolute top-1 right-1 sm:top-2 sm:right-2 bg-white/20 px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm font-bold text-white flex items-center gap-1">
+              <Keyboard className="w-2 h-2 sm:w-3 sm:h-3" />
               {diff.key}
             </div>
-            <diff.Icon className="w-14 h-14 text-white/90 mb-3" strokeWidth={1.5} />
-            <h3 className="text-2xl font-bold text-white mb-2">{diff.title}</h3>
-            <p className="text-white/80 text-sm">{gameDescriptions[gameId]?.[diff.id]}</p>
+            <diff.Icon className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 text-white/90 mb-2 sm:mb-3" strokeWidth={1.5} />
+            <h3 className="text-sm sm:text-lg md:text-2xl font-bold text-white mb-1 sm:mb-2">{diff.title}</h3>
+            <p className="text-white/80 text-[10px] sm:text-xs md:text-sm">{gameDescriptions[gameId]?.[diff.id]}</p>
           </motion.button>
         ))}
       </div>
 
-      <div className="flex gap-4 mt-4">
-        <div className="flex items-center gap-2 px-4 py-2 bg-yellow-400/20 rounded-full">
-          <span className="text-2xl">🟡</span>
-          <span className="text-yellow-400 font-bold">{t('easy')}</span>
+      <div className="flex gap-2 sm:gap-3 md:gap-4 mt-2 sm:mt-3 md:mt-4 flex-wrap justify-center">
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-yellow-400/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🟡</span>
+          <span className="text-yellow-400 font-bold text-xs sm:text-sm">{t('easy')}</span>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-green-500/20 rounded-full">
-          <span className="text-2xl">🟢</span>
-          <span className="text-green-400 font-bold">{t('medium')}</span>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-green-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🟢</span>
+          <span className="text-green-400 font-bold text-xs sm:text-sm">{t('medium')}</span>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 rounded-full">
-          <span className="text-2xl">🔵</span>
-          <span className="text-blue-400 font-bold">{t('hard')}</span>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-blue-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🔵</span>
+          <span className="text-blue-400 font-bold text-xs sm:text-sm">{t('hard')}</span>
         </div>
-        <div className="flex items-center gap-2 px-4 py-2 bg-red-500/20 rounded-full">
-          <span className="text-2xl">🔴</span>
-          <span className="text-red-400 font-bold">{t('expert')}</span>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-red-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🔴</span>
+          <span className="text-red-400 font-bold text-xs sm:text-sm">{t('expert')}</span>
         </div>
       </div>
     </motion.div>
