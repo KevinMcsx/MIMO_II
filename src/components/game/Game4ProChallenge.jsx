@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, Square, Triangle, Star, Heart } from 'lucide-react';
+import { Circle, Square, Triangle, Star, Heart, Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import ColorButtons from './ColorButtons';
 import ShapeButtons from './ShapeButtons';
 import ResultsScreen from './ResultsScreen';
+import TutorialModal from './TutorialModal';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
 import { useTranslation } from '../utils/translations';
@@ -43,6 +45,8 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
   const [activeShapeKey, setActiveShapeKey] = useState(null);
   const [shapeColors, setShapeColors] = useState({});
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [pausedTime, setPausedTime] = useState(0);
   const [stats, setStats] = useState({
     reactionTimes: [],
     correctHits: 0,
@@ -83,6 +87,25 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
       startTimeRef.current = now;
     }
   }, [countdown, gameState]);
+
+  const handleShowTutorial = () => {
+    if (gameState === 'playing') {
+      clearInterval(gameLoopRef.current);
+      clearInterval(spawnRef.current);
+      setPausedTime(Date.now());
+      setGameState('paused');
+    }
+    setShowTutorial(true);
+  };
+
+  const handleCloseTutorial = () => {
+    setShowTutorial(false);
+    if (gameState === 'paused') {
+      const pauseDuration = Date.now() - pausedTime;
+      startTimeRef.current += pauseDuration;
+      setGameState('playing');
+    }
+  };
 
   // Spawn items
   useEffect(() => {
@@ -334,29 +357,45 @@ export default function Game4ProChallenge({ difficulty, onMainMenu, playerName }
 
   return (
     <div className="flex flex-col items-center gap-4 p-4">
+      <TutorialModal
+        isOpen={showTutorial}
+        onClose={handleCloseTutorial}
+        gameId={4}
+      />
+      
       {/* Header */}
       <div className="flex items-center justify-between w-full max-w-3xl">
         <div className="text-slate-400">
           <span className="text-xl">{t('score')}: </span>
           <span className="text-3xl font-bold text-white">{score}</span>
         </div>
-        <div className="text-center">
+        <div className="text-center flex-1">
           <h2 className="text-2xl font-bold text-white">{t('proChallenge')}</h2>
           <p className="text-slate-400">{[t('easy'), t('medium'), t('hard'), t('expert')][difficulty - 1]}</p>
         </div>
-        <div className="text-right">
-          {difficulty === 4 ? (
-            <div className="flex gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Heart 
-                  key={i} 
-                  className={`w-6 h-6 ${i < lives ? 'text-red-500 fill-red-500' : 'text-slate-600'}`} 
-                />
-              ))}
-            </div>
-          ) : (
-            <p className="text-2xl font-bold text-yellow-400">{formatTime(remainingTime || 0)}</p>
-          )}
+        <div className="text-right flex items-start gap-2">
+          <Button
+            onClick={handleShowTutorial}
+            variant="ghost"
+            size="icon"
+            className="bg-white/10 hover:bg-white/20"
+          >
+            <Info className="w-5 h-5 text-white" />
+          </Button>
+          <div>
+            {difficulty === 4 ? (
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <Heart 
+                    key={i} 
+                    className={`w-6 h-6 ${i < lives ? 'text-red-500 fill-red-500' : 'text-slate-600'}`} 
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-2xl font-bold text-yellow-400">{formatTime(remainingTime || 0)}</p>
+            )}
+          </div>
         </div>
       </div>
 

@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import ColorButtons from './ColorButtons';
 import ShapeDisplay from './ShapeDisplay';
 import ResultsScreen from './ResultsScreen';
+import TutorialModal from './TutorialModal';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
 import { useTranslation } from '../utils/translations';
@@ -20,6 +23,8 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
   const [currentColor, setCurrentColor] = useState(null);
   const [shapeIndex, setShapeIndex] = useState(0);
   const [activeKey, setActiveKey] = useState(null);
+  const [showTutorial, setShowTutorial] = useState(false);
+  const [pausedState, setPausedState] = useState(null);
   const [stats, setStats] = useState({
     reactionTimes: [],
     correctHits: 0,
@@ -159,21 +164,61 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
     );
   }
 
+  const handleShowTutorial = () => {
+    if (gameState === 'playing') {
+      setPausedState({
+        gameState,
+        currentShape,
+        currentColor,
+        shapeStartTime: shapeStartTime.current,
+      });
+      setGameState('paused');
+    }
+    setShowTutorial(true);
+  };
+
+  const handleCloseTutorial = () => {
+    setShowTutorial(false);
+    if (pausedState) {
+      setGameState(pausedState.gameState);
+      setCurrentShape(pausedState.currentShape);
+      setCurrentColor(pausedState.currentColor);
+      shapeStartTime.current = Date.now() - (Date.now() - pausedState.shapeStartTime);
+      setPausedState(null);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center gap-8 p-4">
+      <TutorialModal
+        isOpen={showTutorial}
+        onClose={handleCloseTutorial}
+        gameId={1}
+      />
+      
       {/* Header */}
       <div className="flex items-center justify-between w-full max-w-2xl">
         <div className="text-slate-400">
           <span className="text-3xl font-bold text-white">{shapeIndex}</span>
           <span className="text-xl">/{totalShapes}</span>
         </div>
-        <div className="text-center">
+        <div className="text-center flex-1">
           <h2 className="text-2xl font-bold text-white">{t('colorReaction')}</h2>
           <p className="text-slate-400">{[t('easy'), t('medium'), t('hard'), t('expert')][difficulty - 1]}</p>
         </div>
-        <div className="text-right">
-          <p className="text-slate-400 text-sm">{t('correct')}</p>
-          <p className="text-2xl font-bold text-green-400">{stats.correctHits}</p>
+        <div className="text-right flex items-start gap-2">
+          <Button
+            onClick={handleShowTutorial}
+            variant="ghost"
+            size="icon"
+            className="bg-white/10 hover:bg-white/20"
+          >
+            <Info className="w-5 h-5 text-white" />
+          </Button>
+          <div>
+            <p className="text-slate-400 text-sm">{t('correct')}</p>
+            <p className="text-2xl font-bold text-green-400">{stats.correctHits}</p>
+          </div>
         </div>
       </div>
 

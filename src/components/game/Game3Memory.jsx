@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Circle, Square, Triangle, Star } from 'lucide-react';
+import { Circle, Square, Triangle, Star, Info } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import ResultsScreen from './ResultsScreen';
+import TutorialModal from './TutorialModal';
 import { sounds } from '../utils/sounds';
 import { saveGameResult } from './GameResultSaver';
 import { useTranslation } from '../utils/translations';
@@ -34,6 +36,7 @@ export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
   const [matchedPairs, setMatchedPairs] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [currentRound, setCurrentRound] = useState(1);
+  const [showTutorial, setShowTutorial] = useState(false);
   const [stats, setStats] = useState({
     pairTimes: [],
     startTime: null,
@@ -249,19 +252,35 @@ export default function Game3Memory({ difficulty, onMainMenu, playerName }) {
 
   return (
     <div className="flex flex-col items-center gap-6 p-4">
+      <TutorialModal
+        isOpen={showTutorial}
+        onClose={() => setShowTutorial(false)}
+        gameId={3}
+      />
+      
       {/* Header */}
       <div className="flex items-center justify-between w-full max-w-2xl">
         <div className="text-slate-400">
           <span className="text-3xl font-bold text-white">{currentRound}</span>
           <span className="text-xl">/{ROUNDS}</span>
         </div>
-        <div className="text-center">
+        <div className="text-center flex-1">
           <h2 className="text-2xl font-bold text-white">{t('memoryMatch')}</h2>
           <p className="text-slate-400">{[t('easy'), t('medium'), t('hard'), t('expert')][difficulty - 1]}</p>
         </div>
-        <div className="text-right">
-          <p className="text-slate-400 text-sm">{t('pairsFound')}</p>
-          <p className="text-2xl font-bold text-green-400">{matchedPairs.length / 2}/{cardCount / 2}</p>
+        <div className="text-right flex items-start gap-2">
+          <Button
+            onClick={() => setShowTutorial(true)}
+            variant="ghost"
+            size="icon"
+            className="bg-white/10 hover:bg-white/20"
+          >
+            <Info className="w-5 h-5 text-white" />
+          </Button>
+          <div>
+            <p className="text-slate-400 text-sm">{t('pairsFound')}</p>
+            <p className="text-2xl font-bold text-green-400">{matchedPairs.length / 2}/{cardCount / 2}</p>
+          </div>
         </div>
       </div>
 
