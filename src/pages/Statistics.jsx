@@ -3,12 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download } from 'lucide-react';
+import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download, Cloud } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { useTranslation } from '../components/utils/translations';
 import { getAllResults } from '../components/game/GameResultSaver';
+import { toast } from 'sonner';
 
 export default function Statistics() {
   const t = useTranslation();
@@ -66,6 +67,8 @@ export default function Statistics() {
     };
   }).filter(p => p.games > 0).sort((a, b) => b.avgScore - a.avgScore);
 
+  const [uploading, setUploading] = useState(false);
+
   const downloadStats = () => {
     // CSV Header
     let csv = 'Player Name,Game Type,Difficulty,Score,Avg Reaction Time (ms),Correct Hits,Wrong Hits,Total Time (ms),Date\n';
@@ -97,6 +100,22 @@ export default function Statistics() {
     URL.revokeObjectURL(url);
   };
 
+  const uploadToGoogleDrive = async () => {
+    setUploading(true);
+    try {
+      const response = await base44.functions.invoke('uploadStatsToGoogleDrive', {});
+      if (response.data.success) {
+        toast.success(`✅ Uploaded ${response.data.totalRecords} records to Google Drive!`);
+      } else {
+        toast.error('❌ ' + (response.data.error || 'Upload failed'));
+      }
+    } catch (error) {
+      toast.error('❌ Google Drive not authorized. Please authorize first.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
       <div className="max-w-6xl mx-auto">
@@ -114,14 +133,23 @@ export default function Statistics() {
         >
           <h1 className="text-5xl font-black text-slate-800 mb-2">📊 {t('statisticsTitle')}</h1>
           <p className="text-slate-600 text-lg">{t('gamePerformance')}</p>
-          <Button
-            onClick={downloadStats}
-            variant="outline"
-            className="mt-3"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            {t('downloadRecords')}
-          </Button>
+          <div className="flex gap-3 mt-3 justify-center">
+            <Button
+              onClick={downloadStats}
+              variant="outline"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              {t('downloadRecords')}
+            </Button>
+            <Button
+              onClick={uploadToGoogleDrive}
+              disabled={uploading}
+              className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600"
+            >
+              <Cloud className="w-4 h-4 mr-2" />
+              {uploading ? 'Uploading...' : 'Upload to Google Drive'}
+            </Button>
+          </div>
         </motion.div>
 
         {/* Filters */}
