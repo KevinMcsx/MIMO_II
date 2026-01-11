@@ -51,8 +51,7 @@ Deno.serve(async (req) => {
     
     const metadata = {
       name: filename,
-      mimeType: 'text/csv',
-      parents: ['1olS6d1ajpHuaruxPcuy3yF5A_vPtfLT3']
+      mimeType: 'text/csv'
     };
     
     const multipartRequestBody =
