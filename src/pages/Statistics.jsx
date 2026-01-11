@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download, Cloud } from 'lucide-react';
+import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -67,12 +67,10 @@ export default function Statistics() {
     };
   }).filter(p => p.games > 0).sort((a, b) => b.avgScore - a.avgScore);
 
-  const [uploading, setUploading] = useState(false);
-
   const downloadStats = () => {
     // CSV Header
     let csv = 'Player Name,Game Type,Difficulty,Score,Avg Reaction Time (ms),Correct Hits,Wrong Hits,Total Time (ms),Date\n';
-    
+
     // CSV Data Rows
     filteredScores.forEach((score) => {
       const row = [
@@ -100,12 +98,6 @@ export default function Statistics() {
     URL.revokeObjectURL(url);
   };
 
-  const uploadToGoogleDrive = async () => {
-    // Download CSV locally (Google Drive connector has limitations)
-    downloadStats();
-    toast.success(`📥 CSV downloaded! You can manually upload it to your Google Drive folder.`);
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
       <div className="max-w-6xl mx-auto">
@@ -130,13 +122,6 @@ export default function Statistics() {
             >
               <Download className="w-4 h-4 mr-2" />
               {t('downloadRecords')}
-            </Button>
-            <Button
-              onClick={uploadToGoogleDrive}
-              className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600"
-            >
-              <Cloud className="w-4 h-4 mr-2" />
-              Download CSV for Google Drive
             </Button>
           </div>
         </motion.div>
