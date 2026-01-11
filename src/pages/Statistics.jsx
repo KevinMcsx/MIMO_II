@@ -101,19 +101,9 @@ export default function Statistics() {
   };
 
   const uploadToGoogleDrive = async () => {
-    setUploading(true);
-    try {
-      const response = await base44.functions.invoke('uploadStatsToGoogleDrive', {});
-      if (response.data.success) {
-        toast.success(`✅ Uploaded ${response.data.totalRecords} records to Google Drive!`);
-      } else {
-        toast.error('❌ ' + (response.data.error || 'Upload failed'));
-      }
-    } catch (error) {
-      toast.error('❌ Google Drive not authorized. Please authorize first.');
-    } finally {
-      setUploading(false);
-    }
+    // Download CSV locally (Google Drive connector has limitations)
+    downloadStats();
+    toast.success(`📥 CSV downloaded! You can manually upload it to your Google Drive folder.`);
   };
 
   return (
@@ -143,11 +133,10 @@ export default function Statistics() {
             </Button>
             <Button
               onClick={uploadToGoogleDrive}
-              disabled={uploading}
               className="bg-gradient-to-r from-blue-500 to-green-500 hover:from-blue-600 hover:to-green-600"
             >
               <Cloud className="w-4 h-4 mr-2" />
-              {uploading ? 'Uploading...' : 'Upload to Google Drive'}
+              Download CSV for Google Drive
             </Button>
           </div>
         </motion.div>
