@@ -167,6 +167,42 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
           description: t('game4Tutorial3')
         }
       ]
+    },
+    5: {
+      title: t('dualNBack'),
+      steps: [
+        {
+          title: '🎯 ' + t('objective'),
+          description: 'Items appear in a 3x3 grid one at a time. Remember both their POSITION and SHAPE from N steps back. Press buttons when current matches N-back.',
+          visual: (
+            <div className="grid grid-cols-3 gap-2 my-4 max-w-xs mx-auto">
+              {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+                <div key={i} className="aspect-square bg-slate-200 rounded-xl" />
+              ))}
+            </div>
+          )
+        },
+        {
+          title: '⌨️ ' + t('controls'),
+          description: 'Press A (or click left button) when POSITION matches | Press L (or click right button) when SHAPE matches',
+          visual: (
+            <div className="grid grid-cols-2 gap-3 my-4">
+              <div className="bg-blue-500 text-white rounded-xl p-4 text-center">
+                <div className="text-2xl font-bold mb-1">A</div>
+                <div className="text-sm">Position Match</div>
+              </div>
+              <div className="bg-green-500 text-white rounded-xl p-4 text-center">
+                <div className="text-2xl font-bold mb-1">L</div>
+                <div className="text-sm">Shape Match</div>
+              </div>
+            </div>
+          )
+        },
+        {
+          title: '⚡ ' + t('tips'),
+          description: 'Difficulty controls N value: Easy=1-back, Medium=2-back, Hard=3-back, Expert=4-back. Higher N = harder memory challenge!'
+        }
+      ]
     }
   };
 
