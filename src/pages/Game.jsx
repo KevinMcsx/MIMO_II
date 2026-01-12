@@ -13,7 +13,8 @@ import Game1ColorReaction from '../components/game/Game1ColorReaction';
 import Game2ColorShape from '../components/game/Game2ColorShape';
 import Game3Memory from '../components/game/Game3Memory';
 import Game4ProChallenge from '../components/game/Game4ProChallenge';
-import Game5DualNBack from '../components/game/Game5DualNBack';
+import Game5PatternRecognition from '../components/game/Game5PatternRecognition';
+import Game6NumberMemory from '../components/game/Game6NumberMemory';
 import NameEntry from '../components/game/NameEntry';
 import LevelDisplay from '../components/game/LevelDisplay';
 import { sounds } from '../components/utils/sounds';
@@ -63,7 +64,7 @@ export default function Game() {
     if (screen === 'playing') return;
 
     const handleKeyDown = (e) => {
-      const keyToGame = { '1': 1, '2': 3, '3': 2, '4': 4, '5': 5 };
+      const keyToGame = { '1': 1, '2': 3, '3': 2, '4': 4, '5': 5, '6': 6 };
       const keyToDifficulty = { '1': 1, '2': 3, '3': 2, '4': 4 };
 
       if (screen === 'gameSelect' && keyToGame[e.key]) {
@@ -133,7 +134,9 @@ export default function Game() {
       case 4:
         return <Game4ProChallenge difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 5:
-        return <Game5DualNBack difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+        return <Game5PatternRecognition difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 6:
+        return <Game6NumberMemory difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       default:
         return null;
     }
@@ -271,7 +274,8 @@ export default function Game() {
               <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">2</span>
               <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">3</span>
               <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">4</span>
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">5</span> {t('keysToSelect')}
+              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">5</span>
+              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">6</span> {t('keysToSelect')}
             </p>
             </motion.div>
             )}

@@ -52,12 +52,22 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
     {
       id: 5,
       color: 'purple',
-      title: t('dualNBack'),
+      title: t('patternRecognition'),
       description: t('game5Desc'),
-      Icon: Brain,
+      Icon: Shapes,
       bg: 'from-purple-500 to-purple-600',
       glow: 'shadow-purple-500/50',
       key: '5',
+    },
+    {
+      id: 6,
+      color: 'indigo',
+      title: t('numberMemory'),
+      description: t('game6Desc'),
+      Icon: Brain,
+      bg: 'from-indigo-500 to-indigo-600',
+      glow: 'shadow-indigo-500/50',
+      key: '6',
     },
   ];
   return (
@@ -78,7 +88,7 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
         {t('useKeys')} 1-5 {t('keysToSelect')}
       </p>
 
-      <div className="grid grid-cols-2 gap-2 sm:gap-4 md:gap-6 w-full max-w-2xl">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6 w-full max-w-4xl">
         {games.map((game, index) => (
           <motion.button
             key={game.id}
@@ -138,6 +148,10 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
         <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-purple-500/20 rounded-full">
           <span className="text-sm sm:text-lg md:text-2xl">🟣</span>
           <span className="text-purple-400 font-bold text-xs sm:text-sm md:text-base">5</span>
+        </div>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-indigo-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🔢</span>
+          <span className="text-indigo-400 font-bold text-xs sm:text-sm md:text-base">6</span>
         </div>
       </div>
 
