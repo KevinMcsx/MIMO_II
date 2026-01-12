@@ -216,11 +216,13 @@ export default function Game6NumberMemory({ difficulty, onMainMenu, playerName }
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute inset-0 flex items-center justify-center bg-black/70 rounded-3xl"
+              onClick={togglePause}
+              className="absolute inset-0 flex items-center justify-center bg-black/70 rounded-3xl cursor-pointer z-50"
             >
               <div className="text-center">
-                <Pause className="w-24 h-24 text-white mx-auto mb-4" />
+                <Play className="w-24 h-24 text-white mx-auto mb-4" />
                 <p className="text-3xl font-bold text-white">PAUSED</p>
+                <p className="text-lg text-white/80 mt-2">Click to resume</p>
               </div>
             </motion.div>
           )}
