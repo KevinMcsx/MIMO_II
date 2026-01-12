@@ -7,6 +7,7 @@ import { sounds } from '../utils/sounds';
 import ResultsScreen from './ResultsScreen';
 import TutorialModal from './TutorialModal';
 import { useTranslation } from '../utils/translations';
+import { saveGameResult } from './GameResultSaver';
 
 export default function Game6NumberMemory({ difficulty, onMainMenu, playerName }) {
   const t = useTranslation();
@@ -123,8 +124,26 @@ export default function Game6NumberMemory({ difficulty, onMainMenu, playerName }
     setGameState('feedback');
   };
 
-  const endGame = () => {
+  const endGame = async () => {
     sounds.gameEnd();
+    
+    const avgReactionTime = reactionTimes.length > 0 
+      ? reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length 
+      : 0;
+    const totalTime = (settings.time - timeLeft) * 1000;
+
+    // Save game result
+    await saveGameResult({
+      game_type: 6,
+      difficulty,
+      total_time: totalTime,
+      avg_reaction_time: avgReactionTime,
+      correct_hits: correctCount,
+      wrong_hits: wrongCount,
+      score,
+      player_name: playerName,
+    });
+    
     setGameState('finished');
   };
 
