@@ -10,12 +10,14 @@ export const translations = {
     colorShape: "Color + Shape",
     memoryMatch: "Memory Match",
     proChallenge: "Pro Challenge",
+    dualNBack: "Dual N-Back",
     
     // Game Descriptions
     game1Desc: "Match the color as fast as you can!",
     game2Desc: "Match both color AND shape!",
     game3Desc: "Remember and match the pairs!",
     game4Desc: "Ultimate multi-tasking challenge!",
+    game5Desc: "Advanced working memory training!",
     
     // Difficulty
     chooseDifficulty: "Choose Difficulty",
