@@ -210,12 +210,16 @@ export const translations = {
     colorShape: "Color + Forma",
     memoryMatch: "Memoria",
     proChallenge: "Desafío Pro",
-    
+    patternRecognition: "Reconocimiento de Patrones",
+    numberMemory: "Memoria Numérica",
+
     // Game Descriptions
     game1Desc: "¡Coincide el color lo más rápido posible!",
     game2Desc: "¡Coincide color Y forma!",
     game3Desc: "¡Recuerda y empareja los pares!",
     game4Desc: "¡Desafío definitivo de multitarea!",
+    game5Desc: "¡Encuentra el diferente!",
+    game6Desc: "¡Recuerda secuencias de números!",
     
     // Difficulty
     chooseDifficulty: "Elige Dificultad",
@@ -364,6 +368,8 @@ export const translations = {
     colorMatching: "Coincidencia de color",
     shapeMatching: "Coincidencia de forma",
     colorShapeCombo: "Combo de color + forma",
+    round: "Ronda",
+    level: "Nivel",
 
     // ResultsScreen & Store
     colors: "Colores",
@@ -406,12 +412,16 @@ export const translations = {
     colorShape: "Couleur + Forme",
     memoryMatch: "Mémoire",
     proChallenge: "Défi Pro",
-    
+    patternRecognition: "Reconnaissance de Motifs",
+    numberMemory: "Mémoire des Nombres",
+
     // Game Descriptions
     game1Desc: "Associez la couleur le plus vite possible !",
     game2Desc: "Associez couleur ET forme !",
     game3Desc: "Mémorisez et associez les paires !",
     game4Desc: "Défi ultime de multitâche !",
+    game5Desc: "Trouvez l'intrus !",
+    game6Desc: "Mémorisez les séquences de nombres !",
     
     // Difficulty
     chooseDifficulty: "Choisir la Difficulté",
@@ -560,6 +570,8 @@ export const translations = {
     colorMatching: "Correspondance couleur",
     shapeMatching: "Correspondance forme",
     colorShapeCombo: "Combo couleur + forme",
+    round: "Tour",
+    level: "Niveau",
 
     // ResultsScreen & Store
     colors: "Couleurs",
@@ -602,12 +614,16 @@ export const translations = {
     colorShape: "Farbe + Form",
     memoryMatch: "Memory",
     proChallenge: "Pro Herausforderung",
-    
+    patternRecognition: "Mustererkennung",
+    numberMemory: "Zahlengedächtnis",
+
     // Game Descriptions
     game1Desc: "Ordne die Farbe so schnell wie möglich zu!",
     game2Desc: "Ordne Farbe UND Form zu!",
     game3Desc: "Merke und ordne die Paare zu!",
     game4Desc: "Ultimative Multitasking-Herausforderung!",
+    game5Desc: "Finde das Unterschiedliche!",
+    game6Desc: "Merke dir Zahlenfolgen!",
     
     // Difficulty
     chooseDifficulty: "Schwierigkeit Wählen",
@@ -756,6 +772,8 @@ export const translations = {
     colorMatching: "Farbzuordnung",
     shapeMatching: "Formzuordnung",
     colorShapeCombo: "Farbe + Form Kombo",
+    round: "Runde",
+    level: "Level",
 
     // ResultsScreen & Store
     colors: "Farben",
@@ -798,12 +816,16 @@ export const translations = {
     colorShape: "Szín + Forma",
     memoryMatch: "Memória Játék",
     proChallenge: "Profi Kihívás",
-    
+    patternRecognition: "Minta Felismerés",
+    numberMemory: "Szám Memória",
+
     // Game Descriptions
     game1Desc: "Illeszd a színt a lehető leggyorsabban!",
     game2Desc: "Illeszd a színt ÉS a formát!",
     game3Desc: "Jegyezd meg és illeszd a párokat!",
     game4Desc: "Végső multitasking kihívás!",
+    game5Desc: "Találd meg a különbözőt!",
+    game6Desc: "Jegyezd meg a számsorokat!",
     
     // Difficulty
     chooseDifficulty: "Válassz Nehézséget",
@@ -952,6 +974,8 @@ export const translations = {
     colorMatching: "Szín illesztés",
     shapeMatching: "Forma illesztés",
     colorShapeCombo: "Szín + Forma kombó",
+    round: "Forduló",
+    level: "Szint",
 
     // ResultsScreen & Store
     colors: "Színek",
@@ -994,12 +1018,16 @@ export const translations = {
     colorShape: "اللون + الشكل",
     memoryMatch: "مطابقة الذاكرة",
     proChallenge: "التحدي الاحترافي",
-    
+    patternRecognition: "التعرف على الأنماط",
+    numberMemory: "ذاكرة الأرقام",
+
     // Game Descriptions
     game1Desc: "طابق اللون بأسرع ما يمكن!",
     game2Desc: "طابق اللون والشكل معاً!",
     game3Desc: "تذكر وطابق الأزواج!",
     game4Desc: "تحدي تعدد المهام النهائي!",
+    game5Desc: "اعثر على الشيء المختلف!",
+    game6Desc: "تذكر تسلسلات الأرقام!",
     
     // Difficulty
     chooseDifficulty: "اختر المستوى",
@@ -1185,7 +1213,9 @@ export const translations = {
     memoryInstructions: "استخدم الأسهم للتنقل والمسافة/Enter للاختيار",
     findPairs: "ابحث عن جميع الأزواج المتطابقة!",
     pairsFound: "الأزواج المكتشفة",
-  },
+    round: "جولة",
+    level: "المستوى",
+    },
 };
 
 export const languages = [
