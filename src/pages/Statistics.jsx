@@ -17,7 +17,7 @@ export default function Statistics() {
   const [selectedPlayer, setSelectedPlayer] = useState(currentPlayerName);
   const [selectedGame, setSelectedGame] = useState(null);
   
-  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge')];
+  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory')];
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
   const { data: allScores = [] } = useQuery({

@@ -137,17 +137,28 @@ export default function Game6NumberMemory({ difficulty, onMainMenu, playerName }
     const avgReactionTime = reactionTimes.length > 0 
       ? reactionTimes.reduce((a, b) => a + b, 0) / reactionTimes.length 
       : 0;
+    const totalTime = (settings.time - timeLeft) * 1000;
+    const totalAttempts = correctCount + wrongCount;
+    const accuracy = totalAttempts > 0 ? Math.round((correctCount / totalAttempts) * 100) : 0;
 
     return (
       <ResultsScreen
-        gameType={6}
-        difficulty={difficulty}
-        score={score}
-        stats={{
+        gameTitle={t('numberMemory')}
+        gameResult={{
+          game_type: 6,
+          difficulty,
+          score,
+          avg_reaction_time: avgReactionTime,
           correct_hits: correctCount,
           wrong_hits: wrongCount,
-          avg_reaction_time: avgReactionTime,
-          total_time: settings.time - timeLeft,
+          total_time: totalTime,
+        }}
+        stats={{
+          totalTime,
+          avgReactionTime,
+          correctHits: correctCount,
+          wrongHits: wrongCount,
+          totalAttempts,
         }}
         onPlayAgain={() => window.location.reload()}
         onMainMenu={onMainMenu}
