@@ -47,7 +47,7 @@ export default function Game5DualNBack({ difficulty, onMainMenu, playerName }) {
         }, 1000);
         return () => clearTimeout(timer);
       } else {
-        sounds.go();
+        sounds.gameStart();
         initGame();
       }
     }
@@ -90,19 +90,19 @@ export default function Game5DualNBack({ difficulty, onMainMenu, playerName }) {
       if (current.position === nBackItem.position) {
         setPositionHits(prev => prev + 1);
         setScore(prev => prev + 10);
-        sounds.correct();
+        sounds.correctHit();
       } else {
         setPositionMisses(prev => prev + 1);
-        sounds.wrong();
+        sounds.wrongHit();
       }
     } else if (type === 'shape') {
       if (current.shape === nBackItem.shape) {
         setShapeHits(prev => prev + 1);
         setScore(prev => prev + 10);
-        sounds.correct();
+        sounds.correctHit();
       } else {
         setShapeMisses(prev => prev + 1);
-        sounds.wrong();
+        sounds.wrongHit();
       }
     }
   };
