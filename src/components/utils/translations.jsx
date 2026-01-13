@@ -13,7 +13,7 @@ export const translations = {
     patternRecognition: "Pattern Recognition",
     numberMemory: "Number Memory",
     sequenceMemory: "Sequence Memory",
-    logicPuzzle: "Logic Puzzle",
+    juiceMaker: "Juice Maker",
 
     // Game Descriptions
     game1Desc: "Match the color as fast as you can!",
@@ -23,7 +23,7 @@ export const translations = {
     game5Desc: "Spot the odd one out!",
     game6Desc: "Remember number sequences!",
     game7Desc: "Remember the order of colors!",
-    game8Desc: "Solve logical reasoning puzzles!",
+    game8Desc: "Fill juice cups with perfect timing!",
     
     // Difficulty
     chooseDifficulty: "Choose Difficulty",
@@ -217,7 +217,7 @@ export const translations = {
     patternRecognition: "Reconocimiento de Patrones",
     numberMemory: "Memoria Numérica",
     sequenceMemory: "Memoria de Secuencia",
-    logicPuzzle: "Rompecabezas Lógico",
+    juiceMaker: "Fabricante de Jugos",
 
     // Game Descriptions
     game1Desc: "¡Coincide el color lo más rápido posible!",
@@ -227,7 +227,7 @@ export const translations = {
     game5Desc: "¡Encuentra el diferente!",
     game6Desc: "¡Recuerda secuencias de números!",
     game7Desc: "¡Recuerda el orden de colores!",
-    game8Desc: "¡Resuelve rompecabezas de lógica!",
+    game8Desc: "¡Llena vasos de jugo con tiempo perfecto!",
     
     // Difficulty
     chooseDifficulty: "Elige Dificultad",
@@ -423,7 +423,7 @@ export const translations = {
     patternRecognition: "Reconnaissance de Motifs",
     numberMemory: "Mémoire des Nombres",
     sequenceMemory: "Mémoire de Séquence",
-    logicPuzzle: "Puzzle Logique",
+    juiceMaker: "Fabricant de Jus",
 
     // Game Descriptions
     game1Desc: "Associez la couleur le plus vite possible !",
@@ -433,7 +433,7 @@ export const translations = {
     game5Desc: "Trouvez l'intrus !",
     game6Desc: "Mémorisez les séquences de nombres !",
     game7Desc: "Mémorisez l'ordre des couleurs !",
-    game8Desc: "Résolvez des puzzles de logique !",
+    game8Desc: "Remplissez des verres de jus parfaitement !",
     
     // Difficulty
     chooseDifficulty: "Choisir la Difficulté",
@@ -629,7 +629,7 @@ export const translations = {
     patternRecognition: "Mustererkennung",
     numberMemory: "Zahlengedächtnis",
     sequenceMemory: "Sequenzgedächtnis",
-    logicPuzzle: "Logik-Rätsel",
+    juiceMaker: "Saft-Hersteller",
 
     // Game Descriptions
     game1Desc: "Ordne die Farbe so schnell wie möglich zu!",
@@ -639,7 +639,7 @@ export const translations = {
     game5Desc: "Finde das Unterschiedliche!",
     game6Desc: "Merke dir Zahlenfolgen!",
     game7Desc: "Merke dir die Farbreihenfolge!",
-    game8Desc: "Löse Logik-Rätsel!",
+    game8Desc: "Fülle Saftbecher perfekt!",
     
     // Difficulty
     chooseDifficulty: "Schwierigkeit Wählen",
@@ -835,7 +835,7 @@ export const translations = {
     patternRecognition: "Minta Felismerés",
     numberMemory: "Szám Memória",
     sequenceMemory: "Sorrend Memória",
-    logicPuzzle: "Logikai Rejtvény",
+    juiceMaker: "Gyümölcslé Készítő",
 
     // Game Descriptions
     game1Desc: "Illeszd a színt a lehető leggyorsabban!",
@@ -845,7 +845,7 @@ export const translations = {
     game5Desc: "Találd meg a különbözőt!",
     game6Desc: "Jegyezd meg a számsorokat!",
     game7Desc: "Jegyezd meg a színek sorrendjét!",
-    game8Desc: "Old meg logikai rejtvényeket!",
+    game8Desc: "Töltsd a gyümölcslé poharakat tökéletesen!",
     
     // Difficulty
     chooseDifficulty: "Válassz Nehézséget",
@@ -1041,7 +1041,7 @@ export const translations = {
     patternRecognition: "التعرف على الأنماط",
     numberMemory: "ذاكرة الأرقام",
     sequenceMemory: "ذاكرة التسلسل",
-    logicPuzzle: "لغز المنطق",
+    juiceMaker: "صانع العصير",
 
     // Game Descriptions
     game1Desc: "طابق اللون بأسرع ما يمكن!",
@@ -1051,7 +1051,7 @@ export const translations = {
     game5Desc: "اعثر على الشيء المختلف!",
     game6Desc: "تذكر تسلسلات الأرقام!",
     game7Desc: "تذكر ترتيب الألوان!",
-    game8Desc: "حل ألغاز المنطق!",
+    game8Desc: "املأ أكواب العصير بتوقيت مثالي!",
     
     // Difficulty
     chooseDifficulty: "اختر المستوى",

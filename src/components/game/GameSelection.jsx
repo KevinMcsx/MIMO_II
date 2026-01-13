@@ -81,12 +81,12 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
     },
     {
       id: 8,
-      color: 'pink',
-      title: t('logicPuzzle'),
+      color: 'orange',
+      title: t('juiceMaker'),
       description: t('game8Desc'),
-      Icon: Brain,
-      bg: 'from-pink-500 to-purple-600',
-      glow: 'shadow-pink-500/50',
+      Icon: Zap,
+      bg: 'from-orange-500 to-yellow-500',
+      glow: 'shadow-orange-500/50',
       key: '8',
     },
   ];
@@ -177,9 +177,9 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
           <span className="text-sm sm:text-lg md:text-2xl">🎯</span>
           <span className="text-teal-400 font-bold text-xs sm:text-sm md:text-base">7</span>
         </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-pink-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🧠</span>
-          <span className="text-pink-400 font-bold text-xs sm:text-sm md:text-base">8</span>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-orange-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🧃</span>
+          <span className="text-orange-400 font-bold text-xs sm:text-sm md:text-base">8</span>
         </div>
       </div>
 

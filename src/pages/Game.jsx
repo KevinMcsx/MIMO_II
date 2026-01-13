@@ -16,7 +16,7 @@ import Game4ProChallenge from '../components/game/Game4ProChallenge';
 import Game5PatternRecognition from '../components/game/Game5PatternRecognition';
 import Game6NumberMemory from '../components/game/Game6NumberMemory';
 import Game7SequenceMemory from '../components/game/Game7SequenceMemory';
-import Game8LogicPuzzle from '../components/game/Game8LogicPuzzle';
+import Game8JuiceMaker from '../components/game/Game8JuiceMaker';
 import NameEntry from '../components/game/NameEntry';
 import LevelDisplay from '../components/game/LevelDisplay';
 import { sounds } from '../components/utils/sounds';
@@ -142,7 +142,7 @@ export default function Game() {
       case 7:
         return <Game7SequenceMemory difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 8:
-        return <Game8LogicPuzzle difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+        return <Game8JuiceMaker difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       default:
         return null;
     }
