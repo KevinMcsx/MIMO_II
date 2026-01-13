@@ -355,6 +355,66 @@ export default function DailyChallenge() {
             )}
           </motion.div>
         </div>
+
+        {/* Footer hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="text-center mt-8"
+        >
+          <p className="text-slate-700 text-sm font-medium drop-shadow-sm">
+            {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded text-sm">1</span> 
+            <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">2</span>
+            <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">3</span>
+            <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">4</span>
+            <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">5</span>
+            <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">6</span>
+            <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">7</span>
+            <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded text-sm">8</span> {t('keysToSelect')}
+          </p>
+        </motion.div>
+
+        {/* Color Legend */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="flex gap-3 mt-4 flex-wrap justify-center"
+        >
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-yellow-400/20 rounded-full">
+            <span className="text-lg">🟡</span>
+            <span className="text-yellow-400 font-bold text-sm">1</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-blue-500/20 rounded-full">
+            <span className="text-lg">🔵</span>
+            <span className="text-blue-400 font-bold text-sm">2</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-green-500/20 rounded-full">
+            <span className="text-lg">🟢</span>
+            <span className="text-green-400 font-bold text-sm">3</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-red-500/20 rounded-full">
+            <span className="text-lg">🔴</span>
+            <span className="text-red-400 font-bold text-sm">4</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-purple-500/20 rounded-full">
+            <span className="text-lg">🟣</span>
+            <span className="text-purple-400 font-bold text-sm">5</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-indigo-500/20 rounded-full">
+            <span className="text-lg">🔢</span>
+            <span className="text-indigo-400 font-bold text-sm">6</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-teal-500/20 rounded-full">
+            <span className="text-lg">🎯</span>
+            <span className="text-teal-400 font-bold text-sm">7</span>
+          </div>
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-orange-500/20 rounded-full">
+            <span className="text-lg">🧃</span>
+            <span className="text-orange-400 font-bold text-sm">8</span>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
