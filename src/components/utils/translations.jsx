@@ -201,6 +201,21 @@ export const translations = {
     best: "Best",
     completed: "Completed",
     noCompletions: "No one has completed today's challenge yet. Be the first!",
+
+    // Game 7 & 8
+    orders: "Orders",
+    selectCupSize: "Select Cup Size",
+    selectIngredients: "Select Ingredients",
+    start: "START",
+    empty: "Empty",
+    filling: "Filling...",
+    ready: "Ready!",
+    currentOrders: "Current Orders",
+    machine: "Machine",
+    medium: "Medium",
+    big: "Big",
+    watchSequence: "Watch the sequence!",
+    repeatSequence: "Repeat the sequence!",
   },
   
   es: {
@@ -407,6 +422,21 @@ export const translations = {
     best: "Mejor",
     completed: "Completado",
     noCompletions: "Nadie ha completado el desafío de hoy aún. ¡Sé el primero!",
+
+    // Game 7 & 8
+    orders: "Pedidos",
+    selectCupSize: "Seleccionar Tamaño de Vaso",
+    selectIngredients: "Seleccionar Ingredientes",
+    start: "INICIAR",
+    empty: "Vacío",
+    filling: "Llenando...",
+    ready: "¡Listo!",
+    currentOrders: "Pedidos Actuales",
+    machine: "Máquina",
+    medium: "Mediano",
+    big: "Grande",
+    watchSequence: "¡Observa la secuencia!",
+    repeatSequence: "¡Repite la secuencia!",
   },
   
   fr: {
@@ -613,6 +643,21 @@ export const translations = {
     best: "Meilleur",
     completed: "Terminé",
     noCompletions: "Personne n'a encore terminé le défi d'aujourd'hui. Soyez le premier!",
+
+    // Game 7 & 8
+    orders: "Commandes",
+    selectCupSize: "Sélectionner la Taille",
+    selectIngredients: "Sélectionner les Ingrédients",
+    start: "DÉMARRER",
+    empty: "Vide",
+    filling: "Remplissage...",
+    ready: "Prêt!",
+    currentOrders: "Commandes Actuelles",
+    machine: "Machine",
+    medium: "Moyen",
+    big: "Grand",
+    watchSequence: "Regardez la séquence!",
+    repeatSequence: "Répétez la séquence!",
   },
   
   de: {
@@ -819,6 +864,21 @@ export const translations = {
     best: "Beste",
     completed: "Abgeschlossen",
     noCompletions: "Niemand hat die heutige Herausforderung noch abgeschlossen. Sei der Erste!",
+
+    // Game 7 & 8
+    orders: "Bestellungen",
+    selectCupSize: "Bechergröße Wählen",
+    selectIngredients: "Zutaten Wählen",
+    start: "STARTEN",
+    empty: "Leer",
+    filling: "Füllen...",
+    ready: "Fertig!",
+    currentOrders: "Aktuelle Bestellungen",
+    machine: "Maschine",
+    medium: "Mittel",
+    big: "Groß",
+    watchSequence: "Beobachte die Sequenz!",
+    repeatSequence: "Wiederhole die Sequenz!",
   },
   
   hu: {
@@ -1025,6 +1085,21 @@ export const translations = {
     best: "Legjobb",
     completed: "Teljesítve",
     noCompletions: "Még senki sem teljesítette a mai kihívást. Légy te az első!",
+
+    // Game 7 & 8
+    orders: "Rendelések",
+    selectCupSize: "Pohár Méret Kiválasztása",
+    selectIngredients: "Hozzávalók Kiválasztása",
+    start: "INDÍTÁS",
+    empty: "Üres",
+    filling: "Töltés...",
+    ready: "Kész!",
+    currentOrders: "Jelenlegi Rendelések",
+    machine: "Gép",
+    medium: "Közepes",
+    big: "Nagy",
+    watchSequence: "Figyeld a sorrendet!",
+    repeatSequence: "Ismételd a sorrendet!",
   },
 
   ar: {
@@ -1229,6 +1304,21 @@ export const translations = {
     best: "الأفضل",
     completed: "مكتمل",
     noCompletions: "لم يكمل أحد تحدي اليوم بعد. كن الأول!",
+
+    // Game 7 & 8
+    orders: "الطلبات",
+    selectCupSize: "اختر حجم الكوب",
+    selectIngredients: "اختر المكونات",
+    start: "ابدأ",
+    empty: "فارغ",
+    filling: "يملأ...",
+    ready: "جاهز!",
+    currentOrders: "الطلبات الحالية",
+    machine: "آلة",
+    medium: "متوسط",
+    big: "كبير",
+    watchSequence: "شاهد التسلسل!",
+    repeatSequence: "كرر التسلسل!",
     
     // Additional game-specific translations
     colorButtons: "أزرار الألوان",

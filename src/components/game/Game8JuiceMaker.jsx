@@ -342,7 +342,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
         <div className="flex justify-between items-center mb-4">
           <div>
             <p className="text-xl font-bold text-slate-800">
-              Orders: {correctCount}/{settings.totalOrders}
+              {t('orders')}: {correctCount}/{settings.totalOrders}
             </p>
             <p className="text-lg font-semibold text-orange-600">
               {t('score')}: {score}
@@ -396,13 +396,13 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
 
         {/* Orders Queue */}
         <div className="mb-4">
-          <p className="text-sm font-bold text-slate-700 mb-2">📋 Current Orders:</p>
+          <p className="text-sm font-bold text-slate-700 mb-2">📋 {t('currentOrders')}:</p>
           <div className="flex gap-3 flex-wrap">
             {orders.map((order) => (
               <div key={order.id} className="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-xl p-3 border-2 border-orange-300 min-w-[200px]">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xl">{order.cup === 'medium' ? '🥤' : '🥛'}</span>
-                  <span className="text-xs font-bold text-slate-700">{order.cup === 'medium' ? 'Medium (8s)' : 'Big (12s)'}</span>
+                  <span className="text-xs font-bold text-slate-700">{order.cup === 'medium' ? `${t('medium')} (8s)` : `${t('big')} (12s)`}</span>
                 </div>
                 <div className="flex gap-1 flex-wrap">
                   {order.ingredients.map((ing, idx) => (
@@ -428,7 +428,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
                   : 'border-slate-400 hover:border-orange-300'
               }`}
             >
-              <p className="text-xs font-bold text-slate-600 mb-2">Machine {machine.id + 1}</p>
+              <p className="text-xs font-bold text-slate-600 mb-2">{t('machine')} {machine.id + 1}</p>
               
               {/* Juice Machine Visual */}
               <div className="relative bg-slate-100 rounded-xl h-32 border-2 border-slate-400 overflow-hidden">
@@ -468,7 +468,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
                 
                 {machine.state === 'empty' && (
                   <div className="absolute inset-0 flex items-center justify-center text-slate-400 text-xs">
-                    {selectedMachine === machine.id ? 'Selected' : 'Click to Select'}
+                    {selectedMachine === machine.id ? 'Selected' : 'Select'}
                   </div>
                 )}
 
@@ -480,7 +480,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
               </div>
 
               <p className="text-xs font-bold text-slate-600 mt-1">
-                {machine.state === 'empty' ? 'Empty' : machine.state === 'filling' ? 'Filling...' : 'Ready!'}
+                {machine.state === 'empty' ? t('empty') : machine.state === 'filling' ? t('filling') : t('ready')}
               </p>
             </motion.button>
           ))}
@@ -491,7 +491,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
           <div className="flex gap-4">
             {/* Cup Selection */}
             <div>
-              <p className="text-xs font-bold text-slate-700 mb-2">Select Cup Size:</p>
+              <p className="text-xs font-bold text-slate-700 mb-2">{t('selectCupSize')}:</p>
               <div className="flex gap-2">
                 <button
                   onClick={() => handleCupSelect('medium')}
@@ -502,7 +502,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
                       : 'bg-white text-slate-700 hover:bg-orange-100'
                   } ${selectedMachine === null ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  🥤 Medium (8s)
+                  🥤 {t('medium')} (8s)
                 </button>
                 <button
                   onClick={() => handleCupSelect('big')}
@@ -513,14 +513,14 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
                       : 'bg-white text-slate-700 hover:bg-orange-100'
                   } ${selectedMachine === null ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  🥛 Big (12s)
+                  🥛 {t('big')} (12s)
                 </button>
               </div>
             </div>
 
             {/* Ingredients Selection */}
             <div className="flex-1">
-              <p className="text-xs font-bold text-slate-700 mb-2">Select Ingredients (max {settings.maxIngredients}):</p>
+              <p className="text-xs font-bold text-slate-700 mb-2">{t('selectIngredients')} (max {settings.maxIngredients}):</p>
               <div className="flex gap-2 flex-wrap">
                 {ingredients.map((ing) => (
                   <button
@@ -551,7 +551,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
                 disabled={selectedMachine === null || !selectedCup || selectedIngredients.length === 0}
                 className="px-8 py-6 text-lg font-bold bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 disabled:opacity-50"
               >
-                START
+{t('start')}
               </Button>
             </div>
           </div>
