@@ -148,46 +148,11 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
         ))}
       </div>
 
-      <div className="flex gap-2 sm:gap-3 md:gap-4 mt-2 sm:mt-3 md:mt-4 flex-wrap justify-center">
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-yellow-400/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🟡</span>
-          <span className="text-yellow-400 font-bold text-xs sm:text-sm md:text-base">1</span>
-        </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-blue-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🔵</span>
-          <span className="text-blue-400 font-bold text-xs sm:text-sm md:text-base">2</span>
-        </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-green-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🟢</span>
-          <span className="text-green-400 font-bold text-xs sm:text-sm md:text-base">3</span>
-        </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-red-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🔴</span>
-          <span className="text-red-400 font-bold text-xs sm:text-sm md:text-base">4</span>
-        </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-purple-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🟣</span>
-          <span className="text-purple-400 font-bold text-xs sm:text-sm md:text-base">5</span>
-        </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-indigo-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🔢</span>
-          <span className="text-indigo-400 font-bold text-xs sm:text-sm md:text-base">6</span>
-        </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-teal-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🎯</span>
-          <span className="text-teal-400 font-bold text-xs sm:text-sm md:text-base">7</span>
-        </div>
-        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-orange-500/20 rounded-full">
-          <span className="text-sm sm:text-lg md:text-2xl">🧃</span>
-          <span className="text-orange-400 font-bold text-xs sm:text-sm md:text-base">8</span>
-        </div>
-      </div>
-
       <TutorialModal
         isOpen={tutorialGame !== null}
         onClose={() => setTutorialGame(null)}
         gameId={tutorialGame}
       />
-    </motion.div>
-  );
-}
+      </motion.div>
+      );
+      }

@@ -267,26 +267,63 @@ export default function Game() {
           )}
         </AnimatePresence>
 
-        {/* Footer hint */}
+        {/* Footer hints */}
         {screen !== 'playing' && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
-            className="absolute bottom-4 sm:bottom-8 text-center px-2"
+            className="absolute bottom-4 sm:bottom-8 left-0 right-0 px-4"
           >
-            <p className="text-slate-700 text-xs sm:text-sm font-medium drop-shadow-sm">
-              {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">1</span> 
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">2</span>
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">3</span>
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">4</span>
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">5</span>
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">6</span>
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">7</span>
-              <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">8</span> {t('keysToSelect')}
-            </p>
-            </motion.div>
-            )}
+            <div className="text-center mb-3">
+              <p className="text-slate-700 text-xs sm:text-sm font-medium drop-shadow-sm">
+                {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">1</span> 
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">2</span>
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">3</span>
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">4</span>
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">5</span>
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">6</span>
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">7</span>
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">8</span> {t('keysToSelect')}
+              </p>
+            </div>
+
+            <div className="flex gap-1.5 sm:gap-2 justify-center flex-wrap">
+              <div className="flex items-center gap-1 px-2 py-1 bg-yellow-400/20 rounded-full">
+                <span className="text-sm sm:text-base">🟡</span>
+                <span className="text-yellow-400 font-bold text-xs">1</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-blue-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🔵</span>
+                <span className="text-blue-400 font-bold text-xs">2</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-green-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🟢</span>
+                <span className="text-green-400 font-bold text-xs">3</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-red-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🔴</span>
+                <span className="text-red-400 font-bold text-xs">4</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-purple-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🟣</span>
+                <span className="text-purple-400 font-bold text-xs">5</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-indigo-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🔢</span>
+                <span className="text-indigo-400 font-bold text-xs">6</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-teal-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🎯</span>
+                <span className="text-teal-400 font-bold text-xs">7</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-orange-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🧃</span>
+                <span className="text-orange-400 font-bold text-xs">8</span>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
             <TutorialModal
             isOpen={showTutorial}
