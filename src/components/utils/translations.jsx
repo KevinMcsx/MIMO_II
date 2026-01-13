@@ -13,7 +13,7 @@ export const translations = {
     patternRecognition: "Pattern Recognition",
     numberMemory: "Number Memory",
     sequenceMemory: "Sequence Memory",
-    mathSprint: "Math Sprint",
+    logicPuzzle: "Logic Puzzle",
 
     // Game Descriptions
     game1Desc: "Match the color as fast as you can!",
@@ -23,7 +23,7 @@ export const translations = {
     game5Desc: "Spot the odd one out!",
     game6Desc: "Remember number sequences!",
     game7Desc: "Remember the order of colors!",
-    game8Desc: "Solve math problems quickly!",
+    game8Desc: "Solve logical reasoning puzzles!",
     
     // Difficulty
     chooseDifficulty: "Choose Difficulty",
@@ -217,7 +217,7 @@ export const translations = {
     patternRecognition: "Reconocimiento de Patrones",
     numberMemory: "Memoria Numérica",
     sequenceMemory: "Memoria de Secuencia",
-    mathSprint: "Sprint Matemático",
+    logicPuzzle: "Rompecabezas Lógico",
 
     // Game Descriptions
     game1Desc: "¡Coincide el color lo más rápido posible!",
@@ -227,7 +227,7 @@ export const translations = {
     game5Desc: "¡Encuentra el diferente!",
     game6Desc: "¡Recuerda secuencias de números!",
     game7Desc: "¡Recuerda el orden de colores!",
-    game8Desc: "¡Resuelve problemas matemáticos rápido!",
+    game8Desc: "¡Resuelve rompecabezas de lógica!",
     
     // Difficulty
     chooseDifficulty: "Elige Dificultad",
@@ -423,7 +423,7 @@ export const translations = {
     patternRecognition: "Reconnaissance de Motifs",
     numberMemory: "Mémoire des Nombres",
     sequenceMemory: "Mémoire de Séquence",
-    mathSprint: "Sprint Mathématique",
+    logicPuzzle: "Puzzle Logique",
 
     // Game Descriptions
     game1Desc: "Associez la couleur le plus vite possible !",
@@ -433,7 +433,7 @@ export const translations = {
     game5Desc: "Trouvez l'intrus !",
     game6Desc: "Mémorisez les séquences de nombres !",
     game7Desc: "Mémorisez l'ordre des couleurs !",
-    game8Desc: "Résolvez des problèmes mathématiques vite !",
+    game8Desc: "Résolvez des puzzles de logique !",
     
     // Difficulty
     chooseDifficulty: "Choisir la Difficulté",
@@ -629,7 +629,7 @@ export const translations = {
     patternRecognition: "Mustererkennung",
     numberMemory: "Zahlengedächtnis",
     sequenceMemory: "Sequenzgedächtnis",
-    mathSprint: "Mathe-Sprint",
+    logicPuzzle: "Logik-Rätsel",
 
     // Game Descriptions
     game1Desc: "Ordne die Farbe so schnell wie möglich zu!",
@@ -639,7 +639,7 @@ export const translations = {
     game5Desc: "Finde das Unterschiedliche!",
     game6Desc: "Merke dir Zahlenfolgen!",
     game7Desc: "Merke dir die Farbreihenfolge!",
-    game8Desc: "Löse schnell Mathe-Aufgaben!",
+    game8Desc: "Löse Logik-Rätsel!",
     
     // Difficulty
     chooseDifficulty: "Schwierigkeit Wählen",
@@ -835,7 +835,7 @@ export const translations = {
     patternRecognition: "Minta Felismerés",
     numberMemory: "Szám Memória",
     sequenceMemory: "Sorrend Memória",
-    mathSprint: "Matek Sprint",
+    logicPuzzle: "Logikai Rejtvény",
 
     // Game Descriptions
     game1Desc: "Illeszd a színt a lehető leggyorsabban!",
@@ -845,7 +845,7 @@ export const translations = {
     game5Desc: "Találd meg a különbözőt!",
     game6Desc: "Jegyezd meg a számsorokat!",
     game7Desc: "Jegyezd meg a színek sorrendjét!",
-    game8Desc: "Old meg gyorsan a matek feladatokat!",
+    game8Desc: "Old meg logikai rejtvényeket!",
     
     // Difficulty
     chooseDifficulty: "Válassz Nehézséget",
@@ -1041,7 +1041,7 @@ export const translations = {
     patternRecognition: "التعرف على الأنماط",
     numberMemory: "ذاكرة الأرقام",
     sequenceMemory: "ذاكرة التسلسل",
-    mathSprint: "سباق الرياضيات",
+    logicPuzzle: "لغز المنطق",
 
     // Game Descriptions
     game1Desc: "طابق اللون بأسرع ما يمكن!",
@@ -1051,7 +1051,7 @@ export const translations = {
     game5Desc: "اعثر على الشيء المختلف!",
     game6Desc: "تذكر تسلسلات الأرقام!",
     game7Desc: "تذكر ترتيب الألوان!",
-    game8Desc: "حل مسائل رياضية بسرعة!",
+    game8Desc: "حل ألغاز المنطق!",
     
     // Difficulty
     chooseDifficulty: "اختر المستوى",

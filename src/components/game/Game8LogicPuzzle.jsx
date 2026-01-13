@@ -8,15 +8,14 @@ import TutorialModal from './TutorialModal';
 import { useTranslation } from '../utils/translations';
 import { saveGameResult } from './GameResultSaver';
 
-export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) {
+export default function Game8LogicPuzzle({ difficulty, onMainMenu, playerName }) {
   const t = useTranslation();
   const [gameState, setGameState] = useState('countdown');
   const [countdown, setCountdown] = useState(3);
   const [score, setScore] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
-  const [currentProblem, setCurrentProblem] = useState(null);
-  const [answers, setAnswers] = useState([]);
+  const [currentPuzzle, setCurrentPuzzle] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [reactionTimes, setReactionTimes] = useState([]);
   const [roundStartTime, setRoundStartTime] = useState(null);
@@ -25,13 +24,90 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
   const [streak, setStreak] = useState(0);
 
   const difficultySettings = {
-    1: { time: 120, maxNum: 10, operations: ['+', '-'], rounds: 20 },
-    2: { time: 120, maxNum: 20, operations: ['+', '-', '×'], rounds: 25 },
-    3: { time: 120, maxNum: 50, operations: ['+', '-', '×'], rounds: 30 },
-    4: { time: 90, maxNum: 100, operations: ['+', '-', '×', '÷'], rounds: 35 },
+    1: { time: 120, rounds: 20, timePerPuzzle: 10 },
+    2: { time: 120, rounds: 25, timePerPuzzle: 8 },
+    3: { time: 120, rounds: 30, timePerPuzzle: 6 },
+    4: { time: 90, rounds: 35, timePerPuzzle: 5 },
   };
 
   const settings = difficultySettings[difficulty];
+
+  const puzzleTypes = [
+    // Pattern logic
+    () => {
+      const patterns = [
+        { sequence: [2, 4, 6, 8], answer: 10, options: [10, 12, 9, 11] },
+        { sequence: [1, 3, 5, 7], answer: 9, options: [9, 8, 10, 11] },
+        { sequence: [5, 10, 15, 20], answer: 25, options: [25, 30, 22, 24] },
+        { sequence: [100, 90, 80, 70], answer: 60, options: [60, 50, 65, 55] },
+        { sequence: [3, 6, 9, 12], answer: 15, options: [15, 18, 14, 16] },
+        { sequence: [10, 20, 30, 40], answer: 50, options: [50, 60, 45, 55] },
+      ];
+      const p = patterns[Math.floor(Math.random() * patterns.length)];
+      return {
+        type: 'pattern',
+        question: `What comes next?\n${p.sequence.join(', ')}, ?`,
+        correctAnswer: p.answer,
+        options: p.options.sort(() => Math.random() - 0.5)
+      };
+    },
+    
+    // True/False logic
+    () => {
+      const statements = [
+        { text: "If all cats are animals,\nand Tom is a cat,\nthen Tom is an animal", answer: true },
+        { text: "If some birds can fly,\nand penguins are birds,\nthen penguins can fly", answer: false },
+        { text: "If A > B and B > C,\nthen A > C", answer: true },
+        { text: "If no dogs are cats,\nand Rex is a dog,\nthen Rex is not a cat", answer: true },
+        { text: "If all squares are rectangles,\nand all rectangles have 4 sides,\nthen squares have 3 sides", answer: false },
+        { text: "If X = 5 and Y = X + 2,\nthen Y = 7", answer: true },
+        { text: "If today is Monday,\nthen yesterday was Sunday", answer: true },
+        { text: "If 10 > 5 and 5 > 3,\nthen 3 > 10", answer: false },
+      ];
+      const s = statements[Math.floor(Math.random() * statements.length)];
+      return {
+        type: 'truefalse',
+        question: s.text,
+        correctAnswer: s.answer,
+        options: ['TRUE', 'FALSE']
+      };
+    },
+
+    // Comparison logic
+    () => {
+      const comparisons = [
+        { text: "If A = 5, B = 3, C = 7\nWhich is largest?", answer: 'C', options: ['A', 'B', 'C'] },
+        { text: "If X > Y and Y > Z\nWhich is smallest?", answer: 'Z', options: ['X', 'Y', 'Z'] },
+        { text: "If P = Q and Q < R\nWhich is largest?", answer: 'R', options: ['P', 'Q', 'R'] },
+        { text: "If 10 = A, 15 = B, 8 = C\nWhich is smallest?", answer: 'C', options: ['A', 'B', 'C'] },
+      ];
+      const c = comparisons[Math.floor(Math.random() * comparisons.length)];
+      return {
+        type: 'comparison',
+        question: c.text,
+        correctAnswer: c.answer,
+        options: c.options.sort(() => Math.random() - 0.5)
+      };
+    },
+
+    // Missing number in pattern
+    () => {
+      const patterns = [
+        { text: "2, 4, ?, 8, 10", answer: 6, options: [5, 6, 7, 8] },
+        { text: "10, 20, 30, ?, 50", answer: 40, options: [35, 40, 45, 50] },
+        { text: "1, 1, 2, 3, 5, ?", answer: 8, options: [6, 7, 8, 9] },
+        { text: "100, 50, 25, ?", answer: 12.5, options: [10, 12.5, 15, 20] },
+        { text: "3, 9, 27, ?", answer: 81, options: [54, 72, 81, 90] },
+      ];
+      const p = patterns[Math.floor(Math.random() * patterns.length)];
+      return {
+        type: 'missing',
+        question: `Find the missing number:\n${p.text}`,
+        correctAnswer: p.answer,
+        options: p.options.sort(() => Math.random() - 0.5)
+      };
+    }
+  ];
 
   useEffect(() => {
     if (gameState === 'countdown' && countdown > 0) {
@@ -42,7 +118,7 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
       sounds.gameStart();
       setGameState('playing');
       setTimeLeft(settings.time);
-      generateProblem();
+      generatePuzzle();
     }
   }, [countdown, gameState]);
 
@@ -55,47 +131,10 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
     }
   }, [timeLeft, gameState, paused]);
 
-  const generateProblem = () => {
-    const operation = settings.operations[Math.floor(Math.random() * settings.operations.length)];
-    let num1, num2, correctAnswer;
-
-    if (operation === '÷') {
-      num2 = Math.floor(Math.random() * (settings.maxNum / 5)) + 2;
-      correctAnswer = Math.floor(Math.random() * (settings.maxNum / num2)) + 1;
-      num1 = num2 * correctAnswer;
-    } else {
-      num1 = Math.floor(Math.random() * settings.maxNum) + 1;
-      num2 = Math.floor(Math.random() * settings.maxNum) + 1;
-      
-      switch (operation) {
-        case '+':
-          correctAnswer = num1 + num2;
-          break;
-        case '-':
-          if (num2 > num1) [num1, num2] = [num2, num1];
-          correctAnswer = num1 - num2;
-          break;
-        case '×':
-          num1 = Math.floor(Math.random() * 12) + 1;
-          num2 = Math.floor(Math.random() * 12) + 1;
-          correctAnswer = num1 * num2;
-          break;
-      }
-    }
-
-    const wrongAnswers = [];
-    while (wrongAnswers.length < 3) {
-      const offset = Math.floor(Math.random() * 10) - 5;
-      const wrongAnswer = correctAnswer + offset;
-      if (wrongAnswer !== correctAnswer && wrongAnswer > 0 && !wrongAnswers.includes(wrongAnswer)) {
-        wrongAnswers.push(wrongAnswer);
-      }
-    }
-
-    const allAnswers = [correctAnswer, ...wrongAnswers].sort(() => Math.random() - 0.5);
-
-    setCurrentProblem({ num1, num2, operation, correctAnswer });
-    setAnswers(allAnswers);
+  const generatePuzzle = () => {
+    const puzzleGenerator = puzzleTypes[Math.floor(Math.random() * puzzleTypes.length)];
+    const puzzle = puzzleGenerator();
+    setCurrentPuzzle(puzzle);
     setRoundStartTime(Date.now());
   };
 
@@ -105,7 +144,11 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
     const reactionTime = Date.now() - roundStartTime;
     setReactionTimes([...reactionTimes, reactionTime]);
 
-    if (answer === currentProblem.correctAnswer) {
+    const isCorrect = currentPuzzle.type === 'truefalse' 
+      ? (answer === 'TRUE') === currentPuzzle.correctAnswer
+      : answer === currentPuzzle.correctAnswer;
+
+    if (isCorrect) {
       sounds.correctHit();
       const newStreak = streak + 1;
       setStreak(newStreak);
@@ -116,14 +159,14 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
       if (correctCount + 1 >= settings.rounds) {
         endGame();
       } else {
-        generateProblem();
+        generatePuzzle();
       }
     } else {
       sounds.wrongHit();
       setStreak(0);
       setWrongCount(wrongCount + 1);
       setScore(Math.max(0, score - 25));
-      generateProblem();
+      generatePuzzle();
     }
   };
 
@@ -163,7 +206,7 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
 
     return (
       <ResultsScreen
-        gameTitle={t('mathSprint')}
+        gameTitle={t('logicPuzzle')}
         gameResult={{
           game_type: 8,
           difficulty,
@@ -195,7 +238,7 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
             <p className="text-2xl font-bold text-slate-800">
               {correctCount}/{settings.rounds}
             </p>
-            <p className="text-lg font-semibold text-orange-600">
+            <p className="text-lg font-semibold text-purple-600">
               {t('score')}: {score}
             </p>
           </div>
@@ -250,7 +293,7 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
-              className="inline-block bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-6 py-2 rounded-full font-bold"
+              className="inline-block bg-gradient-to-r from-purple-400 to-pink-500 text-white px-6 py-2 rounded-full font-bold"
             >
               🔥 {streak} Streak! +{Math.min(streak * 10, 100)} Bonus
             </motion.div>
@@ -259,32 +302,32 @@ export default function Game8MathSprint({ difficulty, onMainMenu, playerName }) 
 
         <div className="mb-6 text-center">
           <p className="text-lg font-semibold text-slate-700">
-            🧮 Solve the problem!
+            🧠 Solve the logic puzzle!
           </p>
         </div>
 
-        {currentProblem && gameState === 'playing' && (
+        {currentPuzzle && gameState === 'playing' && (
           <motion.div
-            key={`${currentProblem.num1}-${currentProblem.num2}`}
+            key={`puzzle-${correctCount}`}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
           >
             <div className="mb-8 text-center">
-              <div className="text-6xl font-black text-slate-800 mb-8">
-                {currentProblem.num1} {currentProblem.operation} {currentProblem.num2} = ?
+              <div className="text-3xl font-bold text-slate-800 mb-8 whitespace-pre-line min-h-[120px] flex items-center justify-center">
+                {currentPuzzle.question}
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {answers.map((answer, idx) => (
+            <div className={`grid gap-4 ${currentPuzzle.options.length === 2 ? 'grid-cols-2' : currentPuzzle.options.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
+              {currentPuzzle.options.map((option, idx) => (
                 <motion.button
                   key={idx}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => handleAnswer(answer)}
-                  className="py-8 text-4xl font-bold bg-gradient-to-br from-orange-400 to-red-500 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  onClick={() => handleAnswer(option)}
+                  className="py-6 text-2xl font-bold bg-gradient-to-br from-purple-400 to-indigo-500 text-white rounded-xl shadow-lg hover:shadow-xl transition-all"
                 >
-                  {answer}
+                  {option}
                 </motion.button>
               ))}
             </div>
