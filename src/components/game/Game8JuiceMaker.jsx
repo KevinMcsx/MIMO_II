@@ -120,7 +120,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
         prevMachines.map(machine => {
           if (machine.state === 'filling') {
             const elapsed = Date.now() - machine.fillStartTime;
-            const fillTime = machine.cup === 'medium' ? 3000 : 5000;
+            const fillTime = machine.cup === 'medium' ? 8000 : 12000;
             const newLevel = Math.min((elapsed / fillTime) * 100, 100);
             
             return { ...machine, fillLevel: newLevel };
@@ -402,7 +402,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
               <div key={order.id} className="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-xl p-3 border-2 border-orange-300 min-w-[200px]">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xl">{order.cup === 'medium' ? '🥤' : '🥛'}</span>
-                  <span className="text-xs font-bold text-slate-700">{order.cup === 'medium' ? 'Medium' : 'Big'}</span>
+                  <span className="text-xs font-bold text-slate-700">{order.cup === 'medium' ? 'Medium (8s)' : 'Big (12s)'}</span>
                 </div>
                 <div className="flex gap-1 flex-wrap">
                   {order.ingredients.map((ing, idx) => (
@@ -502,7 +502,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
                       : 'bg-white text-slate-700 hover:bg-orange-100'
                   } ${selectedMachine === null ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  🥤 Medium (3s)
+                  🥤 Medium (8s)
                 </button>
                 <button
                   onClick={() => handleCupSelect('big')}
@@ -513,7 +513,7 @@ export default function Game8JuiceMaker({ difficulty, onMainMenu, playerName }) 
                       : 'bg-white text-slate-700 hover:bg-orange-100'
                   } ${selectedMachine === null ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
-                  🥛 Big (5s)
+                  🥛 Big (12s)
                 </button>
               </div>
             </div>
