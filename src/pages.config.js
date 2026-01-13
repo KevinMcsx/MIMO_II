@@ -4,6 +4,7 @@ import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
 import Statistics from './pages/Statistics';
 import Store from './pages/Store';
+import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
@@ -18,4 +19,5 @@ export const PAGES = {
 export const pagesConfig = {
     mainPage: "Game",
     Pages: PAGES,
+    Layout: __Layout,
 };
