@@ -205,7 +205,7 @@ export default function Game() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 pb-40 sm:pb-48">
         <AnimatePresence mode="wait">
           {screen === 'nameEntry' && (
             <motion.div
