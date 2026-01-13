@@ -28,12 +28,13 @@ export default function Game7SequenceMemory({ difficulty, onMainMenu, playerName
   const [paused, setPaused] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [consecutiveCorrect, setConsecutiveCorrect] = useState(0);
 
   const difficultySettings = {
-    1: { startLength: 3, time: 180, showSpeed: 1000, maxLength: 8 },
-    2: { startLength: 4, time: 150, showSpeed: 800, maxLength: 10 },
-    3: { startLength: 5, time: 120, showSpeed: 600, maxLength: 12 },
-    4: { startLength: 6, time: 90, showSpeed: 400, maxLength: 15 },
+    1: { startLength: 3, time: 180, showSpeed: 1000, maxLength: 8, increaseAfter: 6 },
+    2: { startLength: 4, time: 150, showSpeed: 800, maxLength: 10, increaseAfter: 3 },
+    3: { startLength: 5, time: 120, showSpeed: 600, maxLength: 12, increaseAfter: 2 },
+    4: { startLength: 6, time: 90, showSpeed: 400, maxLength: 15, increaseAfter: 1 },
   };
 
   const settings = difficultySettings[difficulty];
@@ -99,6 +100,7 @@ export default function Game7SequenceMemory({ difficulty, onMainMenu, playerName
       setScore(Math.max(0, score - 30));
       setFeedbackMessage(`✗ Wrong! Correct was: ${sequence.map(i => colorNames[i]).join(' → ')}`);
       setGameState('feedback');
+      setConsecutiveCorrect(0);
       
       setTimeout(() => {
         if (wrongCount + 1 >= 3) {
@@ -120,11 +122,19 @@ export default function Game7SequenceMemory({ difficulty, onMainMenu, playerName
       const points = sequence.length * 100;
       setScore(score + points);
       setCorrectCount(correctCount + 1);
+      const newConsecutive = consecutiveCorrect + 1;
+      setConsecutiveCorrect(newConsecutive);
       setFeedbackMessage('✓ Perfect!');
       setGameState('feedback');
       
       setTimeout(() => {
-        const newLength = Math.min(sequence.length + 1, settings.maxLength);
+        let newLength = sequence.length;
+        
+        if (newConsecutive >= settings.increaseAfter) {
+          newLength = Math.min(sequence.length + 1, settings.maxLength);
+          setConsecutiveCorrect(0);
+        }
+        
         if (newLength <= settings.maxLength) {
           setLevel(level + 1);
           setGameState('showing');
