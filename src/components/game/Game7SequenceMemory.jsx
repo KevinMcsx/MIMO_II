@@ -257,7 +257,7 @@ export default function Game7SequenceMemory({ difficulty, onMainMenu, playerName
 
         <div className="mb-6 text-center">
           <p className="text-lg font-semibold text-slate-700">
-            {gameState === 'showing' ? '👀 Watch the sequence!' : '🧠 Repeat the sequence!'}
+            {gameState === 'showing' ? `👀 ${t('watchSequence')}` : `🧠 ${t('repeatSequence')}`}
           </p>
         </div>
 
