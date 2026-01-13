@@ -42,6 +42,17 @@ export const saveGameResult = async (gameData) => {
   try {
     const result = await base44.entities.GameScore.create(gameData);
     console.log('Game result saved to database:', result);
+    
+    // Save to Google Drive
+    try {
+      await base44.functions.invoke('saveScoreToDrive', {
+        gameResult: gameData,
+        playerName: gameData.player_name,
+      });
+    } catch (driveError) {
+      console.error('Failed to save to Drive (non-critical):', driveError);
+    }
+    
     return result;
   } catch (error) {
     console.error('Failed to save to database, using localStorage only:', error);
