@@ -69,6 +69,26 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
       glow: 'shadow-indigo-500/50',
       key: '6',
     },
+    {
+      id: 7,
+      color: 'teal',
+      title: t('sequenceMemory'),
+      description: t('game7Desc'),
+      Icon: Shapes,
+      bg: 'from-teal-500 to-teal-600',
+      glow: 'shadow-teal-500/50',
+      key: '7',
+    },
+    {
+      id: 8,
+      color: 'orange',
+      title: t('mathSprint'),
+      description: t('game8Desc'),
+      Icon: Zap,
+      bg: 'from-orange-500 to-orange-600',
+      glow: 'shadow-orange-500/50',
+      key: '8',
+    },
   ];
   return (
     <motion.div
@@ -85,7 +105,7 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
       </motion.h1>
       
       <p className="text-sm sm:text-lg md:text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
-        {t('useKeys')} 1-5 {t('keysToSelect')}
+        {t('useKeys')} 1-8 {t('keysToSelect')}
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6 w-full max-w-4xl">
@@ -152,6 +172,14 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
         <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-indigo-500/20 rounded-full">
           <span className="text-sm sm:text-lg md:text-2xl">🔢</span>
           <span className="text-indigo-400 font-bold text-xs sm:text-sm md:text-base">6</span>
+        </div>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-teal-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🎯</span>
+          <span className="text-teal-400 font-bold text-xs sm:text-sm md:text-base">7</span>
+        </div>
+        <div className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-orange-500/20 rounded-full">
+          <span className="text-sm sm:text-lg md:text-2xl">🧮</span>
+          <span className="text-orange-400 font-bold text-xs sm:text-sm md:text-base">8</span>
         </div>
       </div>
 

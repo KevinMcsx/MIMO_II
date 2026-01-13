@@ -16,7 +16,7 @@ export default function Leaderboard() {
   const [timeFilter, setTimeFilter] = useState('all-time');
   const playerName = localStorage.getItem('loopybrainPlayerName') || '';
   
-  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory')];
+  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory'), t('sequenceMemory'), t('mathSprint')];
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
   const { data: allProfiles = [] } = useQuery({

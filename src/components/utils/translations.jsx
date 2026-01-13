@@ -12,7 +12,9 @@ export const translations = {
     proChallenge: "Pro Challenge",
     patternRecognition: "Pattern Recognition",
     numberMemory: "Number Memory",
-    
+    sequenceMemory: "Sequence Memory",
+    mathSprint: "Math Sprint",
+
     // Game Descriptions
     game1Desc: "Match the color as fast as you can!",
     game2Desc: "Match both color AND shape!",
@@ -20,6 +22,8 @@ export const translations = {
     game4Desc: "Ultimate multi-tasking challenge!",
     game5Desc: "Spot the odd one out!",
     game6Desc: "Remember number sequences!",
+    game7Desc: "Remember the order of colors!",
+    game8Desc: "Solve math problems quickly!",
     
     // Difficulty
     chooseDifficulty: "Choose Difficulty",
@@ -212,6 +216,8 @@ export const translations = {
     proChallenge: "Desafío Pro",
     patternRecognition: "Reconocimiento de Patrones",
     numberMemory: "Memoria Numérica",
+    sequenceMemory: "Memoria de Secuencia",
+    mathSprint: "Sprint Matemático",
 
     // Game Descriptions
     game1Desc: "¡Coincide el color lo más rápido posible!",
@@ -220,6 +226,8 @@ export const translations = {
     game4Desc: "¡Desafío definitivo de multitarea!",
     game5Desc: "¡Encuentra el diferente!",
     game6Desc: "¡Recuerda secuencias de números!",
+    game7Desc: "¡Recuerda el orden de colores!",
+    game8Desc: "¡Resuelve problemas matemáticos rápido!",
     
     // Difficulty
     chooseDifficulty: "Elige Dificultad",
@@ -414,6 +422,8 @@ export const translations = {
     proChallenge: "Défi Pro",
     patternRecognition: "Reconnaissance de Motifs",
     numberMemory: "Mémoire des Nombres",
+    sequenceMemory: "Mémoire de Séquence",
+    mathSprint: "Sprint Mathématique",
 
     // Game Descriptions
     game1Desc: "Associez la couleur le plus vite possible !",
@@ -422,6 +432,8 @@ export const translations = {
     game4Desc: "Défi ultime de multitâche !",
     game5Desc: "Trouvez l'intrus !",
     game6Desc: "Mémorisez les séquences de nombres !",
+    game7Desc: "Mémorisez l'ordre des couleurs !",
+    game8Desc: "Résolvez des problèmes mathématiques vite !",
     
     // Difficulty
     chooseDifficulty: "Choisir la Difficulté",
@@ -616,6 +628,8 @@ export const translations = {
     proChallenge: "Pro Herausforderung",
     patternRecognition: "Mustererkennung",
     numberMemory: "Zahlengedächtnis",
+    sequenceMemory: "Sequenzgedächtnis",
+    mathSprint: "Mathe-Sprint",
 
     // Game Descriptions
     game1Desc: "Ordne die Farbe so schnell wie möglich zu!",
@@ -624,6 +638,8 @@ export const translations = {
     game4Desc: "Ultimative Multitasking-Herausforderung!",
     game5Desc: "Finde das Unterschiedliche!",
     game6Desc: "Merke dir Zahlenfolgen!",
+    game7Desc: "Merke dir die Farbreihenfolge!",
+    game8Desc: "Löse schnell Mathe-Aufgaben!",
     
     // Difficulty
     chooseDifficulty: "Schwierigkeit Wählen",
@@ -818,6 +834,8 @@ export const translations = {
     proChallenge: "Profi Kihívás",
     patternRecognition: "Minta Felismerés",
     numberMemory: "Szám Memória",
+    sequenceMemory: "Sorrend Memória",
+    mathSprint: "Matek Sprint",
 
     // Game Descriptions
     game1Desc: "Illeszd a színt a lehető leggyorsabban!",
@@ -826,6 +844,8 @@ export const translations = {
     game4Desc: "Végső multitasking kihívás!",
     game5Desc: "Találd meg a különbözőt!",
     game6Desc: "Jegyezd meg a számsorokat!",
+    game7Desc: "Jegyezd meg a színek sorrendjét!",
+    game8Desc: "Old meg gyorsan a matek feladatokat!",
     
     // Difficulty
     chooseDifficulty: "Válassz Nehézséget",
@@ -1020,6 +1040,8 @@ export const translations = {
     proChallenge: "التحدي الاحترافي",
     patternRecognition: "التعرف على الأنماط",
     numberMemory: "ذاكرة الأرقام",
+    sequenceMemory: "ذاكرة التسلسل",
+    mathSprint: "سباق الرياضيات",
 
     // Game Descriptions
     game1Desc: "طابق اللون بأسرع ما يمكن!",
@@ -1028,6 +1050,8 @@ export const translations = {
     game4Desc: "تحدي تعدد المهام النهائي!",
     game5Desc: "اعثر على الشيء المختلف!",
     game6Desc: "تذكر تسلسلات الأرقام!",
+    game7Desc: "تذكر ترتيب الألوان!",
+    game8Desc: "حل مسائل رياضية بسرعة!",
     
     // Difficulty
     chooseDifficulty: "اختر المستوى",
