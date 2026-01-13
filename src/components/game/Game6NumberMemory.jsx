@@ -26,12 +26,13 @@ export default function Game6NumberMemory({ difficulty, onMainMenu, playerName }
   const [paused, setPaused] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
   const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [consecutiveCorrect, setConsecutiveCorrect] = useState(0);
 
   const difficultySettings = {
-    1: { startLength: 3, time: 180, showDuration: 2000, maxLength: 8 },
-    2: { startLength: 4, time: 150, showDuration: 1500, maxLength: 10 },
-    3: { startLength: 5, time: 120, showDuration: 1000, maxLength: 12 },
-    4: { startLength: 6, time: 90, showDuration: 800, maxLength: 15 },
+    1: { startLength: 3, time: 180, showDuration: 2000, maxLength: 8, increaseAfter: 4 },
+    2: { startLength: 4, time: 150, showDuration: 1500, maxLength: 10, increaseAfter: 1 },
+    3: { startLength: 5, time: 120, showDuration: 1000, maxLength: 12, increaseAfter: 1 },
+    4: { startLength: 6, time: 90, showDuration: 800, maxLength: 15, increaseAfter: 1 },
   };
 
   const settings = difficultySettings[difficulty];
@@ -93,13 +94,24 @@ export default function Game6NumberMemory({ difficulty, onMainMenu, playerName }
       setCorrectCount(correctCount + 1);
       setFeedbackMessage('✓ Correct!');
       
+      const newConsecutive = consecutiveCorrect + 1;
+      setConsecutiveCorrect(newConsecutive);
+      
       setTimeout(() => {
-        const newLength = Math.min(sequence.length + 1, settings.maxLength);
+        // Check if we should increase difficulty
+        const shouldIncrease = newConsecutive >= settings.increaseAfter;
+        const newLength = shouldIncrease 
+          ? Math.min(sequence.length + 1, settings.maxLength)
+          : sequence.length;
+        
         if (newLength <= settings.maxLength) {
           setLevel(level + 1);
           setGameState('showing');
           generateSequence(newLength);
           setFeedbackMessage('');
+          if (shouldIncrease) {
+            setConsecutiveCorrect(0);
+          }
         } else {
           endGame();
         }
@@ -109,6 +121,7 @@ export default function Game6NumberMemory({ difficulty, onMainMenu, playerName }
       setWrongCount(wrongCount + 1);
       setScore(Math.max(0, score - 20));
       setFeedbackMessage(`✗ Wrong! It was: ${sequence.join('')}`);
+      setConsecutiveCorrect(0);
       
       setTimeout(() => {
         if (wrongCount + 1 >= 3) {
