@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Star, Trophy, ChevronLeft, CheckCircle, Flame, Medal } from 'lucide-react';
+import { Calendar, Star, Trophy, ChevronLeft, CheckCircle, Flame, Medal, Sparkles, History, Award } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -17,6 +17,7 @@ import { useTranslation } from '../components/utils/translations';
 export default function DailyChallenge() {
   const t = useTranslation();
   const [playing, setPlaying] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const playerName = localStorage.getItem('loopybrainPlayerName');
   const today = new Date().toISOString().split('T')[0];
   const queryClient = useQueryClient();
@@ -37,10 +38,17 @@ export default function DailyChallenge() {
       const challenges = await base44.entities.DailyChallenge.filter({ date: today }, '-created_date', 1);
       if (challenges.length > 0) return challenges[0];
       
+      // Determine if this should be a featured challenge (every Monday)
+      const dayOfWeek = new Date().getDay();
+      const isFeatured = dayOfWeek === 1; // Monday
+      
       // Generate today's challenge
       const gameType = Math.floor(Math.random() * 4) + 1;
-      const difficulty = Math.floor(Math.random() * 4) + 1;
-      const targetScore = 10 + (difficulty * 10) + (gameType * 5);
+      const difficulty = isFeatured ? 4 : Math.floor(Math.random() * 4) + 1; // Featured challenges are always Expert
+      const targetScore = isFeatured ? 50 + (gameType * 10) : 10 + (difficulty * 10) + (gameType * 5);
+      
+      const featuredThemes = ['Speed Week', 'Accuracy Week', 'Master Week', 'Champion Week'];
+      const randomTheme = featuredThemes[Math.floor(Math.random() * featuredThemes.length)];
       
       return await base44.entities.DailyChallenge.create({
         date: today,
@@ -48,6 +56,9 @@ export default function DailyChallenge() {
         difficulty: difficulty,
         target_score: targetScore,
         reward_stars: difficulty,
+        is_featured: isFeatured,
+        featured_reward_multiplier: isFeatured ? 2 : 1,
+        featured_theme: isFeatured ? randomTheme : null,
       });
     },
   });
@@ -82,6 +93,38 @@ export default function DailyChallenge() {
     queryKey: ['playerProfile', playerName],
     queryFn: () => getPlayerProfile(playerName),
     enabled: !!playerName,
+  });
+
+  // Fetch player's challenge history (last 30 days)
+  const { data: challengeHistory } = useQuery({
+    queryKey: ['challengeHistory', playerName],
+    queryFn: async () => {
+      if (!playerName) return [];
+      
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      const thirtyDaysAgoStr = thirtyDaysAgo.toISOString().split('T')[0];
+      
+      const completions = await base44.entities.ChallengeCompletion.filter(
+        { player_name: playerName },
+        '-challenge_date',
+        30
+      );
+      
+      // Get all corresponding challenges
+      const dates = completions.map(c => c.challenge_date);
+      const allChallenges = await base44.entities.DailyChallenge.list();
+      const relevantChallenges = allChallenges.filter(ch => dates.includes(ch.date));
+      
+      return completions.map(comp => {
+        const chall = relevantChallenges.find(ch => ch.date === comp.challenge_date);
+        return {
+          ...comp,
+          challenge: chall,
+        };
+      }).filter(c => c.challenge);
+    },
+    enabled: !!playerName && showHistory,
   });
 
   const completeMutation = useMutation({
@@ -195,6 +238,18 @@ export default function DailyChallenge() {
           <h1 className="text-5xl font-black text-slate-800 mb-2">📅 {t('dailyChallenge')}</h1>
           <p className="text-slate-600 text-lg">{t('completeTodaysChallenge')}</p>
           
+          {/* Action Buttons */}
+          <div className="flex justify-center gap-3 mt-4">
+            <Button
+              onClick={() => setShowHistory(!showHistory)}
+              variant="outline"
+              className="gap-2"
+            >
+              <History className="w-4 h-4" />
+              Challenge History
+            </Button>
+          </div>
+          
           {/* Streak Display */}
           {playerProfile && (playerProfile.daily_streak > 0 || playerProfile.longest_streak > 0) && (
             <div className="flex justify-center gap-4 mt-4">
@@ -221,8 +276,23 @@ export default function DailyChallenge() {
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="bg-white rounded-3xl p-8 border-4 border-slate-300 shadow-xl"
+              className={`rounded-3xl p-8 border-4 shadow-xl ${
+                challenge.is_featured
+                  ? 'bg-gradient-to-br from-yellow-50 via-orange-50 to-pink-50 border-yellow-400'
+                  : 'bg-white border-slate-300'
+              }`}
             >
+            {challenge.is_featured && (
+              <motion.div
+                initial={{ y: -10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                className="flex items-center justify-center gap-2 mb-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-4 py-2 rounded-full"
+              >
+                <Sparkles className="w-5 h-5" />
+                <span className="font-black text-lg">FEATURED: {challenge.featured_theme}</span>
+                <Award className="w-5 h-5" />
+              </motion.div>
+            )}
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
                 <Calendar className="w-8 h-8 text-blue-500" />
@@ -235,16 +305,27 @@ export default function DailyChallenge() {
               </div>
               <div className="flex items-center gap-2">
                 {[...Array(challenge.reward_stars)].map((_, i) => (
-                  <Star key={i} className="w-6 h-6 text-yellow-400 fill-yellow-400" />
+                  <Star key={i} className={`w-6 h-6 ${challenge.is_featured ? 'text-orange-400 fill-orange-400' : 'text-yellow-400 fill-yellow-400'}`} />
                 ))}
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-100 to-blue-100 rounded-2xl p-6 mb-6">
+            <div className={`rounded-2xl p-6 mb-6 ${
+              challenge.is_featured
+                ? 'bg-gradient-to-r from-yellow-100 to-orange-100'
+                : 'bg-gradient-to-r from-purple-100 to-blue-100'
+            }`}>
               <p className="text-slate-700 text-center text-lg">
                 <span className="font-bold">{t('targetScore')}:</span>{' '}
-                <span className="text-3xl font-black text-purple-600">{challenge.target_score}</span>
+                <span className={`text-3xl font-black ${challenge.is_featured ? 'text-orange-600' : 'text-purple-600'}`}>
+                  {challenge.target_score}
+                </span>
               </p>
+              {challenge.is_featured && (
+                <p className="text-center text-orange-600 font-bold mt-2">
+                  🎁 {challenge.featured_reward_multiplier}x Rewards!
+                </p>
+              )}
             </div>
 
             {completion ? (
@@ -281,8 +362,13 @@ export default function DailyChallenge() {
             ) : (
               <Button
                 onClick={() => setPlaying(true)}
-                className="w-full h-14 text-xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                className={`w-full h-14 text-xl font-bold ${
+                  challenge.is_featured
+                    ? 'bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-600 hover:to-orange-700'
+                    : 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700'
+                }`}
               >
+                {challenge.is_featured && <Sparkles className="w-5 h-5 mr-2" />}
                 {t('startChallenge')}
               </Button>
             )}
@@ -355,6 +441,76 @@ export default function DailyChallenge() {
             )}
           </motion.div>
         </div>
+
+        {/* Challenge History */}
+        {showHistory && challengeHistory && (
+          <motion.div
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            className="mt-6 bg-white rounded-3xl p-8 border-4 border-slate-300 shadow-xl"
+          >
+            <div className="flex items-center gap-3 mb-6">
+              <History className="w-8 h-8 text-indigo-500" />
+              <h2 className="text-2xl font-black text-slate-800">Challenge History</h2>
+            </div>
+
+            {challengeHistory.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {challengeHistory.map((entry, index) => (
+                  <motion.div
+                    key={entry.id}
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: index * 0.05 }}
+                    className={`p-4 rounded-xl border-2 ${
+                      entry.completed
+                        ? 'bg-green-50 border-green-300'
+                        : 'bg-slate-50 border-slate-300'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between mb-2">
+                      <p className="text-sm font-semibold text-slate-600">
+                        {new Date(entry.challenge_date).toLocaleDateString()}
+                      </p>
+                      {entry.challenge?.is_featured && (
+                        <Sparkles className="w-4 h-4 text-orange-500" />
+                      )}
+                    </div>
+                    
+                    <p className="font-bold text-slate-800 mb-1">
+                      {gameNames[entry.challenge.game_type - 1]}
+                    </p>
+                    <p className="text-xs text-slate-600 mb-2">
+                      {difficultyNames[entry.challenge.difficulty - 1]}
+                    </p>
+                    
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-2xl font-black text-purple-600">{entry.score}</p>
+                        <p className="text-xs text-slate-500">Target: {entry.challenge.target_score}</p>
+                      </div>
+                      {entry.completed ? (
+                        <CheckCircle className="w-6 h-6 text-green-600" />
+                      ) : (
+                        <div className="w-6 h-6 rounded-full border-2 border-slate-300" />
+                      )}
+                    </div>
+                    
+                    {entry.stars_earned > 0 && (
+                      <div className="flex gap-1 mt-2">
+                        {[...Array(entry.stars_earned)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-slate-500 py-8">No challenge history yet. Start completing daily challenges!</p>
+            )}
+          </motion.div>
+        )}
 
         {/* Footer hint */}
         <motion.div
