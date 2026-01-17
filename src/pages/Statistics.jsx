@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Area, AreaChart, Legend } from 'recharts';
 import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -41,6 +41,72 @@ export default function Statistics() {
   const bestScore = totalGames > 0 ? Math.max(...filteredScores.map(s => s.score || 0)) : 0;
   const avgReaction = totalGames > 0 ? Math.round(filteredScores.reduce((sum, s) => sum + (s.avg_reaction_time || 0), 0) / totalGames) : 0;
   const bestReaction = totalGames > 0 ? Math.min(...filteredScores.filter(s => s.avg_reaction_time > 0).map(s => s.avg_reaction_time || Infinity)) : 0;
+
+  // Win/Loss ratios by game (score > 0 considered a win for simplicity)
+  const winLossByGame = gameNames.map((name, i) => {
+    const gameScores = filteredScores.filter(s => s.game_type === i + 1);
+    const wins = gameScores.filter(s => s.score > 500).length; // Threshold for "win"
+    const losses = gameScores.length - wins;
+    return {
+      name: name.split(' ')[0],
+      wins,
+      losses,
+      total: gameScores.length,
+      winRate: gameScores.length > 0 ? ((wins / gameScores.length) * 100).toFixed(1) : 0,
+    };
+  }).filter(g => g.total > 0);
+
+  // Average score over time (chronological)
+  const scoreOverTime = filteredScores
+    .sort((a, b) => new Date(a.created_date) - new Date(b.created_date))
+    .reduce((acc, score, idx, arr) => {
+      const date = new Date(score.created_date).toLocaleDateString();
+      const existing = acc.find(d => d.date === date);
+      if (existing) {
+        existing.scores.push(score.score);
+      } else {
+        acc.push({ date, scores: [score.score] });
+      }
+      return acc;
+    }, [])
+    .map(d => ({
+      date: d.date,
+      avgScore: Math.round(d.scores.reduce((sum, s) => sum + s, 0) / d.scores.length),
+      games: d.scores.length,
+    }))
+    .slice(-15); // Last 15 days
+
+  // Accuracy trends (correct hits / total hits)
+  const accuracyTrends = filteredScores
+    .filter(s => s.correct_hits !== undefined && s.wrong_hits !== undefined)
+    .slice(0, 20)
+    .reverse()
+    .map((s, i) => {
+      const total = (s.correct_hits || 0) + (s.wrong_hits || 0);
+      const accuracy = total > 0 ? ((s.correct_hits / total) * 100).toFixed(1) : 0;
+      return {
+        game: `#${i + 1}`,
+        accuracy: parseFloat(accuracy),
+        correct: s.correct_hits,
+        wrong: s.wrong_hits,
+      };
+    });
+
+  // Overall accuracy
+  const totalCorrect = filteredScores.reduce((sum, s) => sum + (s.correct_hits || 0), 0);
+  const totalWrong = filteredScores.reduce((sum, s) => sum + (s.wrong_hits || 0), 0);
+  const totalHits = totalCorrect + totalWrong;
+  const overallAccuracy = totalHits > 0 ? ((totalCorrect / totalHits) * 100).toFixed(1) : 0;
+
+  // Performance by difficulty
+  const difficultyPerformance = difficultyNames.map((name, i) => {
+    const diffScores = filteredScores.filter(s => s.difficulty === i + 1);
+    return {
+      name,
+      avgScore: diffScores.length > 0 ? Math.round(diffScores.reduce((sum, s) => sum + (s.score || 0), 0) / diffScores.length) : 0,
+      games: diffScores.length,
+    };
+  }).filter(d => d.games > 0);
 
   // Games by type
   const gamesByType = gameNames.map((name, i) => ({
@@ -152,7 +218,7 @@ export default function Statistics() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -206,9 +272,20 @@ export default function Statistics() {
             <p className="text-3xl font-black text-slate-800">{bestReaction === Infinity ? 0 : bestReaction.toFixed(0)}ms</p>
             <p className="text-slate-600 text-sm">{t('bestReaction')}</p>
           </motion.div>
+
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ delay: 0.5 }}
+            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+          >
+            <Target className="w-8 h-8 mx-auto mb-2 text-pink-500" />
+            <p className="text-3xl font-black text-slate-800">{overallAccuracy}%</p>
+            <p className="text-slate-600 text-sm">Accuracy</p>
+          </motion.div>
         </div>
 
-        {/* Charts */}
+        {/* Charts Row 1 */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <motion.div
             initial={{ x: -50, opacity: 0 }}
@@ -232,6 +309,68 @@ export default function Statistics() {
             animate={{ x: 0, opacity: 1 }}
             className="bg-white rounded-2xl p-6 border-2 border-slate-200"
           >
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Win Rate by Game Mode</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={winLossByGame}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="wins" fill="#10b981" name="Wins" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="losses" fill="#ef4444" name="Losses" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </motion.div>
+        </div>
+
+        {/* Charts Row 2 */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+          >
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Average Score Over Time</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <AreaChart data={scoreOverTime}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" angle={-45} textAnchor="end" height={80} />
+                <YAxis />
+                <Tooltip />
+                <Area type="monotone" dataKey="avgScore" stroke="#3b82f6" fill="#93c5fd" name="Avg Score" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </motion.div>
+
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+          >
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Accuracy Trends</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={accuracyTrends}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="game" />
+                <YAxis domain={[0, 100]} />
+                <Tooltip />
+                <Line type="monotone" dataKey="accuracy" stroke="#f59e0b" strokeWidth={3} name="Accuracy %" />
+              </LineChart>
+            </ResponsiveContainer>
+          </motion.div>
+        </div>
+
+        {/* Charts Row 3 */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <motion.div
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+          >
             <h3 className="text-xl font-bold text-slate-800 mb-4">{t('reactionProgression')}</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={reactionProgression}>
@@ -241,6 +380,24 @@ export default function Statistics() {
                 <Tooltip />
                 <Line type="monotone" dataKey="reaction" stroke="#10b981" strokeWidth={3} name="Reaction (ms)" />
               </LineChart>
+            </ResponsiveContainer>
+          </motion.div>
+
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+          >
+            <h3 className="text-xl font-bold text-slate-800 mb-4">Performance by Difficulty</h3>
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={difficultyPerformance}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="avgScore" fill="#ec4899" radius={[8, 8, 0, 0]} name="Avg Score" />
+              </BarChart>
             </ResponsiveContainer>
           </motion.div>
         </div>
