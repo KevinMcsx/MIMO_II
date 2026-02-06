@@ -130,6 +130,19 @@ export const SOUND_PACKS = {
       gameEnd: { frequencies: [300, 250, 200, 150], duration: 120 },
     }
   },
+  synth: { 
+    name: 'Synth', 
+    description: 'Electronic synthesizer sounds', 
+    icon: '🎹', 
+    price: 175,
+    sounds: {
+      buttonPress: { frequency: 880, duration: 60 },
+      correct: { frequencies: [880, 1109, 1318], duration: 180 },
+      wrong: { frequency: 110, duration: 350 },
+      gameStart: { frequencies: [440, 554, 659, 880], duration: 130 },
+      gameEnd: { frequencies: [880, 659, 554, 440], duration: 200 },
+    }
+  },
 };
 
 export const CURSORS = {
