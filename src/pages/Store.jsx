@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { getPlayerProfile } from '../components/game/PlayerProgressManager';
-import { AVATARS, SOUND_PACKS, CURSORS } from '../components/profile/CosmeticData';
+import { AVATARS, SOUND_PACKS, CURSORS, THEMES } from '../components/profile/CosmeticData';
 import { toast } from 'sonner';
 import { useTranslation } from '../components/utils/translations';
 
@@ -38,6 +38,8 @@ export default function Store() {
         updates.unlocked_sound_packs = [...(profile.unlocked_sound_packs || ['default']), itemId];
       } else if (itemType === 'cursor') {
         updates.unlocked_cursors = [...(profile.unlocked_cursors || ['default']), itemId];
+      } else if (itemType === 'theme') {
+        updates.unlocked_themes = [...(profile.unlocked_themes || ['default']), itemId];
       }
 
       return base44.entities.PlayerProfile.update(profile.id, updates);
@@ -66,6 +68,7 @@ export default function Store() {
   const purchasableAvatars = Object.entries(AVATARS).filter(([id, avatar]) => avatar.price);
   const purchasableSoundPacks = Object.entries(SOUND_PACKS).filter(([id, pack]) => pack.price);
   const purchasableCursors = Object.entries(CURSORS).filter(([id, cursor]) => cursor.price);
+  const purchasableThemes = Object.entries(THEMES).filter(([id, theme]) => theme.price);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
@@ -96,6 +99,7 @@ export default function Store() {
         <div className="flex gap-2 mb-4 overflow-x-auto">
           {[
             { id: 'avatars', label: `😊 ${t('avatarsCount')}`, count: purchasableAvatars.length },
+            { id: 'themes', label: `🎨 Themes`, count: purchasableThemes.length },
             { id: 'sounds', label: `🎵 ${t('soundsCount')}`, count: purchasableSoundPacks.length },
             { id: 'cursors', label: `✨ ${t('cursorsCount')}`, count: purchasableCursors.length },
           ].map((tab) => (
@@ -150,6 +154,45 @@ export default function Store() {
                         className="bg-purple-600"
                       >
                         {profile.coins < avatar.price ? <Lock className="w-4 h-4" /> : t('get')}
+                      </Button>
+                    )}
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+
+          {activeTab === 'themes' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {purchasableThemes.map(([id, theme]) => {
+                const isOwned = (profile.unlocked_themes || ['default']).includes(id);
+                return (
+                  <motion.div
+                    key={id}
+                    whileHover={{ scale: 1.02 }}
+                    className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 flex items-center gap-4"
+                  >
+                    <div className={`w-20 h-20 rounded-lg bg-gradient-to-br ${theme.gradient}`} />
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-slate-800">{theme.name}</h3>
+                      <p className="text-sm text-slate-500">{t('backgroundTheme')}</p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <Coins className="w-4 h-4 text-yellow-600" />
+                        <span className="font-bold text-yellow-700">{theme.price}</span>
+                      </div>
+                    </div>
+                    {isOwned ? (
+                      <div className="flex items-center gap-2 text-green-600 font-semibold">
+                        <Check className="w-5 h-5" />
+                        {t('owned')}
+                      </div>
+                    ) : (
+                      <Button
+                        onClick={() => handlePurchase('theme', id, theme.price)}
+                        disabled={profile.coins < theme.price}
+                        className="bg-purple-600"
+                      >
+                        {profile.coins < theme.price ? <Lock className="w-4 h-4" /> : t('get')}
                       </Button>
                     )}
                   </motion.div>
