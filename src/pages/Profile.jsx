@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Star, Lock } from 'lucide-react';
+import { ChevronLeft, Star, Lock, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -135,13 +135,19 @@ export default function Profile() {
           </div>
         </motion.div>
 
-        {/* Coins Display */}
-        <div className="text-center mb-4">
+        {/* Coins Display and Store Link */}
+        <div className="flex justify-center items-center gap-3 mb-4">
           <div className="inline-flex items-center gap-2 bg-yellow-100 border-2 border-yellow-300 rounded-full px-4 py-2">
             <span className="text-2xl">🪙</span>
             <span className="text-xl font-black text-yellow-700">{profile.coins || 0}</span>
             <span className="text-slate-600 text-sm">{t('coins')}</span>
           </div>
+          <Link to={createPageUrl('Store')}>
+            <Button className="bg-purple-600 hover:bg-purple-700">
+              <ShoppingBag className="w-4 h-4 mr-2" />
+              {t('store')}
+            </Button>
+          </Link>
         </div>
 
         {/* Tabs */}
