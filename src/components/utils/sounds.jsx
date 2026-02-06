@@ -1,4 +1,6 @@
 // Sound effects manager using Web Audio API
+import { SOUND_PACKS } from '../components/profile/CosmeticData';
+
 let audioContext = null;
 let soundEnabled = true;
 
@@ -6,6 +8,11 @@ const initAudio = () => {
   if (!audioContext) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
   }
+};
+
+const getCurrentSoundPack = () => {
+  const packId = localStorage.getItem('loopybrainSoundPack') || 'default';
+  return SOUND_PACKS[packId] || SOUND_PACKS.default;
 };
 
 const playTone = (frequency, duration, volume = 0.3, type = 'sine') => {
@@ -53,36 +60,49 @@ const playChord = (frequencies, duration, volume = 0.2) => {
 };
 
 export const sounds = {
-  buttonPress: () => playTone(800, 0.1, 0.2, 'square'),
+  buttonPress: () => {
+    const pack = getCurrentSoundPack();
+    const config = pack.sounds.buttonPress;
+    playTone(config.frequency, config.duration / 1000, 0.2, config.type || 'square');
+  },
   
   correctHit: () => {
-    playTone(523.25, 0.1, 0.3); // C5
-    setTimeout(() => playTone(659.25, 0.15, 0.3), 50); // E5
+    const pack = getCurrentSoundPack();
+    const config = pack.sounds.correct;
+    config.frequencies.forEach((freq, i) => {
+      setTimeout(() => playTone(freq, config.duration / 1000, 0.3, config.type || 'sine'), i * 50);
+    });
   },
   
   wrongHit: () => {
-    playTone(200, 0.2, 0.3, 'sawtooth');
-    setTimeout(() => playTone(150, 0.2, 0.3, 'sawtooth'), 100);
+    const pack = getCurrentSoundPack();
+    const config = pack.sounds.wrong;
+    playTone(config.frequency, config.duration / 1000, 0.3, config.type || 'sawtooth');
+    setTimeout(() => playTone(config.frequency * 0.75, config.duration / 1000, 0.3, config.type || 'sawtooth'), 100);
   },
   
   countdown: () => playTone(600, 0.15, 0.25),
   
   gameStart: () => {
-    playTone(523.25, 0.1, 0.3); // C5
-    setTimeout(() => playTone(659.25, 0.1, 0.3), 100); // E5
-    setTimeout(() => playTone(783.99, 0.2, 0.3), 200); // G5
+    const pack = getCurrentSoundPack();
+    const config = pack.sounds.gameStart;
+    config.frequencies.forEach((freq, i) => {
+      setTimeout(() => playTone(freq, config.duration / 1000, 0.3, config.type || 'sine'), i * 100);
+    });
   },
   
   gameEnd: () => {
-    playChord([523.25, 659.25, 783.99], 0.5, 0.2); // C major chord
+    const pack = getCurrentSoundPack();
+    const config = pack.sounds.gameEnd;
+    playChord(config.frequencies, config.duration / 1000, 0.2);
   },
   
   cardFlip: () => playTone(700, 0.08, 0.15),
   
   pairMatch: () => {
-    playTone(659.25, 0.1, 0.25); // E5
-    setTimeout(() => playTone(783.99, 0.1, 0.25), 80); // G5
-    setTimeout(() => playTone(1046.50, 0.2, 0.25), 160); // C6
+    playTone(659.25, 0.1, 0.25);
+    setTimeout(() => playTone(783.99, 0.1, 0.25), 80);
+    setTimeout(() => playTone(1046.50, 0.2, 0.25), 160);
   },
   
   itemSpawn: () => playTone(400, 0.05, 0.1),
