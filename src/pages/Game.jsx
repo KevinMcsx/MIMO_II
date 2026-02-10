@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, Trophy, BarChart3, Calendar, User } from 'lucide-react';
+import { Volume2, VolumeX, Trophy, BarChart3, Calendar, User, LogOut, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import GameSelection from '../components/game/GameSelection';
@@ -125,6 +132,30 @@ export default function Game() {
     refetchProfile();
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('loopybrainPlayerName');
+    setPlayerName('');
+    setScreen('nameEntry');
+  };
+
+  const handleSwitchProfile = (name) => {
+    localStorage.setItem('loopybrainPlayerName', name);
+    setPlayerName(name);
+    setScreen('gameSelect');
+    refetchProfile();
+  };
+
+  const getAllProfiles = () => {
+    try {
+      const PROFILE_STORAGE_KEY = 'loopybrain_player_profiles';
+      const stored = localStorage.getItem(PROFILE_STORAGE_KEY);
+      const profiles = stored ? JSON.parse(stored) : {};
+      return Object.keys(profiles).filter(name => name !== playerName);
+    } catch {
+      return [];
+    }
+  };
+
   const renderGame = () => {
     switch (selectedGame) {
       case 1:
@@ -170,11 +201,43 @@ export default function Game() {
 
       <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end max-w-[50%] sm:max-w-none">
         <LanguageSelector />
-        <Link to={createPageUrl('Profile')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
-            <User className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
-          </Button>
-        </Link>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+              <User className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-48">
+            <Link to={createPageUrl('Profile')}>
+              <DropdownMenuItem>
+                <User className="w-4 h-4 mr-2" />
+                {t('profile')}
+              </DropdownMenuItem>
+            </Link>
+
+            {getAllProfiles().length > 0 && (
+              <>
+                <DropdownMenuSeparator />
+                <div className="px-2 py-1.5 text-xs font-semibold text-slate-500">
+                  <Users className="w-3 h-3 inline mr-1" />
+                  Switch Profile
+                </div>
+                {getAllProfiles().map((name) => (
+                  <DropdownMenuItem key={name} onClick={() => handleSwitchProfile(name)}>
+                    <span className="ml-6 text-sm">{name}</span>
+                  </DropdownMenuItem>
+                ))}
+              </>
+            )}
+
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <Link to={createPageUrl('DailyChallenge')}>
           <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
             <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
