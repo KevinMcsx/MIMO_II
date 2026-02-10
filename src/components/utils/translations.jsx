@@ -140,6 +140,8 @@ export const translations = {
     getReady: "Get ready...",
     go: "GO!",
     toNextLevel: "to next level",
+    logout: "Logout",
+    switchProfile: "Switch Profile",
 
     // Tutorial
     howToPlay: "How to Play",
@@ -359,6 +361,8 @@ export const translations = {
     getReady: "Prepárate...",
     go: "¡YA!",
     toNextLevel: "al siguiente nivel",
+    logout: "Cerrar sesión",
+    switchProfile: "Cambiar perfil",
 
     // Tutorial
     howToPlay: "Cómo Jugar",
@@ -580,6 +584,8 @@ export const translations = {
     getReady: "Préparez-vous...",
     go: "PARTEZ !",
     toNextLevel: "au niveau suivant",
+    logout: "Déconnexion",
+    switchProfile: "Changer de profil",
 
     // Tutorial
     howToPlay: "Comment Jouer",
@@ -801,6 +807,8 @@ export const translations = {
     getReady: "Mach dich bereit...",
     go: "LOS!",
     toNextLevel: "bis zum nächsten Level",
+    logout: "Abmelden",
+    switchProfile: "Profil wechseln",
 
     // Tutorial
     howToPlay: "Anleitung",
@@ -1022,6 +1030,8 @@ export const translations = {
     getReady: "Készülj...",
     go: "RAJT!",
     toNextLevel: "a következő szintig",
+    logout: "Kijelentkezés",
+    switchProfile: "Profil váltás",
 
     // Tutorial
     howToPlay: "Hogyan Játszd",
@@ -1243,6 +1253,8 @@ export const translations = {
     getReady: "استعد...",
     go: "ابدأ!",
     toNextLevel: "للمستوى التالي",
+    logout: "تسجيل الخروج",
+    switchProfile: "تبديل الملف الشخصي",
 
     // Tutorial
     howToPlay: "كيفية اللعب",

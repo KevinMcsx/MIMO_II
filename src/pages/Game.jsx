@@ -221,7 +221,7 @@ export default function Game() {
                 <DropdownMenuSeparator />
                 <div className="px-2 py-1.5 text-xs font-semibold text-slate-500">
                   <Users className="w-3 h-3 inline mr-1" />
-                  Switch Profile
+                  {t('switchProfile')}
                 </div>
                 {getAllProfiles().map((name) => (
                   <DropdownMenuItem key={name} onClick={() => handleSwitchProfile(name)}>
@@ -234,7 +234,7 @@ export default function Game() {
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleLogout} className="text-red-600">
               <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              {t('logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
