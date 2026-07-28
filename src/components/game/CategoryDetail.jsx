@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Play, Info, Trophy, TrendingUp, Sparkles } from 'lucide-react';
 import { getCategoryById, getGamesByCategory, getDifficultyStyle } from '@/lib/gameCatalog';
@@ -11,9 +11,20 @@ export default function CategoryDetail({ categoryId, onSelect, onBack }) {
   const [tutorialGame, setTutorialGame] = useState(null);
 
   const category = getCategoryById(categoryId);
-  if (!category) return null;
-
   const games = getGamesByCategory(categoryId);
+
+  useEffect(() => {
+    const handleKey = (e) => {
+      const num = parseInt(e.key);
+      if (num >= 1 && num <= games.length) {
+        onSelect(games[num - 1].gameId);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [games, onSelect]);
+
+  if (!category) return null;
 
   return (
     <div className="w-full max-w-3xl px-2">
@@ -46,6 +57,11 @@ export default function CategoryDetail({ categoryId, onSelect, onBack }) {
         </div>
       </div>
 
+      {/* Keyboard hint */}
+      <p className="text-sm text-white/80 text-center mb-4 font-bold drop-shadow-sm">
+        {t('useKeys')} 1–{games.length} {t('keysToSelect')}
+      </p>
+
       {/* Games grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         {games.map((game, index) => {
@@ -73,20 +89,25 @@ export default function CategoryDetail({ categoryId, onSelect, onBack }) {
               <div className="absolute -top-6 -right-6 w-20 h-20 bg-white/10 rounded-full" />
               <div className="absolute -bottom-4 -left-4 w-14 h-14 bg-white/10 rounded-full" />
 
-              {/* Info button */}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTutorialGame(game.gameId);
-                }}
-                className="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 border-2 border-white/40 relative z-10"
-                aria-label="How to play"
-              >
-                <Info className="w-4 h-4 text-white" strokeWidth={2.5} />
-              </button>
+              {/* Header: number + info */}
+              <div className="flex items-center justify-between mb-2 relative z-10">
+                <div className="w-8 h-8 shrink-0 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/40">
+                  <span className="text-sm font-black text-white drop-shadow-sm">{index + 1}</span>
+                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setTutorialGame(game.gameId);
+                  }}
+                  className="w-9 h-9 rounded-full bg-white/30 hover:bg-white/50 backdrop-blur-sm flex items-center justify-center transition-all hover:scale-110 active:scale-95 border-2 border-white/40"
+                  aria-label="How to play"
+                >
+                  <Info className="w-4 h-4 text-white" strokeWidth={2.5} />
+                </button>
+              </div>
 
               {/* Title */}
-              <h3 className={`text-base sm:text-lg font-black text-white pr-10 mb-1 mt-1 drop-shadow-sm relative z-10`}>
+              <h3 className="text-base sm:text-lg font-black text-white mb-1 drop-shadow-sm relative z-10">
                 {t(game.nameKey)}
               </h3>
               <p className="text-xs sm:text-sm text-white/90 leading-relaxed mb-3 font-medium relative z-10">
