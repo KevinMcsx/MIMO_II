@@ -7,6 +7,7 @@ import { awardXP } from './PlayerProgressManager';
 import LevelUpModal from './LevelUpModal';
 import XPGainPopup from './XPGainPopup';
 import CelebrationOverlay from './CelebrationOverlay';
+import { sounds } from '../utils/sounds';
 import { useTranslation } from '../utils/translations';
 
 export default function ResultsScreen({ 
@@ -23,6 +24,7 @@ export default function ResultsScreen({
   const [progressionData, setProgressionData] = React.useState(null);
   
   React.useEffect(() => {
+    sounds.win();
     if (gameResult && playerName) {
       awardXP(playerName, gameResult).then(data => {
         if (data) {

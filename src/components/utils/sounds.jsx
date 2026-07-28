@@ -10,6 +10,7 @@ const SOUND_PACK_CONFIGS = {
       wrong: { frequency: 200, duration: 300 },
       gameStart: { frequencies: [262, 330, 392, 523], duration: 150 },
       gameEnd: { frequencies: [523, 392, 330, 262], duration: 200 },
+      win: { melody: [523, 659, 784, 1047], chord: [523, 659, 784], noteDuration: 120, chordDuration: 600 },
     }
   },
   retro: {
@@ -19,6 +20,7 @@ const SOUND_PACK_CONFIGS = {
       wrong: { frequency: 100, duration: 150 },
       gameStart: { frequencies: [523, 659, 784, 1047], duration: 100 },
       gameEnd: { frequencies: [1047, 784, 659, 523], duration: 150 },
+      win: { melody: [1047, 1319, 1568, 2093], chord: [1047, 1319, 1568], noteDuration: 80, chordDuration: 400 },
     }
   },
   nature: {
@@ -28,6 +30,7 @@ const SOUND_PACK_CONFIGS = {
       wrong: { frequency: 180, duration: 400, type: 'sine' },
       gameStart: { frequencies: [294, 370, 440, 554], duration: 200, type: 'sine' },
       gameEnd: { frequencies: [554, 440, 370, 294], duration: 250, type: 'sine' },
+      win: { melody: [440, 554, 659, 880], chord: [440, 554, 659], noteDuration: 150, chordDuration: 700, type: 'sine' },
     }
   },
   space: {
@@ -37,6 +40,7 @@ const SOUND_PACK_CONFIGS = {
       wrong: { frequency: 80, duration: 250 },
       gameStart: { frequencies: [784, 988, 1175, 1568], duration: 120 },
       gameEnd: { frequencies: [1568, 1175, 988, 784], duration: 180 },
+      win: { melody: [1568, 1976, 2349, 3136], chord: [1568, 1976, 2349], noteDuration: 100, chordDuration: 500 },
     }
   },
   drums: {
@@ -46,6 +50,7 @@ const SOUND_PACK_CONFIGS = {
       wrong: { frequency: 80, duration: 200 },
       gameStart: { frequencies: [150, 200, 250, 300], duration: 80 },
       gameEnd: { frequencies: [300, 250, 200, 150], duration: 120 },
+      win: { melody: [200, 250, 300, 400], chord: [200, 250, 300], noteDuration: 100, chordDuration: 500 },
     }
   },
   synth: {
@@ -55,6 +60,7 @@ const SOUND_PACK_CONFIGS = {
       wrong: { frequency: 110, duration: 350 },
       gameStart: { frequencies: [440, 554, 659, 880], duration: 130 },
       gameEnd: { frequencies: [880, 659, 554, 440], duration: 200 },
+      win: { melody: [880, 1109, 1318, 1760], chord: [880, 1109, 1318], noteDuration: 110, chordDuration: 550 },
     }
   },
 };
@@ -150,6 +156,16 @@ export const sounds = {
     const pack = getCurrentSoundPack();
     const config = pack.sounds.gameEnd;
     playChord(config.frequencies, config.duration / 1000, 0.2);
+  },
+
+  win: () => {
+    const pack = getCurrentSoundPack();
+    const config = pack.sounds.win;
+    config.melody.forEach((freq, i) => {
+      setTimeout(() => playTone(freq, config.noteDuration / 1000, 0.3, config.type || 'sine'), i * config.noteDuration);
+    });
+    const chordStart = config.melody.length * config.noteDuration;
+    setTimeout(() => playChord(config.chord, config.chordDuration / 1000, 0.2), chordStart);
   },
   
   cardFlip: () => playTone(700, 0.08, 0.15),
