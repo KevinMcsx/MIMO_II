@@ -2,6 +2,11 @@ export const translations = {
   en: {
     // Main Menu
     chooseGame: "Choose a Game!",
+    categoryAll: "All",
+    categoryAttention: "Attention",
+    categoryTracking: "Tracking",
+    categoryMemory: "Memory",
+    categoryProcessingSpeed: "Processing Speed",
     useKeys: "Use",
     keysToSelect: "keys to select",
     
@@ -285,6 +290,11 @@ export const translations = {
   es: {
     // Main Menu
     chooseGame: "¡Elige un Juego!",
+    categoryAll: "Todos",
+    categoryAttention: "Atención",
+    categoryTracking: "Seguimiento",
+    categoryMemory: "Memoria",
+    categoryProcessingSpeed: "Velocidad de Procesamiento",
     useKeys: "Usa las teclas",
     keysToSelect: "para seleccionar",
     
@@ -570,6 +580,11 @@ export const translations = {
   fr: {
     // Main Menu
     chooseGame: "Choisissez un Jeu !",
+    categoryAll: "Tout",
+    categoryAttention: "Attention",
+    categoryTracking: "Suivi",
+    categoryMemory: "Mémoire",
+    categoryProcessingSpeed: "Vitesse de Traitement",
     useKeys: "Utilisez les touches",
     keysToSelect: "pour sélectionner",
     
@@ -855,6 +870,11 @@ export const translations = {
   de: {
     // Main Menu
     chooseGame: "Wähle ein Spiel!",
+    categoryAll: "Alle",
+    categoryAttention: "Aufmerksamkeit",
+    categoryTracking: "Verfolgung",
+    categoryMemory: "Gedächtnis",
+    categoryProcessingSpeed: "Verarbeitungsgeschwindigkeit",
     useKeys: "Benutze die Tasten",
     keysToSelect: "zur Auswahl",
     
@@ -1140,6 +1160,11 @@ export const translations = {
   hu: {
     // Main Menu
     chooseGame: "Válassz Játékot!",
+    categoryAll: "Összes",
+    categoryAttention: "Figyelem",
+    categoryTracking: "Követés",
+    categoryMemory: "Memória",
+    categoryProcessingSpeed: "Feldolgozási Sebesség",
     useKeys: "Használd a",
     keysToSelect: "billentyűket a választáshoz",
     
@@ -1425,6 +1450,11 @@ export const translations = {
   ar: {
     // Main Menu
     chooseGame: "اختر لعبة!",
+    categoryAll: "الكل",
+    categoryAttention: "الانتباه",
+    categoryTracking: "التتبع",
+    categoryMemory: "الذاكرة",
+    categoryProcessingSpeed: "سرعة المعالجة",
     useKeys: "استخدم المفاتيح",
     keysToSelect: "للاختيار",
     

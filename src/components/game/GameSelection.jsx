@@ -7,6 +7,26 @@ import TutorialModal from './TutorialModal';
 export default function GameSelection({ onSelect, activeKey, unlockedGames = [1, 2, 3, 4] }) {
   const t = useTranslation();
   const [tutorialGame, setTutorialGame] = useState(null);
+  const [activeCategory, setActiveCategory] = useState('all');
+
+  const categoryMap = {
+    1: 'attention', 2: 'attention', 10: 'attention', 17: 'attention',
+    18: 'attention', 22: 'attention', 26: 'attention', 27: 'attention', 28: 'attention',
+    4: 'tracking', 14: 'tracking', 15: 'tracking', 20: 'tracking',
+    21: 'tracking', 30: 'tracking', 35: 'tracking',
+    3: 'memory', 6: 'memory', 7: 'memory', 16: 'memory',
+    23: 'memory', 24: 'memory', 25: 'memory',
+    5: 'speed', 8: 'speed', 9: 'speed', 11: 'speed', 12: 'speed', 13: 'speed',
+    19: 'speed', 29: 'speed', 31: 'speed', 32: 'speed', 33: 'speed', 34: 'speed', 36: 'speed',
+  };
+
+  const categories = [
+    { id: 'all', label: t('categoryAll'), Icon: LayoutGrid },
+    { id: 'attention', label: t('categoryAttention'), Icon: Target },
+    { id: 'tracking', label: t('categoryTracking'), Icon: Gauge },
+    { id: 'memory', label: t('categoryMemory'), Icon: Brain },
+    { id: 'speed', label: t('categoryProcessingSpeed'), Icon: Zap },
+  ];
   
   const games = [
     {
@@ -388,8 +408,25 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
         {t('useKeys')} 1-9 {t('keysToSelect')}
       </p>
 
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-3 w-full max-w-4xl">
+        {categories.map(cat => (
+          <button
+            key={cat.id}
+            onClick={() => setActiveCategory(cat.id)}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold transition-all ${
+              activeCategory === cat.id
+                ? 'bg-white text-slate-800 shadow-lg scale-105'
+                : 'bg-white/30 text-white hover:bg-white/40'
+            }`}
+          >
+            <cat.Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6 w-full max-w-4xl">
-        {games.map((game, index) => (
+        {games.filter(g => activeCategory === 'all' || categoryMap[g.id] === activeCategory).map((game, index) => (
           <motion.button
             key={game.id}
             initial={{ opacity: 0, y: 50 }}
