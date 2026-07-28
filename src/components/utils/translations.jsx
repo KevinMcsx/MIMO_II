@@ -22,6 +22,8 @@ export const translations = {
     progressLabel: "Your Stars",
     dailyStreak: "Daily Streak",
     daysInARow: "days in a row",
+    achievements: "Achievements",
+    badgesEarned: "badges earned",
     
     // Games
     colorReaction: "Color Reaction",
@@ -323,6 +325,8 @@ export const translations = {
     progressLabel: "Tus Estrellas",
     dailyStreak: "Racha Diaria",
     daysInARow: "días seguidos",
+    achievements: "Logros",
+    badgesEarned: "insignias ganadas",
     
     // Games
     colorReaction: "Reacción de Color",
@@ -626,6 +630,8 @@ export const translations = {
     progressLabel: "Tes Étoiles",
     dailyStreak: "Série Quotidienne",
     daysInARow: "jours d'affilée",
+    achievements: "Succès",
+    badgesEarned: "badges gagnés",
     
     // Games
     colorReaction: "Réaction Couleur",
@@ -929,6 +935,8 @@ export const translations = {
     progressLabel: "Deine Sterne",
     dailyStreak: "Tägliche Serie",
     daysInARow: "Tage in Folge",
+    achievements: "Erfolge",
+    badgesEarned: "Abzeichen verdient",
     
     // Games
     colorReaction: "Farb-Reaktion",
@@ -1232,6 +1240,8 @@ export const translations = {
     progressLabel: "Csillagjaid",
     dailyStreak: "Napi Sorozat",
     daysInARow: "nap egy sorban",
+    achievements: "Eredmények",
+    badgesEarned: "jelvény megszerezve",
     
     // Games
     colorReaction: "Szín Reakció",
@@ -1535,6 +1545,8 @@ export const translations = {
     progressLabel: "نجومك",
     dailyStreak: "سلسلة يومية",
     daysInARow: "أيام متتالية",
+    achievements: "الإنجازات",
+    badgesEarned: "شارات مكتسبة",
     
     // Games
     colorReaction: "رد فعل الألوان",

@@ -330,16 +330,22 @@ export default function Statistics() {
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border-2 border-blue-300"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Average Score Over Time</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">📈 Average Score Over Time</h3>
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart data={scoreOverTime}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <defs>
+                  <linearGradient id="scoreGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.8} />
+                    <stop offset="100%" stopColor="#93c5fd" stopOpacity={0.2} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#dbeafe" />
                 <XAxis dataKey="date" angle={-45} textAnchor="end" height={80} />
                 <YAxis />
                 <Tooltip />
-                <Area type="monotone" dataKey="avgScore" stroke="#3b82f6" fill="#93c5fd" name="Avg Score" />
+                <Area type="monotone" dataKey="avgScore" stroke="#3b82f6" strokeWidth={3} fill="url(#scoreGradient)" name="Avg Score" />
               </AreaChart>
             </ResponsiveContainer>
           </motion.div>
@@ -348,16 +354,23 @@ export default function Statistics() {
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border-2 border-amber-300"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Accuracy Trends</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">🎯 Accuracy Trends</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={accuracyTrends}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <defs>
+                  <linearGradient id="accuracyGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#f59e0b" />
+                    <stop offset="50%" stopColor="#f97316" />
+                    <stop offset="100%" stopColor="#ef4444" />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#fef3c7" />
                 <XAxis dataKey="game" />
                 <YAxis domain={[0, 100]} />
                 <Tooltip />
-                <Line type="monotone" dataKey="accuracy" stroke="#f59e0b" strokeWidth={3} name="Accuracy %" />
+                <Line type="monotone" dataKey="accuracy" stroke="url(#accuracyGradient)" strokeWidth={4} name="Accuracy %" dot={{ fill: '#f59e0b', r: 5 }} />
               </LineChart>
             </ResponsiveContainer>
           </motion.div>
@@ -369,16 +382,22 @@ export default function Statistics() {
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border-2 border-green-300"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">{t('reactionProgression')}</h3>
+            <h3 className="text-xl font-bold text-slate-800 mb-4">⚡ {t('reactionProgression')}</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={reactionProgression}>
-                <CartesianGrid strokeDasharray="3 3" />
+                <defs>
+                  <linearGradient id="reactionGradient" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#34d399" />
+                    <stop offset="100%" stopColor="#10b981" />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#d1fae5" />
                 <XAxis dataKey="game" />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="reaction" stroke="#10b981" strokeWidth={3} name="Reaction (ms)" />
+                <Line type="monotone" dataKey="reaction" stroke="url(#reactionGradient)" strokeWidth={4} name="Reaction (ms)" dot={{ fill: '#10b981', r: 5 }} />
               </LineChart>
             </ResponsiveContainer>
           </motion.div>

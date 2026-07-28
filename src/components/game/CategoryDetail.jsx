@@ -28,17 +28,6 @@ export default function CategoryDetail({ categoryId, onSelect, onBack }) {
 
   return (
     <div className="w-full max-w-3xl px-2">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-4">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-white/70 hover:bg-white/90 backdrop-blur-sm text-slate-700 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg"
-        >
-          <ArrowLeft className="w-4 h-4" strokeWidth={3} />
-          {t('back')}
-        </button>
-      </div>
-
       {/* Category title card */}
       <div className={`flex items-center gap-3 rounded-[1.5rem] p-4 sm:p-5 mb-5 ${category.bgClass} border-4 border-white/50 shadow-2xl ${category.cardShadow} overflow-hidden relative`}>
         <div className="absolute -top-8 -right-8 w-28 h-28 bg-white/15 rounded-full" />
