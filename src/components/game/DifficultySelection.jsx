@@ -31,6 +31,12 @@ const gameDescriptions = {
     3: '5 min • Fast mixed',
     4: 'Endless • Speed increases • 5 lives',
   },
+  9: {
+    1: 'Shapes only • No timer • 10 rounds',
+    2: 'Shapes + colors • No timer • 12 rounds',
+    3: 'Longer patterns • 2 min • 15 rounds',
+    4: 'Expert speed • 75s • 20 rounds',
+  },
 };
 
 export default function DifficultySelection({ gameId, onSelect, onBack, activeKey, unlockedDifficulties = [1, 2, 3, 4] }) {

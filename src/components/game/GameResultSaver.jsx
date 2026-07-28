@@ -88,7 +88,7 @@ export const downloadResultsAsText = async () => {
     textContent += '========================================\n\n';
     
     results.forEach((result, index) => {
-      const gameNames = ['Color Reaction', 'Color + Shape', 'Memory Match', 'Pro Challenge'];
+      const gameNames = ['Color Reaction', 'Color + Shape', 'Memory Match', 'Pro Challenge', 'Pattern Recognition', 'Number Memory', 'Sequence Memory', 'Juice Maker', 'Pattern Prediction'];
       const difficultyNames = ['Easy', 'Medium', 'Hard', 'Expert'];
       
       textContent += `--- Record #${index + 1} ---\n`;

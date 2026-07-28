@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Shapes, Brain, Zap, Keyboard, Info } from 'lucide-react';
+import { Palette, Shapes, Brain, Zap, Keyboard, Info, TrendingUp } from 'lucide-react';
 import { useTranslation } from '../utils/translations';
 import TutorialModal from './TutorialModal';
 
@@ -89,6 +89,16 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
       glow: 'shadow-orange-500/50',
       key: '8',
     },
+    {
+      id: 9,
+      color: 'pink',
+      title: t('patternPrediction'),
+      description: t('game9Desc'),
+      Icon: TrendingUp,
+      bg: 'from-pink-500 to-rose-600',
+      glow: 'shadow-pink-500/50',
+      key: '9',
+    },
   ];
   return (
     <motion.div
@@ -105,7 +115,7 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
       </motion.h1>
       
       <p className="text-sm sm:text-lg md:text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
-        {t('useKeys')} 1-8 {t('keysToSelect')}
+        {t('useKeys')} 1-9 {t('keysToSelect')}
       </p>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6 w-full max-w-4xl">

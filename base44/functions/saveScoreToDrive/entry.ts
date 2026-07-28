@@ -18,6 +18,7 @@ Deno.serve(async (req) => {
       6: 'Number Memory',
       7: 'Sequence Memory',
       8: 'Juice Maker',
+      9: 'Pattern Prediction',
     };
     const gameName = gameNames[gameResult.game_type] || 'Unknown';
     

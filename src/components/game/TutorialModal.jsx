@@ -201,6 +201,23 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
           description: "Try chunking: group numbers mentally (like phone numbers). Focus hard during the display. Three mistakes ends the game!",
         },
       ],
+    },
+    9: {
+      title: t('patternPrediction'),
+      steps: [
+        {
+          title: '🎯 ' + t('objective'),
+          description: "A sequence of shapes (and colors) appears with a '?' at the end. Study the repeating pattern, then pick the item that comes next!",
+        },
+        {
+          title: '⌨️ ' + t('controls'),
+          description: "Click an answer card or press the number key (1-4 or 1-6) shown on each option. Correct answers score points; wrong ones lose points!",
+        },
+        {
+          title: '⚡ ' + t('tips'),
+          description: "Easy = shapes only. Medium adds colors. Hard/expert use longer patterns and tighter timers — spot the cycle length fast!",
+        },
+      ],
     }
   };
 

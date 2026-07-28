@@ -14,6 +14,7 @@ export const translations = {
     numberMemory: "Number Memory",
     sequenceMemory: "Sequence Memory",
     juiceMaker: "Juice Maker",
+    patternPrediction: "Pattern Prediction",
 
     // Game Descriptions
     game1Desc: "Match the color as fast as you can!",
@@ -24,6 +25,10 @@ export const translations = {
     game6Desc: "Remember number sequences!",
     game7Desc: "Remember the order of colors!",
     game8Desc: "Fill juice cups with perfect timing!",
+    game9Desc: "Predict the next item in the pattern!",
+
+    // Game 9
+    predictNext: "What comes next in the pattern?",
     
     // Difficulty
     chooseDifficulty: "Choose Difficulty",
@@ -235,6 +240,7 @@ export const translations = {
     numberMemory: "Memoria Numérica",
     sequenceMemory: "Memoria de Secuencia",
     juiceMaker: "Fabricante de Jugos",
+    patternPrediction: "Predicción de Patrones",
 
     // Game Descriptions
     game1Desc: "¡Coincide el color lo más rápido posible!",
@@ -245,6 +251,10 @@ export const translations = {
     game6Desc: "¡Recuerda secuencias de números!",
     game7Desc: "¡Recuerda el orden de colores!",
     game8Desc: "¡Llena vasos de jugo con tiempo perfecto!",
+    game9Desc: "¡Predice el siguiente elemento del patrón!",
+
+    // Game 9
+    predictNext: "¿Qué sigue en el patrón?",
     
     // Difficulty
     chooseDifficulty: "Elige Dificultad",
@@ -458,6 +468,7 @@ export const translations = {
     numberMemory: "Mémoire des Nombres",
     sequenceMemory: "Mémoire de Séquence",
     juiceMaker: "Fabricant de Jus",
+    patternPrediction: "Prédiction de Motifs",
 
     // Game Descriptions
     game1Desc: "Associez la couleur le plus vite possible !",
@@ -468,6 +479,10 @@ export const translations = {
     game6Desc: "Mémorisez les séquences de nombres !",
     game7Desc: "Mémorisez l'ordre des couleurs !",
     game8Desc: "Remplissez des verres de jus parfaitement !",
+    game9Desc: "Prédisez le prochain élément du motif !",
+
+    // Game 9
+    predictNext: "Quel est le suivant dans le motif ?",
     
     // Difficulty
     chooseDifficulty: "Choisir la Difficulté",
@@ -681,6 +696,7 @@ export const translations = {
     numberMemory: "Zahlengedächtnis",
     sequenceMemory: "Sequenzgedächtnis",
     juiceMaker: "Saft-Hersteller",
+    patternPrediction: "Muster-Vorhersage",
 
     // Game Descriptions
     game1Desc: "Ordne die Farbe so schnell wie möglich zu!",
@@ -691,6 +707,10 @@ export const translations = {
     game6Desc: "Merke dir Zahlenfolgen!",
     game7Desc: "Merke dir die Farbreihenfolge!",
     game8Desc: "Fülle Saftbecher perfekt!",
+    game9Desc: "Sage das nächste Element im Muster voraus!",
+
+    // Game 9
+    predictNext: "Was kommt als Nächstes im Muster?",
     
     // Difficulty
     chooseDifficulty: "Schwierigkeit Wählen",
@@ -904,6 +924,7 @@ export const translations = {
     numberMemory: "Szám Memória",
     sequenceMemory: "Sorrend Memória",
     juiceMaker: "Gyümölcslé Készítő",
+    patternPrediction: "Minta Jóslás",
 
     // Game Descriptions
     game1Desc: "Illeszd a színt a lehető leggyorsabban!",
@@ -914,6 +935,10 @@ export const translations = {
     game6Desc: "Jegyezd meg a számsorokat!",
     game7Desc: "Jegyezd meg a színek sorrendjét!",
     game8Desc: "Töltsd a gyümölcslé poharakat tökéletesen!",
+    game9Desc: "Jósold meg a minta következő elemét!",
+
+    // Game 9
+    predictNext: "Mi következik a mintában?",
     
     // Difficulty
     chooseDifficulty: "Válassz Nehézséget",
@@ -1127,6 +1152,7 @@ export const translations = {
     numberMemory: "ذاكرة الأرقام",
     sequenceMemory: "ذاكرة التسلسل",
     juiceMaker: "صانع العصير",
+    patternPrediction: "التنبؤ بالنمط",
 
     // Game Descriptions
     game1Desc: "طابق اللون بأسرع ما يمكن!",
@@ -1137,6 +1163,10 @@ export const translations = {
     game6Desc: "تذكر تسلسلات الأرقام!",
     game7Desc: "تذكر ترتيب الألوان!",
     game8Desc: "املأ أكواب العصير بتوقيت مثالي!",
+    game9Desc: "توقع العنصر التالي في النمط!",
+
+    // Game 9
+    predictNext: "ما التالي في النمط؟",
     
     // Difficulty
     chooseDifficulty: "اختر المستوى",

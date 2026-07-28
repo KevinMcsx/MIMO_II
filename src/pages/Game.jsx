@@ -24,6 +24,7 @@ import Game5PatternRecognition from '../components/game/Game5PatternRecognition'
 import Game6NumberMemory from '../components/game/Game6NumberMemory';
 import Game7SequenceMemory from '../components/game/Game7SequenceMemory';
 import Game8JuiceMaker from '../components/game/Game8JuiceMaker';
+import Game9PatternPrediction from '../components/game/Game9PatternPrediction';
 import NameEntry from '../components/game/NameEntry';
 import LevelDisplay from '../components/game/LevelDisplay';
 import { sounds } from '../components/utils/sounds';
@@ -73,7 +74,7 @@ export default function Game() {
     if (screen === 'playing') return;
 
     const handleKeyDown = (e) => {
-      const keyToGame = { '1': 1, '2': 3, '3': 2, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8 };
+      const keyToGame = { '1': 1, '2': 3, '3': 2, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9 };
       const keyToDifficulty = { '1': 1, '2': 3, '3': 2, '4': 4 };
 
       if (screen === 'gameSelect' && keyToGame[e.key]) {
@@ -174,6 +175,8 @@ export default function Game() {
         return <Game7SequenceMemory difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 8:
         return <Game8JuiceMaker difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 9:
+        return <Game9PatternPrediction difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       default:
         return null;
     }
@@ -347,7 +350,8 @@ export default function Game() {
                 <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">5</span>
                 <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">6</span>
                 <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">7</span>
-                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">8</span> {t('keysToSelect')}
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">8</span>
+                <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">9</span> {t('keysToSelect')}
               </p>
             </div>
 
@@ -383,6 +387,10 @@ export default function Game() {
               <div className="flex items-center gap-1 px-2 py-1 bg-orange-500/20 rounded-full">
                 <span className="text-sm sm:text-base">🧃</span>
                 <span className="text-orange-400 font-bold text-xs">8</span>
+              </div>
+              <div className="flex items-center gap-1 px-2 py-1 bg-pink-500/20 rounded-full">
+                <span className="text-sm sm:text-base">🔮</span>
+                <span className="text-pink-400 font-bold text-xs">9</span>
               </div>
             </div>
           </motion.div>
