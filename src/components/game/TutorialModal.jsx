@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Circle, Square, Triangle, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from '../utils/translations';
+import { getTutorialText } from './TutorialContent';
 
 const ShapeIcon = ({ shape, className }) => {
   const icons = { circle: Circle, square: Square, triangle: Triangle, star: Star };
@@ -171,268 +172,241 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
     5: {
       title: t('patternRecognition'),
       steps: [
-        {
-          title: '🎯 ' + t('objective'),
-          description: "Find and click the item that is different from the rest. One shape or color will stand out - that's your target!",
-        },
-        {
-          title: '⌨️ ' + t('controls'),
-          description: "Click or tap on the item you think is different. Work quickly but carefully - wrong answers deduct points!",
-        },
-        {
-          title: '⚡ ' + t('tips'),
-          description: "Scan the grid systematically. Look for differences in shape OR color. The odd one out becomes more subtle at higher difficulties!",
-        },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(5, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(5, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(5, 'tips') },
       ],
     },
     6: {
       title: t('numberMemory'),
       steps: [
-        {
-          title: '🎯 ' + t('objective'),
-          description: "Memorize number sequences that appear briefly, then type them back correctly. Sequences get longer as you progress!",
-        },
-        {
-          title: '⌨️ ' + t('controls'),
-          description: "Watch the numbers carefully when shown. Then type the exact sequence and press Enter or click Submit.",
-        },
-        {
-          title: '⚡ ' + t('tips'),
-          description: "Try chunking: group numbers mentally (like phone numbers). Focus hard during the display. Three mistakes ends the game!",
-        },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(6, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(6, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(6, 'tips') },
       ],
     },
     9: {
       title: t('patternPrediction'),
       steps: [
-        {
-          title: '🎯 ' + t('objective'),
-          description: "A sequence of shapes (and colors) appears with a '?' at the end. Study the repeating pattern, then pick the item that comes next!",
-        },
-        {
-          title: '⌨️ ' + t('controls'),
-          description: "Click an answer card or press the number key (1-4 or 1-6) shown on each option. Correct answers score points; wrong ones lose points!",
-        },
-        {
-          title: '⚡ ' + t('tips'),
-          description: "Easy = shapes only. Medium adds colors. Hard/expert use longer patterns and tighter timers — spot the cycle length fast!",
-        },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(9, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(9, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(9, 'tips') },
       ],
     },
     10: {
       title: t('shapeSorting'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A rule appears (e.g. 'Is it a CIRCLE?' or 'Is it RED?'). For each shape shown, decide if it matches the rule!" },
-        { title: '⌨️ ' + t('controls'), description: "Click ✓ Match if the shape fits the rule, or ✗ Pass if it doesn't. Decide fast — the clock is ticking!" },
-        { title: '⚡ ' + t('tips'), description: "Focus on the rule's attribute only (shape or color). Wrong answers lose points, so stay sharp as the speed climbs!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(10, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(10, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(10, 'tips') },
       ],
     },
     11: {
       title: t('twinHunt'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A grid full of shapes appears — but exactly TWO are identical. Find and tap the matching pair!" },
-        { title: '⌨️ ' + t('controls'), description: "Click one shape, then click its twin. Correct pairs score points; mismatched picks lose points." },
-        { title: '⚡ ' + t('tips'), description: "Scan by shape first, then by color. Bigger grids and shorter timers at higher levels — trust your eyes!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(11, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(11, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(11, 'tips') },
       ],
     },
     12: {
       title: t('quickCount'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A target shape is shown. A grid flashes briefly — count how many targets you see, then pick the right number!" },
-        { title: '⌨️ ' + t('controls'), description: "Watch the grid during the flash, then click the number button with your count. Wrong guesses lose points!" },
-        { title: '⚡ ' + t('tips'), description: "Lock onto the target's shape AND color. Group items visually to count faster. Higher levels flash quicker!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(12, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(12, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(12, 'tips') },
       ],
     },
     13: {
       title: t('speedMatch'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Two shapes appear — the previous one and the current one. Decide if they match by the rule!" },
-        { title: '⌨️ ' + t('controls'), description: "Click Match if they fit the rule, or Different if not. Be quick — the timer is running!" },
-        { title: '⚡ ' + t('tips'), description: "Easy checks color, medium checks shape, hard checks either, expert checks both. Focus only on the rule's attribute!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(13, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(13, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(13, 'tips') },
       ],
     },
     14: {
       title: t('lightTrack'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Watch cells light up in a sequence, then repeat the exact same path by clicking them in order!" },
-        { title: '⌨️ ' + t('controls'), description: "Click each cell in the order it lit up. One wrong tap restarts the round — stay focused!" },
-        { title: '⚡ ' + t('tips'), description: "Mentally number the cells. Higher levels add longer sequences and bigger grids!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(14, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(14, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(14, 'tips') },
       ],
     },
     15: {
       title: t('colorInvaders'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Shapes pop up across the grid. Tap ONLY the ones matching the target color before they vanish!" },
-        { title: '⌨️ ' + t('controls'), description: "Click target-color shapes to score. Tapping wrong colors loses points. Don't let targets escape!" },
-        { title: '⚡ ' + t('tips'), description: "Keep your eyes on the target color. Shapes disappear fast — react quickly but accurately!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(15, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(15, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(15, 'tips') },
       ],
     },
     16: {
       title: t('reverseSequence'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A sequence of shapes flashes one at a time. Then tap them BACKWARDS — the last shape first!" },
-        { title: '⌨️ ' + t('controls'), description: "Use the four shape buttons to replay the sequence in reverse order. Mistakes restart the round!" },
-        { title: '⚡ ' + t('tips'), description: "Mentally reverse the list as you watch. Longer sequences at higher levels test your working memory!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(16, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(16, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(16, 'tips') },
       ],
     },
     17: {
       title: t('visualSearch'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A target shape is shown. Find the ONE match hidden among distractors and tap it fast!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the shape that matches the target's shape AND color. Wrong taps lose points; the clock is ticking!" },
-        { title: '⚡ ' + t('tips'), description: "Scan systematically left-to-right. Bigger grids and shorter timers at higher levels — trust your eyes!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(17, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(17, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(17, 'tips') },
       ],
     },
     18: {
       title: t('stroopColor'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A color word appears in an ink color. Pick the INK color — ignore what the word says!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the button matching the ink color, not the word. Conflict rises at higher levels!" },
-        { title: '⚡ ' + t('tips'), description: "Don't read — look at the color. Your brain wants to read the word; fight that instinct to win!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(18, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(18, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(18, 'tips') },
       ],
     },
     19: {
       title: t('reactionTarget'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Wait for the dot, then tap it as fast as you can! Don't tap too early." },
-        { title: '⌨️ ' + t('controls'), description: "Click anywhere when the dot appears. Tapping during the wait counts as a miss." },
-        { title: '⚡ ' + t('tips'), description: "Keep your finger ready but resist the urge to tap early. Faster taps = more points!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(19, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(19, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(19, 'tips') },
       ],
     },
     20: {
       title: t('speedTap'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Targets pop up one at a time — tap as many as you can before time runs out!" },
-        { title: '⌨️ ' + t('controls'), description: "Click each dot the instant it appears. Every tap scores points." },
-        { title: '⚡ ' + t('tips'), description: "Stay alert and keep tapping — accuracy comes from speed at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(20, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(20, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(20, 'tips') },
       ],
     },
     21: {
       title: t('quickColor'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A color flashes — tap the matching color button as fast as possible!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the button whose color matches the big circle. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Don't overthink — trust your reflexes. Higher levels add more rounds!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(21, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(21, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(21, 'tips') },
       ],
     },
     22: {
       title: t('goNoGo'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Green means GO (tap!), red means STOP (don't tap). Test your self-control!" },
-        { title: '⌨️ ' + t('controls'), description: "Tap only on green stimuli. Holding back on red scores bonus points." },
-        { title: '⚡ ' + t('tips'), description: "Higher levels show more red and faster pace — stay disciplined!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(22, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(22, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(22, 'tips') },
       ],
     },
     23: {
       title: t('memoryMatrix'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Cells light up briefly — memorize them, then tap the same cells!" },
-        { title: '⌨️ ' + t('controls'), description: "Watch the pattern, then click each cell that was lit. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Chunk the lit cells into a shape in your mind. Bigger grids at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(23, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(23, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(23, 'tips') },
       ],
     },
     24: {
       title: t('shapeStack'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A sequence of shapes flashes — repeat them in the same order!" },
-        { title: '⌨️ ' + t('controls'), description: "Tap the shape buttons in the order they appeared. Mistakes restart the round." },
-        { title: '⚡ ' + t('tips'), description: "Say each shape silently as it appears. Longer sequences test your memory!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(24, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(24, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(24, 'tips') },
       ],
     },
     25: {
       title: t('nBack'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Does the current shape match the one from N steps ago? Decide fast!" },
-        { title: '⌨️ ' + t('controls'), description: "Click YES if it matches the shape N steps back, NO if different." },
-        { title: '⚡ ' + t('tips'), description: "Keep a mental image of the last few shapes. Higher N = harder working memory!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(25, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(25, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(25, 'tips') },
       ],
     },
     26: {
       title: t('oddColor'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "All shapes share a color — except one with a slightly different shade. Find it!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the shape with the different shade. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Look for subtle hue differences. Higher levels shrink the gap between shades!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(26, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(26, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(26, 'tips') },
       ],
     },
     27: {
       title: t('oddSize'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "All shapes are the same size — except one. Spot the different one!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the shape with a different size. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Size differences get subtler at higher levels — scan carefully!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(27, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(27, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(27, 'tips') },
       ],
     },
     28: {
       title: t('spotDifference'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Two grids appear — find the ONE cell that differs between them!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the differing cell in the bottom grid. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Compare cell by cell systematically. Bigger grids and less time at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(28, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(28, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(28, 'tips') },
       ],
     },
     29: {
       title: t('findMax'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A grid of numbers — tap the highest one as fast as you can!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the cell with the largest number. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Scan for double-digit numbers first. Bigger grids at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(29, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(29, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(29, 'tips') },
       ],
     },
     30: {
       title: t('tapOrder'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Numbers are scattered — tap them in ascending order: 1, 2, 3..." },
-        { title: '⌨️ ' + t('controls'), description: "Click numbers from lowest to highest. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Plan a path through the grid before tapping. More numbers at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(30, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(30, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(30, 'tips') },
       ],
     },
     31: {
       title: t('mathFlash'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Solve the arithmetic problem — pick the right answer fast!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the button with the correct result. Wrong answers lose points." },
-        { title: '⚡ ' + t('tips'), description: "Higher levels add multiplication and tighter timers — calculate quickly!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(31, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(31, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(31, 'tips') },
       ],
     },
     32: {
       title: t('higherLower'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "Is the second number higher or lower than the first? Guess fast!" },
-        { title: '⌨️ ' + t('controls'), description: "Click Higher or Lower after seeing the first number." },
-        { title: '⚡ ' + t('tips'), description: "It's pure probability near 50 — trust your gut and react quickly!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(32, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(32, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(32, 'tips') },
       ],
     },
     33: {
       title: t('numberSequence'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A number sequence has one missing — figure out the pattern and pick it!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the button with the missing number. Wrong answers lose points." },
-        { title: '⚡ ' + t('tips'), description: "Look for the step between numbers. Bigger steps at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(33, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(33, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(33, 'tips') },
       ],
     },
     34: {
       title: t('evenOdd'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A number appears — is it even or odd? Decide fast!" },
-        { title: '⌨️ ' + t('controls'), description: "Click EVEN or ODD. Wrong answers lose points." },
-        { title: '⚡ ' + t('tips'), description: "Check the last digit — if it's 0,2,4,6,8 it's even. Bigger numbers at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(34, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(34, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(34, 'tips') },
       ],
     },
     35: {
       title: t('colorSort'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A shape appears — tap the bin matching its color!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the color button that matches the shape's color. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Focus on the color, not the shape. Faster pace at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(35, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(35, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(35, 'tips') },
       ],
     },
     36: {
       title: t('shapeMatch'),
       steps: [
-        { title: '🎯 ' + t('objective'), description: "A target shape is shown — find the matching shape (ignore the colors)!" },
-        { title: '⌨️ ' + t('controls'), description: "Click the option with the same SHAPE as the target. Wrong taps lose points." },
-        { title: '⚡ ' + t('tips'), description: "Colors are distractions — focus only on the shape. Faster pace at higher levels!" },
+        { title: '🎯 ' + t('objective'), description: getTutorialText(36, 'objective') },
+        { title: '⌨️ ' + t('controls'), description: getTutorialText(36, 'controls') },
+        { title: '⚡ ' + t('tips'), description: getTutorialText(36, 'tips') },
       ],
     }
   };
