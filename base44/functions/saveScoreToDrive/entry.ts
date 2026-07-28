@@ -8,11 +8,25 @@ Deno.serve(async (req) => {
     // Get Google Sheets access token
     const accessToken = await base44.asServiceRole.connectors.getAccessToken('googlesheets');
     
+    // Map game type number to game name
+    const gameNames = {
+      1: 'Color Reaction',
+      2: 'Color + Shape',
+      3: 'Memory Match',
+      4: 'Pro Challenge',
+      5: 'Pattern Recognition',
+      6: 'Number Memory',
+      7: 'Sequence Memory',
+      8: 'Juice Maker',
+    };
+    const gameName = gameNames[gameResult.game_type] || 'Unknown';
+    
     // Format the score data as a row
     const rowData = [
       new Date().toISOString(),
       playerName,
       gameResult.game_type,
+      gameName,
       gameResult.difficulty,
       gameResult.score,
       gameResult.avg_reaction_time,
@@ -39,6 +53,23 @@ Deno.serve(async (req) => {
     if (searchData.files && searchData.files.length > 0) {
       // Spreadsheet exists, append to it
       spreadsheetId = searchData.files[0].id;
+
+      // Update header row to include Game Name column
+      const headerValues = [
+        'Date', 'Player', 'Game Type', 'Game Name', 'Difficulty',
+        'Score', 'Avg Reaction Time (ms)', 'Correct Hits', 'Wrong Hits', 'Total Time (ms)',
+      ];
+      await fetch(
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Scores!A1:J1?valueInputOption=RAW`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ values: [headerValues] }),
+        }
+      );
     } else {
       // Create new spreadsheet with headers
       const createResponse = await fetch(
@@ -65,6 +96,7 @@ Deno.serve(async (req) => {
                     { userEnteredValue: { stringValue: 'Date' } },
                     { userEnteredValue: { stringValue: 'Player' } },
                     { userEnteredValue: { stringValue: 'Game Type' } },
+                    { userEnteredValue: { stringValue: 'Game Name' } },
                     { userEnteredValue: { stringValue: 'Difficulty' } },
                     { userEnteredValue: { stringValue: 'Score' } },
                     { userEnteredValue: { stringValue: 'Avg Reaction Time (ms)' } },

@@ -1,0 +1,172 @@
+{
+  "name": "PlayerProfile",
+  "type": "object",
+  "properties": {
+    "player_name": {
+      "type": "string",
+      "description": "Player name (unique identifier)"
+    },
+    "level": {
+      "type": "number",
+      "default": 1,
+      "description": "Current player level"
+    },
+    "xp": {
+      "type": "number",
+      "default": 0,
+      "description": "Current experience points"
+    },
+    "total_xp": {
+      "type": "number",
+      "default": 0,
+      "description": "Total XP earned all time"
+    },
+    "coins": {
+      "type": "number",
+      "default": 0,
+      "description": "In-game currency for purchasing cosmetics"
+    },
+    "unlocked_games": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "default": [
+        1
+      ],
+      "description": "Array of unlocked game IDs"
+    },
+    "unlocked_difficulties": {
+      "type": "object",
+      "default": {
+        "1": [
+          1
+        ],
+        "2": [
+          1
+        ],
+        "3": [
+          1
+        ],
+        "4": [
+          1
+        ]
+      },
+      "description": "Object mapping game IDs to unlocked difficulty arrays"
+    },
+    "cosmetic_theme": {
+      "type": "string",
+      "default": "default",
+      "description": "Selected cosmetic theme"
+    },
+    "unlocked_themes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "default"
+      ],
+      "description": "Array of unlocked theme names"
+    },
+    "equipped_avatar": {
+      "type": "string",
+      "default": "default",
+      "description": "Equipped avatar/icon"
+    },
+    "unlocked_avatars": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "default"
+      ],
+      "description": "Array of unlocked avatar IDs"
+    },
+    "equipped_badge": {
+      "type": "string",
+      "default": null,
+      "description": "Equipped badge"
+    },
+    "unlocked_badges": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Array of unlocked badge IDs"
+    },
+    "equipped_frame": {
+      "type": "string",
+      "default": "default",
+      "description": "Equipped profile frame"
+    },
+    "unlocked_frames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "default"
+      ],
+      "description": "Array of unlocked frame IDs"
+    },
+    "equipped_sound_pack": {
+      "type": "string",
+      "default": "default",
+      "description": "Equipped sound pack"
+    },
+    "unlocked_sound_packs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "default"
+      ],
+      "description": "Array of unlocked sound pack IDs"
+    },
+    "equipped_cursor": {
+      "type": "string",
+      "default": "default",
+      "description": "Equipped cursor effect"
+    },
+    "unlocked_cursors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "default"
+      ],
+      "description": "Array of unlocked cursor IDs"
+    },
+    "achievements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Array of earned achievement IDs"
+    },
+    "daily_streak": {
+      "type": "number",
+      "default": 0,
+      "description": "Current daily challenge streak"
+    },
+    "last_daily_challenge": {
+      "type": "string",
+      "format": "date",
+      "description": "Last date player completed daily challenge"
+    },
+    "longest_streak": {
+      "type": "number",
+      "default": 0,
+      "description": "Longest daily challenge streak achieved"
+    }
+  },
+  "required": [
+    "player_name"
+  ]
+}

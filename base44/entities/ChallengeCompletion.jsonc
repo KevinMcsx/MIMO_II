@@ -1,0 +1,32 @@
+{
+  "name": "ChallengeCompletion",
+  "type": "object",
+  "properties": {
+    "challenge_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Challenge date"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Player name"
+    },
+    "completed": {
+      "type": "boolean",
+      "description": "Whether challenge was completed"
+    },
+    "score": {
+      "type": "number",
+      "description": "Score achieved"
+    },
+    "stars_earned": {
+      "type": "number",
+      "description": "Stars earned"
+    }
+  },
+  "required": [
+    "challenge_date",
+    "player_name",
+    "completed"
+  ]
+}

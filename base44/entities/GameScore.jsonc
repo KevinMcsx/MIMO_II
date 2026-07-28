@@ -1,0 +1,50 @@
+{
+  "name": "GameScore",
+  "type": "object",
+  "properties": {
+    "game_type": {
+      "type": "number",
+      "description": "Game type (1-4)"
+    },
+    "difficulty": {
+      "type": "number",
+      "description": "Difficulty level (1-4)"
+    },
+    "total_time": {
+      "type": "number",
+      "description": "Total game time in milliseconds"
+    },
+    "avg_reaction_time": {
+      "type": "number",
+      "description": "Average reaction time in milliseconds"
+    },
+    "correct_hits": {
+      "type": "number",
+      "description": "Number of correct hits"
+    },
+    "wrong_hits": {
+      "type": "number",
+      "description": "Number of wrong hits"
+    },
+    "correct_shapes": {
+      "type": "number",
+      "description": "Number of correct shape matches"
+    },
+    "wrong_shapes": {
+      "type": "number",
+      "description": "Number of wrong shape matches"
+    },
+    "score": {
+      "type": "number",
+      "description": "Total score"
+    },
+    "player_name": {
+      "type": "string",
+      "description": "Player name or identifier"
+    }
+  },
+  "required": [
+    "game_type",
+    "difficulty"
+  ]
+}

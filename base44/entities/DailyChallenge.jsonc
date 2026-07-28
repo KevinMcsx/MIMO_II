@@ -1,0 +1,47 @@
+{
+  "name": "DailyChallenge",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Challenge date"
+    },
+    "game_type": {
+      "type": "number",
+      "description": "Game type (1-4)"
+    },
+    "difficulty": {
+      "type": "number",
+      "description": "Difficulty level (1-4)"
+    },
+    "target_score": {
+      "type": "number",
+      "description": "Target score to complete challenge"
+    },
+    "reward_stars": {
+      "type": "number",
+      "description": "Stars awarded for completion"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a featured weekly challenge"
+    },
+    "featured_reward_multiplier": {
+      "type": "number",
+      "default": 1,
+      "description": "Multiplier for XP and coins on featured challenges"
+    },
+    "featured_theme": {
+      "type": "string",
+      "description": "Theme name for featured challenges (e.g., Speed Week, Accuracy Week)"
+    }
+  },
+  "required": [
+    "date",
+    "game_type",
+    "difficulty",
+    "target_score"
+  ]
+}
