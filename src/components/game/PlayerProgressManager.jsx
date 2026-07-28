@@ -121,6 +121,22 @@ export async function awardXP(playerName, gameResult) {
   
   const xpGained = calculateXP(gameResult);
 
+  // Track daily play date for streak tracking
+  try {
+    const today = new Date().toISOString().split('T')[0];
+    const datesKey = `loopybrain_play_dates_${playerName}`;
+    const stored = localStorage.getItem(datesKey);
+    const dates = stored ? JSON.parse(stored) : [];
+    if (!dates.includes(today)) {
+      dates.push(today);
+      // Keep only last 30 days
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - 30);
+      const cutoffStr = cutoff.toISOString().split('T')[0];
+      localStorage.setItem(datesKey, JSON.stringify(dates.filter(d => d >= cutoffStr)));
+    }
+  } catch { /* ignore */ }
+
   // Bonus coins for consecutive wins on hard (3) / expert (4) difficulty.
   // Each consecutive win adds 10% of the score as bonus, capped at 50%.
   let streakBonus = 0;

@@ -6,6 +6,7 @@ import { downloadResultsAsText } from './GameResultSaver';
 import { awardXP } from './PlayerProgressManager';
 import LevelUpModal from './LevelUpModal';
 import XPGainPopup from './XPGainPopup';
+import CelebrationOverlay from './CelebrationOverlay';
 import { useTranslation } from '../utils/translations';
 
 export default function ResultsScreen({ 
@@ -51,6 +52,7 @@ export default function ResultsScreen({
 
   return (
     <>
+      <CelebrationOverlay show={true} />
       <XPGainPopup show={showXP} xp={progressionData?.xpGained} />
       <LevelUpModal 
         show={showLevelUp} 

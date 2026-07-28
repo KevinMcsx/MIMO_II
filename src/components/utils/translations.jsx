@@ -20,6 +20,8 @@ export const translations = {
     beFirstToScore: "Be the first to score!",
     gamesLabel: "games",
     progressLabel: "Your Stars",
+    dailyStreak: "Daily Streak",
+    daysInARow: "days in a row",
     
     // Games
     colorReaction: "Color Reaction",
@@ -319,6 +321,8 @@ export const translations = {
     beFirstToScore: "¡Sé el primero en puntuar!",
     gamesLabel: "juegos",
     progressLabel: "Tus Estrellas",
+    dailyStreak: "Racha Diaria",
+    daysInARow: "días seguidos",
     
     // Games
     colorReaction: "Reacción de Color",
@@ -620,6 +624,8 @@ export const translations = {
     beFirstToScore: "Sois le premier à marquer !",
     gamesLabel: "jeux",
     progressLabel: "Tes Étoiles",
+    dailyStreak: "Série Quotidienne",
+    daysInARow: "jours d'affilée",
     
     // Games
     colorReaction: "Réaction Couleur",
@@ -921,6 +927,8 @@ export const translations = {
     beFirstToScore: "Sei der Erste, der punktet!",
     gamesLabel: "Spiele",
     progressLabel: "Deine Sterne",
+    dailyStreak: "Tägliche Serie",
+    daysInARow: "Tage in Folge",
     
     // Games
     colorReaction: "Farb-Reaktion",
@@ -1222,6 +1230,8 @@ export const translations = {
     beFirstToScore: "Légy te az első, aki pontot szerez!",
     gamesLabel: "játék",
     progressLabel: "Csillagjaid",
+    dailyStreak: "Napi Sorozat",
+    daysInARow: "nap egy sorban",
     
     // Games
     colorReaction: "Szín Reakció",
@@ -1523,6 +1533,8 @@ export const translations = {
     beFirstToScore: "كن أول من يسجل!",
     gamesLabel: "ألعاب",
     progressLabel: "نجومك",
+    dailyStreak: "سلسلة يومية",
+    daysInARow: "أيام متتالية",
     
     // Games
     colorReaction: "رد فعل الألوان",

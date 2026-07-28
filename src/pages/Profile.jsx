@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { getPlayerProfile } from '../components/game/PlayerProgressManager';
 import LevelDisplay from '../components/game/LevelDisplay';
+import DailyStreakTracker from '../components/game/DailyStreakTracker';
 import PlayerAvatar from '../components/profile/PlayerAvatar';
 import { AVATARS, BADGES, FRAMES, THEMES, SOUND_PACKS, CURSORS } from '../components/profile/CosmeticData';
 import { useTranslation } from '../components/utils/translations';
@@ -134,6 +135,9 @@ export default function Profile() {
             </div>
           </div>
         </motion.div>
+
+        {/* Daily Streak Tracker */}
+        <DailyStreakTracker playerName={playerName} />
 
         {/* Coins Display and Store Link */}
         <div className="flex justify-center items-center gap-3 mb-4">
