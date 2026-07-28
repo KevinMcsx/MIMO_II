@@ -20,6 +20,12 @@ const GAME_NAMES = {
   10: 'Shape Sorting',
   11: 'Twin Hunt',
   12: 'Quick Count',
+  13: 'Speed Match',
+  14: 'Light Track',
+  15: 'Color Invaders',
+  16: 'Reverse Sequence',
+  17: 'Visual Search',
+  18: 'Stroop Color',
 };
 
 const gameName = (gt) => GAME_NAMES[gt] || 'Unknown';

@@ -28,6 +28,12 @@ import Game9PatternPrediction from '../components/game/Game9PatternPrediction';
 import Game10ShapeSorting from '../components/game/Game10ShapeSorting';
 import Game11TwinHunt from '../components/game/Game11TwinHunt';
 import Game12QuickCount from '../components/game/Game12QuickCount';
+import Game13SpeedMatch from '../components/game/Game13SpeedMatch';
+import Game14LightTrack from '../components/game/Game14LightTrack';
+import Game15ColorInvaders from '../components/game/Game15ColorInvaders';
+import Game16ReverseSequence from '../components/game/Game16ReverseSequence';
+import Game17VisualSearch from '../components/game/Game17VisualSearch';
+import Game18StroopColor from '../components/game/Game18StroopColor';
 import NameEntry from '../components/game/NameEntry';
 import LevelDisplay from '../components/game/LevelDisplay';
 import { sounds } from '../components/utils/sounds';
@@ -186,6 +192,18 @@ export default function Game() {
         return <Game11TwinHunt difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 12:
         return <Game12QuickCount difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 13:
+        return <Game13SpeedMatch difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 14:
+        return <Game14LightTrack difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 15:
+        return <Game15ColorInvaders difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 16:
+        return <Game16ReverseSequence difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 17:
+        return <Game17VisualSearch difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 18:
+        return <Game18StroopColor difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       default:
         return null;
     }

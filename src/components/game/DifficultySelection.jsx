@@ -55,6 +55,42 @@ const gameDescriptions = {
     3: '4×4 flash • 2s • 15 rounds',
     4: '5×5 flash • 1.5s • 18 rounds',
   },
+  13: {
+    1: 'Match color • 60s • 20 rounds',
+    2: 'Match shape • 60s • 25 rounds',
+    3: 'Color or shape • 50s • 30 rounds',
+    4: 'Color and shape • 40s • 35 rounds',
+  },
+  14: {
+    1: '3×3 • 3 steps • 8 rounds',
+    2: '3×3 • 4 steps • 10 rounds',
+    3: '4×4 • 5 steps • 12 rounds',
+    4: '4×4 • 6 steps • 15 rounds',
+  },
+  15: {
+    1: '3×3 • 30s • slow spawn',
+    2: '3×3 • 35s • medium spawn',
+    3: '4×4 • 40s • fast spawn',
+    4: '4×4 • 45s • rapid spawn',
+  },
+  16: {
+    1: '3 shapes • 8 rounds',
+    2: '4 shapes • 10 rounds',
+    3: '5 shapes • 12 rounds',
+    4: '6 shapes • 15 rounds',
+  },
+  17: {
+    1: '4×4 grid • 5s/round',
+    2: '5×5 grid • 4s/round',
+    3: '5×5 grid • 3s/round',
+    4: '6×6 grid • 3s/round',
+  },
+  18: {
+    1: 'Low conflict • 60s • 20 rounds',
+    2: 'Med conflict • 60s • 25 rounds',
+    3: 'Full conflict • 50s • 30 rounds',
+    4: 'Full conflict • 40s • 35 rounds',
+  },
 };
 
 export default function DifficultySelection({ gameId, onSelect, onBack, activeKey, unlockedDifficulties = [1, 2, 3, 4] }) {

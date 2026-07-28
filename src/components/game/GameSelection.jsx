@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Shapes, Brain, Zap, Keyboard, Info, TrendingUp, Filter, Copy, Hash } from 'lucide-react';
+import { Palette, Shapes, Brain, Zap, Keyboard, Info, TrendingUp, Filter, Copy, Hash, Gauge, Lightbulb, Bug, Rewind, Search, Type } from 'lucide-react';
 import { useTranslation } from '../utils/translations';
 import TutorialModal from './TutorialModal';
 
@@ -128,6 +128,66 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
       bg: 'from-fuchsia-500 to-fuchsia-600',
       glow: 'shadow-fuchsia-500/50',
       key: '12',
+    },
+    {
+      id: 13,
+      color: 'amber',
+      title: t('speedMatch'),
+      description: t('game13Desc'),
+      Icon: Gauge,
+      bg: 'from-amber-500 to-amber-600',
+      glow: 'shadow-amber-500/50',
+      key: '13',
+    },
+    {
+      id: 14,
+      color: 'emerald',
+      title: t('lightTrack'),
+      description: t('game14Desc'),
+      Icon: Lightbulb,
+      bg: 'from-emerald-500 to-emerald-600',
+      glow: 'shadow-emerald-500/50',
+      key: '14',
+    },
+    {
+      id: 15,
+      color: 'rose',
+      title: t('colorInvaders'),
+      description: t('game15Desc'),
+      Icon: Bug,
+      bg: 'from-rose-500 to-rose-600',
+      glow: 'shadow-rose-500/50',
+      key: '15',
+    },
+    {
+      id: 16,
+      color: 'sky',
+      title: t('reverseSequence'),
+      description: t('game16Desc'),
+      Icon: Rewind,
+      bg: 'from-sky-500 to-sky-600',
+      glow: 'shadow-sky-500/50',
+      key: '16',
+    },
+    {
+      id: 17,
+      color: 'violet',
+      title: t('visualSearch'),
+      description: t('game17Desc'),
+      Icon: Search,
+      bg: 'from-violet-500 to-violet-600',
+      glow: 'shadow-violet-500/50',
+      key: '17',
+    },
+    {
+      id: 18,
+      color: 'slate',
+      title: t('stroopColor'),
+      description: t('game18Desc'),
+      Icon: Type,
+      bg: 'from-slate-500 to-slate-600',
+      glow: 'shadow-slate-500/50',
+      key: '18',
     },
   ];
   return (

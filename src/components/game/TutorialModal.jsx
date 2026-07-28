@@ -242,6 +242,54 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
         { title: '⌨️ ' + t('controls'), description: "Watch the grid during the flash, then click the number button with your count. Wrong guesses lose points!" },
         { title: '⚡ ' + t('tips'), description: "Lock onto the target's shape AND color. Group items visually to count faster. Higher levels flash quicker!" },
       ],
+    },
+    13: {
+      title: t('speedMatch'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Two shapes appear — the previous one and the current one. Decide if they match by the rule!" },
+        { title: '⌨️ ' + t('controls'), description: "Click Match if they fit the rule, or Different if not. Be quick — the timer is running!" },
+        { title: '⚡ ' + t('tips'), description: "Easy checks color, medium checks shape, hard checks either, expert checks both. Focus only on the rule's attribute!" },
+      ],
+    },
+    14: {
+      title: t('lightTrack'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Watch cells light up in a sequence, then repeat the exact same path by clicking them in order!" },
+        { title: '⌨️ ' + t('controls'), description: "Click each cell in the order it lit up. One wrong tap restarts the round — stay focused!" },
+        { title: '⚡ ' + t('tips'), description: "Mentally number the cells. Higher levels add longer sequences and bigger grids!" },
+      ],
+    },
+    15: {
+      title: t('colorInvaders'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Shapes pop up across the grid. Tap ONLY the ones matching the target color before they vanish!" },
+        { title: '⌨️ ' + t('controls'), description: "Click target-color shapes to score. Tapping wrong colors loses points. Don't let targets escape!" },
+        { title: '⚡ ' + t('tips'), description: "Keep your eyes on the target color. Shapes disappear fast — react quickly but accurately!" },
+      ],
+    },
+    16: {
+      title: t('reverseSequence'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A sequence of shapes flashes one at a time. Then tap them BACKWARDS — the last shape first!" },
+        { title: '⌨️ ' + t('controls'), description: "Use the four shape buttons to replay the sequence in reverse order. Mistakes restart the round!" },
+        { title: '⚡ ' + t('tips'), description: "Mentally reverse the list as you watch. Longer sequences at higher levels test your working memory!" },
+      ],
+    },
+    17: {
+      title: t('visualSearch'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A target shape is shown. Find the ONE match hidden among distractors and tap it fast!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the shape that matches the target's shape AND color. Wrong taps lose points; the clock is ticking!" },
+        { title: '⚡ ' + t('tips'), description: "Scan systematically left-to-right. Bigger grids and shorter timers at higher levels — trust your eyes!" },
+      ],
+    },
+    18: {
+      title: t('stroopColor'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A color word appears in an ink color. Pick the INK color — ignore what the word says!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the button matching the ink color, not the word. Conflict rises at higher levels!" },
+        { title: '⚡ ' + t('tips'), description: "Don't read — look at the color. Your brain wants to read the word; fight that instinct to win!" },
+      ],
     }
   };
 
