@@ -23,7 +23,7 @@ export default function LanguageSelector() {
         onClick={() => setIsOpen(!isOpen)}
         variant="ghost"
         size="icon"
-        className="bg-white/60 hover:bg-white/80 backdrop-blur-sm"
+        className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10"
       >
         <Languages className="w-5 h-5 text-slate-700" />
       </Button>

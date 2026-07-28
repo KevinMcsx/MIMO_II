@@ -313,7 +313,7 @@ export default function Game() {
         )}
       </div>
 
-      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end items-center max-w-[60%] sm:max-w-none">
+      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end items-center max-w-[calc(100%-3.5rem)] sm:max-w-none">
         {playerProfile && screen !== 'nameEntry' && (
           <LevelDisplay level={playerProfile.level} xp={playerProfile.xp} compact={true} />
         )}
