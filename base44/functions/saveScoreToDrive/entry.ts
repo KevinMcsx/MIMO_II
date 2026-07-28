@@ -32,6 +32,8 @@ Deno.serve(async (req) => {
       gameResult.avg_reaction_time,
       gameResult.correct_hits,
       gameResult.wrong_hits,
+      gameResult.correct_shapes ?? '',
+      gameResult.wrong_shapes ?? '',
       gameResult.total_time,
     ];
     
@@ -57,10 +59,11 @@ Deno.serve(async (req) => {
       // Update header row to include Game Name column
       const headerValues = [
         'Date', 'Player', 'Game Type', 'Game Name', 'Difficulty',
-        'Score', 'Avg Reaction Time (ms)', 'Correct Hits', 'Wrong Hits', 'Total Time (ms)',
+        'Score', 'Avg Reaction Time (ms)', 'Correct Hits', 'Wrong Hits',
+        'Correct Shapes', 'Wrong Shapes', 'Total Time (ms)',
       ];
       await fetch(
-        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Scores!A1:J1?valueInputOption=RAW`,
+        `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/Scores!A1:L1?valueInputOption=RAW`,
         {
           method: 'PUT',
           headers: {
@@ -102,6 +105,8 @@ Deno.serve(async (req) => {
                     { userEnteredValue: { stringValue: 'Avg Reaction Time (ms)' } },
                     { userEnteredValue: { stringValue: 'Correct Hits' } },
                     { userEnteredValue: { stringValue: 'Wrong Hits' } },
+                    { userEnteredValue: { stringValue: 'Correct Shapes' } },
+                    { userEnteredValue: { stringValue: 'Wrong Shapes' } },
                     { userEnteredValue: { stringValue: 'Total Time (ms)' } },
                   ],
                 }],
