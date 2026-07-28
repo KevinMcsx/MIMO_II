@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
-import { Trophy, Medal, Award, ChevronLeft } from 'lucide-react';
+import { Trophy, Medal, Award, ChevronLeft, RefreshCw } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 import PlayerAvatar from '../components/profile/PlayerAvatar';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -16,8 +17,24 @@ export default function Leaderboard() {
   const [timeFilter, setTimeFilter] = useState('all-time');
   const playerName = localStorage.getItem('loopybrainPlayerName') || '';
   
-  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory'), t('sequenceMemory'), t('juiceMaker')];
+  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory'), t('sequenceMemory'), t('juiceMaker'), t('patternPrediction')];
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
+
+  const { toast } = useToast();
+  const [syncing, setSyncing] = useState(false);
+
+  const handleSync = async () => {
+    setSyncing(true);
+    try {
+      const res = await base44.functions.invoke('saveScoreToDrive', { syncAll: true });
+      const count = res?.synced ?? 0;
+      toast({ title: t('syncComplete').replace('{count}', count) });
+    } catch (e) {
+      toast({ title: t('syncFailed'), variant: 'destructive' });
+    } finally {
+      setSyncing(false);
+    }
+  };
 
   const { data: allProfiles = [] } = useQuery({
     queryKey: ['allProfiles'],
@@ -65,12 +82,18 @@ export default function Leaderboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
       <div className="max-w-4xl mx-auto">
-        <Link to={createPageUrl('Game')}>
-          <Button variant="ghost" className="mb-4">
-            <ChevronLeft className="w-5 h-5 mr-2" />
-            {t('backToGame')}
+        <div className="flex items-center justify-between mb-4">
+          <Link to={createPageUrl('Game')}>
+            <Button variant="ghost">
+              <ChevronLeft className="w-5 h-5 mr-2" />
+              {t('backToGame')}
+            </Button>
+          </Link>
+          <Button variant="outline" onClick={handleSync} disabled={syncing}>
+            <RefreshCw className={`w-4 h-4 mr-2 ${syncing ? 'animate-spin' : ''}`} />
+            {t('syncToSheet')}
           </Button>
-        </Link>
+        </div>
 
         <motion.div
           initial={{ y: -20, opacity: 0 }}

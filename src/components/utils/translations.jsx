@@ -77,6 +77,9 @@ export const translations = {
     profile: "Profile",
     statistics: "Statistics",
     leaderboard: "Leaderboard",
+    syncToSheet: "Sync to Google Sheet",
+    syncComplete: "Synced {count} records to Google Sheet",
+    syncFailed: "Sync failed",
     dailyChallenge: "Daily Challenge",
     store: "Store",
     
@@ -303,6 +306,9 @@ export const translations = {
     profile: "Perfil",
     statistics: "Estadísticas",
     leaderboard: "Clasificación",
+    syncToSheet: "Sincronizar con Google Sheets",
+    syncComplete: "Sincronizados {count} registros a Google Sheets",
+    syncFailed: "Error de sincronización",
     dailyChallenge: "Desafío Diario",
     store: "Tienda",
     
@@ -531,6 +537,9 @@ export const translations = {
     profile: "Profil",
     statistics: "Statistiques",
     leaderboard: "Classement",
+    syncToSheet: "Synchroniser avec Google Sheets",
+    syncComplete: "{count} enregistrements synchronisés vers Google Sheets",
+    syncFailed: "Échec de la synchronisation",
     dailyChallenge: "Défi Quotidien",
     store: "Boutique",
     
@@ -759,6 +768,9 @@ export const translations = {
     profile: "Profil",
     statistics: "Statistiken",
     leaderboard: "Bestenliste",
+    syncToSheet: "Mit Google Sheets synchronisieren",
+    syncComplete: "{count} Datensätze mit Google Sheets synchronisiert",
+    syncFailed: "Synchronisierung fehlgeschlagen",
     dailyChallenge: "Tägliche Herausforderung",
     store: "Laden",
     
@@ -987,6 +999,9 @@ export const translations = {
     profile: "Profil",
     statistics: "Statisztikák",
     leaderboard: "Ranglista",
+    syncToSheet: "Szinkronizálás Google Táblázattal",
+    syncComplete: "{count} rekord szinkronizálva a Google Táblázatba",
+    syncFailed: "Szinkronizálás sikertelen",
     dailyChallenge: "Napi Kihívás",
     store: "Bolt",
     
@@ -1215,6 +1230,9 @@ export const translations = {
     profile: "الملف الشخصي",
     statistics: "الإحصائيات",
     leaderboard: "لوحة المتصدرين",
+    syncToSheet: "مزامنة مع جداول جوجل",
+    syncComplete: "تمت مزامنة {count} سجل مع جداول جوجل",
+    syncFailed: "فشلت المزامنة",
     dailyChallenge: "التحدي اليومي",
     store: "المتجر",
     
