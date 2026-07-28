@@ -54,17 +54,15 @@ export default function CategoryCards({ onSelect, activeKey }) {
               <div className="absolute bottom-12 right-8 w-2 h-2 bg-white/30 rounded-full" />
               <div className="absolute top-16 left-1/2 w-4 h-4 bg-white/10 rounded-full" />
 
-              {/* Number badge */}
-              <div className="absolute top-4 right-4 w-9 h-9 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/40 relative z-10">
-                <span className="text-base font-black text-white drop-shadow-sm">{index + 1}</span>
-              </div>
-
-              {/* Icon + emoji header */}
+              {/* Header row: number, icon, emoji */}
               <div className="flex items-center gap-3 mb-3 relative z-10">
-                <div className={`w-16 h-16 sm:w-18 sm:h-18 rounded-2xl ${cat.iconBgClass} flex items-center justify-center backdrop-blur-sm border-2 border-white/30`}>
-                  <cat.Icon className="w-8 h-8 sm:w-9 sm:h-9 text-white" strokeWidth={2.5} />
+                <div className="w-10 h-10 shrink-0 bg-white/30 backdrop-blur-sm rounded-full flex items-center justify-center border-2 border-white/40">
+                  <span className="text-base font-black text-white drop-shadow-sm">{index + 1}</span>
                 </div>
-                <div className="text-4xl sm:text-5xl drop-shadow-sm">{cat.emoji}</div>
+                <div className={`w-14 h-14 shrink-0 rounded-2xl ${cat.iconBgClass} flex items-center justify-center backdrop-blur-sm border-2 border-white/30`}>
+                  <cat.Icon className="w-7 h-7 text-white" strokeWidth={2.5} />
+                </div>
+                <div className="text-3xl sm:text-4xl drop-shadow-sm">{cat.emoji}</div>
               </div>
 
               {/* Title */}
