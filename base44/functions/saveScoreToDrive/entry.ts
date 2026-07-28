@@ -17,6 +17,9 @@ const GAME_NAMES = {
   7: 'Sequence Memory',
   8: 'Juice Maker',
   9: 'Pattern Prediction',
+  10: 'Shape Sorting',
+  11: 'Twin Hunt',
+  12: 'Quick Count',
 };
 
 const gameName = (gt) => GAME_NAMES[gt] || 'Unknown';

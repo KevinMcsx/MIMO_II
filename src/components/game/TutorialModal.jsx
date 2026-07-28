@@ -218,6 +218,30 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
           description: "Easy = shapes only. Medium adds colors. Hard/expert use longer patterns and tighter timers — spot the cycle length fast!",
         },
       ],
+    },
+    10: {
+      title: t('shapeSorting'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A rule appears (e.g. 'Is it a CIRCLE?' or 'Is it RED?'). For each shape shown, decide if it matches the rule!" },
+        { title: '⌨️ ' + t('controls'), description: "Click ✓ Match if the shape fits the rule, or ✗ Pass if it doesn't. Decide fast — the clock is ticking!" },
+        { title: '⚡ ' + t('tips'), description: "Focus on the rule's attribute only (shape or color). Wrong answers lose points, so stay sharp as the speed climbs!" },
+      ],
+    },
+    11: {
+      title: t('twinHunt'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A grid full of shapes appears — but exactly TWO are identical. Find and tap the matching pair!" },
+        { title: '⌨️ ' + t('controls'), description: "Click one shape, then click its twin. Correct pairs score points; mismatched picks lose points." },
+        { title: '⚡ ' + t('tips'), description: "Scan by shape first, then by color. Bigger grids and shorter timers at higher levels — trust your eyes!" },
+      ],
+    },
+    12: {
+      title: t('quickCount'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A target shape is shown. A grid flashes briefly — count how many targets you see, then pick the right number!" },
+        { title: '⌨️ ' + t('controls'), description: "Watch the grid during the flash, then click the number button with your count. Wrong guesses lose points!" },
+        { title: '⚡ ' + t('tips'), description: "Lock onto the target's shape AND color. Group items visually to count faster. Higher levels flash quicker!" },
+      ],
     }
   };
 

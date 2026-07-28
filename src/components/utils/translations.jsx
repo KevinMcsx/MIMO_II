@@ -26,6 +26,12 @@ export const translations = {
     game7Desc: "Remember the order of colors!",
     game8Desc: "Fill juice cups with perfect timing!",
     game9Desc: "Predict the next item in the pattern!",
+    shapeSorting: "Shape Sorting",
+    twinHunt: "Twin Hunt",
+    quickCount: "Quick Count",
+    game10Desc: "Sort shapes by the rule — match or pass!",
+    game11Desc: "Find the only matching pair!",
+    game12Desc: "Count the target shapes in a flash!",
 
     // Game 9
     predictNext: "What comes next in the pattern?",
@@ -255,6 +261,12 @@ export const translations = {
     game7Desc: "¡Recuerda el orden de colores!",
     game8Desc: "¡Llena vasos de jugo con tiempo perfecto!",
     game9Desc: "¡Predice el siguiente elemento del patrón!",
+    shapeSorting: "Clasificación de Formas",
+    twinHunt: "Caza Gemelos",
+    quickCount: "Conteo Rápido",
+    game10Desc: "¡Clasifica las formas según la regla — coincide o pasa!",
+    game11Desc: "¡Encuentra el único par idéntico!",
+    game12Desc: "¡Cuenta las formas objetivo en un instante!",
 
     // Game 9
     predictNext: "¿Qué sigue en el patrón?",
@@ -486,6 +498,12 @@ export const translations = {
     game7Desc: "Mémorisez l'ordre des couleurs !",
     game8Desc: "Remplissez des verres de jus parfaitement !",
     game9Desc: "Prédisez le prochain élément du motif !",
+    shapeSorting: "Tri de Formes",
+    twinHunt: "Chasse aux Jumeaux",
+    quickCount: "Compte Rapide",
+    game10Desc: "Triez les formes selon la règle — correspondez ou passez !",
+    game11Desc: "Trouvez la seule paire identique !",
+    game12Desc: "Comptez les formes cible en un éclair !",
 
     // Game 9
     predictNext: "Quel est le suivant dans le motif ?",
@@ -717,6 +735,12 @@ export const translations = {
     game7Desc: "Merke dir die Farbreihenfolge!",
     game8Desc: "Fülle Saftbecher perfekt!",
     game9Desc: "Sage das nächste Element im Muster voraus!",
+    shapeSorting: "Formen-Sortieren",
+    twinHunt: "Zwillingsjagd",
+    quickCount: "Schnelles Zählen",
+    game10Desc: "Sortiere Formen nach Regel — passen oder überspringen!",
+    game11Desc: "Finde das einzige passende Paar!",
+    game12Desc: "Zähle die Zielformen im Blitzlicht!",
 
     // Game 9
     predictNext: "Was kommt als Nächstes im Muster?",
@@ -948,6 +972,12 @@ export const translations = {
     game7Desc: "Jegyezd meg a színek sorrendjét!",
     game8Desc: "Töltsd a gyümölcslé poharakat tökéletesen!",
     game9Desc: "Jósold meg a minta következő elemét!",
+    shapeSorting: "Forma Rendezés",
+    twinHunt: "Iker Vadászat",
+    quickCount: "Gyors Számlálás",
+    game10Desc: "Rendezd a formákat a szabály szerint — illeszd vagy hagyd ki!",
+    game11Desc: "Találd meg az egyetlen egyező párt!",
+    game12Desc: "Számold meg a célformákat egy szempillantás alatt!",
 
     // Game 9
     predictNext: "Mi következik a mintában?",
@@ -1179,6 +1209,12 @@ export const translations = {
     game7Desc: "تذكر ترتيب الألوان!",
     game8Desc: "املأ أكواب العصير بتوقيت مثالي!",
     game9Desc: "توقع العنصر التالي في النمط!",
+    shapeSorting: "فرز الأشكال",
+    twinHunt: "صيد التوائم",
+    quickCount: "العد السريع",
+    game10Desc: "افرض الأشكال حسب القاعدة — طابق أو تجاوز!",
+    game11Desc: "اعثر على الزوج المتطابق الوحيد!",
+    game12Desc: "عُدّ الأشكال المستهدفة في لمح البصر!",
 
     // Game 9
     predictNext: "ما التالي في النمط؟",

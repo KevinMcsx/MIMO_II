@@ -25,6 +25,9 @@ import Game6NumberMemory from '../components/game/Game6NumberMemory';
 import Game7SequenceMemory from '../components/game/Game7SequenceMemory';
 import Game8JuiceMaker from '../components/game/Game8JuiceMaker';
 import Game9PatternPrediction from '../components/game/Game9PatternPrediction';
+import Game10ShapeSorting from '../components/game/Game10ShapeSorting';
+import Game11TwinHunt from '../components/game/Game11TwinHunt';
+import Game12QuickCount from '../components/game/Game12QuickCount';
 import NameEntry from '../components/game/NameEntry';
 import LevelDisplay from '../components/game/LevelDisplay';
 import { sounds } from '../components/utils/sounds';
@@ -177,6 +180,12 @@ export default function Game() {
         return <Game8JuiceMaker difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 9:
         return <Game9PatternPrediction difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 10:
+        return <Game10ShapeSorting difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 11:
+        return <Game11TwinHunt difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 12:
+        return <Game12QuickCount difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       default:
         return null;
     }

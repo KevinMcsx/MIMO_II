@@ -37,6 +37,24 @@ const gameDescriptions = {
     3: 'Longer patterns • 2 min • 15 rounds',
     4: 'Expert speed • 75s • 20 rounds',
   },
+  10: {
+    1: 'Sort by shape • 60s • 20 rounds',
+    2: 'Sort by color • 60s • 25 rounds',
+    3: 'Shape or color • 50s • 30 rounds',
+    4: 'Mixed rules • 40s • 35 rounds',
+  },
+  11: {
+    1: '3×3 grid • 35s • 10 rounds',
+    2: '4×4 grid • 40s • 12 rounds',
+    3: '4×4 grid • 30s • 15 rounds',
+    4: '4×4 grid • 20s • 18 rounds',
+  },
+  12: {
+    1: '3×3 flash • 3s • 10 rounds',
+    2: '4×4 flash • 2.5s • 12 rounds',
+    3: '4×4 flash • 2s • 15 rounds',
+    4: '5×5 flash • 1.5s • 18 rounds',
+  },
 };
 
 export default function DifficultySelection({ gameId, onSelect, onBack, activeKey, unlockedDifficulties = [1, 2, 3, 4] }) {

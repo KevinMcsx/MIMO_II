@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Palette, Shapes, Brain, Zap, Keyboard, Info, TrendingUp } from 'lucide-react';
+import { Palette, Shapes, Brain, Zap, Keyboard, Info, TrendingUp, Filter, Copy, Hash } from 'lucide-react';
 import { useTranslation } from '../utils/translations';
 import TutorialModal from './TutorialModal';
 
@@ -98,6 +98,36 @@ export default function GameSelection({ onSelect, activeKey, unlockedGames = [1,
       bg: 'from-pink-500 to-rose-600',
       glow: 'shadow-pink-500/50',
       key: '9',
+    },
+    {
+      id: 10,
+      color: 'cyan',
+      title: t('shapeSorting'),
+      description: t('game10Desc'),
+      Icon: Filter,
+      bg: 'from-cyan-500 to-cyan-600',
+      glow: 'shadow-cyan-500/50',
+      key: '10',
+    },
+    {
+      id: 11,
+      color: 'lime',
+      title: t('twinHunt'),
+      description: t('game11Desc'),
+      Icon: Copy,
+      bg: 'from-lime-500 to-lime-600',
+      glow: 'shadow-lime-500/50',
+      key: '11',
+    },
+    {
+      id: 12,
+      color: 'fuchsia',
+      title: t('quickCount'),
+      description: t('game12Desc'),
+      Icon: Hash,
+      bg: 'from-fuchsia-500 to-fuchsia-600',
+      glow: 'shadow-fuchsia-500/50',
+      key: '12',
     },
   ];
   return (
