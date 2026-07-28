@@ -34,6 +34,24 @@ import Game15ColorInvaders from '../components/game/Game15ColorInvaders';
 import Game16ReverseSequence from '../components/game/Game16ReverseSequence';
 import Game17VisualSearch from '../components/game/Game17VisualSearch';
 import Game18StroopColor from '../components/game/Game18StroopColor';
+import Game19ReactionTarget from '../components/game/Game19ReactionTarget';
+import Game20SpeedTap from '../components/game/Game20SpeedTap';
+import Game21QuickColor from '../components/game/Game21QuickColor';
+import Game22GoNoGo from '../components/game/Game22GoNoGo';
+import Game23MemoryMatrix from '../components/game/Game23MemoryMatrix';
+import Game24ShapeStack from '../components/game/Game24ShapeStack';
+import Game25NBack from '../components/game/Game25NBack';
+import Game26OddColor from '../components/game/Game26OddColor';
+import Game27OddSize from '../components/game/Game27OddSize';
+import Game28SpotDifference from '../components/game/Game28SpotDifference';
+import Game29FindMax from '../components/game/Game29FindMax';
+import Game30TapOrder from '../components/game/Game30TapOrder';
+import Game31MathFlash from '../components/game/Game31MathFlash';
+import Game32HigherLower from '../components/game/Game32HigherLower';
+import Game33NumberSequence from '../components/game/Game33NumberSequence';
+import Game34EvenOdd from '../components/game/Game34EvenOdd';
+import Game35ColorSort from '../components/game/Game35ColorSort';
+import Game36ShapeMatch from '../components/game/Game36ShapeMatch';
 import NameEntry from '../components/game/NameEntry';
 import LevelDisplay from '../components/game/LevelDisplay';
 import { sounds } from '../components/utils/sounds';
@@ -204,6 +222,42 @@ export default function Game() {
         return <Game17VisualSearch difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       case 18:
         return <Game18StroopColor difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 19:
+        return <Game19ReactionTarget difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 20:
+        return <Game20SpeedTap difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 21:
+        return <Game21QuickColor difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 22:
+        return <Game22GoNoGo difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 23:
+        return <Game23MemoryMatrix difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 24:
+        return <Game24ShapeStack difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 25:
+        return <Game25NBack difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 26:
+        return <Game26OddColor difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 27:
+        return <Game27OddSize difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 28:
+        return <Game28SpotDifference difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 29:
+        return <Game29FindMax difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 30:
+        return <Game30TapOrder difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 31:
+        return <Game31MathFlash difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 32:
+        return <Game32HigherLower difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 33:
+        return <Game33NumberSequence difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 34:
+        return <Game34EvenOdd difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 35:
+        return <Game35ColorSort difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
+      case 36:
+        return <Game36ShapeMatch difficulty={selectedDifficulty} onMainMenu={handleMainMenu} playerName={playerName} />;
       default:
         return null;
     }

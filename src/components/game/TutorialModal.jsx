@@ -290,6 +290,150 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
         { title: '⌨️ ' + t('controls'), description: "Click the button matching the ink color, not the word. Conflict rises at higher levels!" },
         { title: '⚡ ' + t('tips'), description: "Don't read — look at the color. Your brain wants to read the word; fight that instinct to win!" },
       ],
+    },
+    19: {
+      title: t('reactionTarget'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Wait for the dot, then tap it as fast as you can! Don't tap too early." },
+        { title: '⌨️ ' + t('controls'), description: "Click anywhere when the dot appears. Tapping during the wait counts as a miss." },
+        { title: '⚡ ' + t('tips'), description: "Keep your finger ready but resist the urge to tap early. Faster taps = more points!" },
+      ],
+    },
+    20: {
+      title: t('speedTap'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Targets pop up one at a time — tap as many as you can before time runs out!" },
+        { title: '⌨️ ' + t('controls'), description: "Click each dot the instant it appears. Every tap scores points." },
+        { title: '⚡ ' + t('tips'), description: "Stay alert and keep tapping — accuracy comes from speed at higher levels!" },
+      ],
+    },
+    21: {
+      title: t('quickColor'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A color flashes — tap the matching color button as fast as possible!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the button whose color matches the big circle. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Don't overthink — trust your reflexes. Higher levels add more rounds!" },
+      ],
+    },
+    22: {
+      title: t('goNoGo'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Green means GO (tap!), red means STOP (don't tap). Test your self-control!" },
+        { title: '⌨️ ' + t('controls'), description: "Tap only on green stimuli. Holding back on red scores bonus points." },
+        { title: '⚡ ' + t('tips'), description: "Higher levels show more red and faster pace — stay disciplined!" },
+      ],
+    },
+    23: {
+      title: t('memoryMatrix'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Cells light up briefly — memorize them, then tap the same cells!" },
+        { title: '⌨️ ' + t('controls'), description: "Watch the pattern, then click each cell that was lit. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Chunk the lit cells into a shape in your mind. Bigger grids at higher levels!" },
+      ],
+    },
+    24: {
+      title: t('shapeStack'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A sequence of shapes flashes — repeat them in the same order!" },
+        { title: '⌨️ ' + t('controls'), description: "Tap the shape buttons in the order they appeared. Mistakes restart the round." },
+        { title: '⚡ ' + t('tips'), description: "Say each shape silently as it appears. Longer sequences test your memory!" },
+      ],
+    },
+    25: {
+      title: t('nBack'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Does the current shape match the one from N steps ago? Decide fast!" },
+        { title: '⌨️ ' + t('controls'), description: "Click YES if it matches the shape N steps back, NO if different." },
+        { title: '⚡ ' + t('tips'), description: "Keep a mental image of the last few shapes. Higher N = harder working memory!" },
+      ],
+    },
+    26: {
+      title: t('oddColor'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "All shapes share a color — except one with a slightly different shade. Find it!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the shape with the different shade. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Look for subtle hue differences. Higher levels shrink the gap between shades!" },
+      ],
+    },
+    27: {
+      title: t('oddSize'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "All shapes are the same size — except one. Spot the different one!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the shape with a different size. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Size differences get subtler at higher levels — scan carefully!" },
+      ],
+    },
+    28: {
+      title: t('spotDifference'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Two grids appear — find the ONE cell that differs between them!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the differing cell in the bottom grid. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Compare cell by cell systematically. Bigger grids and less time at higher levels!" },
+      ],
+    },
+    29: {
+      title: t('findMax'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A grid of numbers — tap the highest one as fast as you can!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the cell with the largest number. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Scan for double-digit numbers first. Bigger grids at higher levels!" },
+      ],
+    },
+    30: {
+      title: t('tapOrder'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Numbers are scattered — tap them in ascending order: 1, 2, 3..." },
+        { title: '⌨️ ' + t('controls'), description: "Click numbers from lowest to highest. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Plan a path through the grid before tapping. More numbers at higher levels!" },
+      ],
+    },
+    31: {
+      title: t('mathFlash'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Solve the arithmetic problem — pick the right answer fast!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the button with the correct result. Wrong answers lose points." },
+        { title: '⚡ ' + t('tips'), description: "Higher levels add multiplication and tighter timers — calculate quickly!" },
+      ],
+    },
+    32: {
+      title: t('higherLower'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "Is the second number higher or lower than the first? Guess fast!" },
+        { title: '⌨️ ' + t('controls'), description: "Click Higher or Lower after seeing the first number." },
+        { title: '⚡ ' + t('tips'), description: "It's pure probability near 50 — trust your gut and react quickly!" },
+      ],
+    },
+    33: {
+      title: t('numberSequence'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A number sequence has one missing — figure out the pattern and pick it!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the button with the missing number. Wrong answers lose points." },
+        { title: '⚡ ' + t('tips'), description: "Look for the step between numbers. Bigger steps at higher levels!" },
+      ],
+    },
+    34: {
+      title: t('evenOdd'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A number appears — is it even or odd? Decide fast!" },
+        { title: '⌨️ ' + t('controls'), description: "Click EVEN or ODD. Wrong answers lose points." },
+        { title: '⚡ ' + t('tips'), description: "Check the last digit — if it's 0,2,4,6,8 it's even. Bigger numbers at higher levels!" },
+      ],
+    },
+    35: {
+      title: t('colorSort'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A shape appears — tap the bin matching its color!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the color button that matches the shape's color. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Focus on the color, not the shape. Faster pace at higher levels!" },
+      ],
+    },
+    36: {
+      title: t('shapeMatch'),
+      steps: [
+        { title: '🎯 ' + t('objective'), description: "A target shape is shown — find the matching shape (ignore the colors)!" },
+        { title: '⌨️ ' + t('controls'), description: "Click the option with the same SHAPE as the target. Wrong taps lose points." },
+        { title: '⚡ ' + t('tips'), description: "Colors are distractions — focus only on the shape. Faster pace at higher levels!" },
+      ],
     }
   };
 
