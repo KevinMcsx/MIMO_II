@@ -12,6 +12,8 @@ import {
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import GameSelection from '../components/game/GameSelection';
+import CategoryCards from '../components/game/CategoryCards';
+import CategoryDetail from '../components/game/CategoryDetail';
 import DifficultySelection from '../components/game/DifficultySelection';
 import LanguageSelector from '../components/game/LanguageSelector';
 import TutorialModal from '../components/game/TutorialModal';
@@ -63,6 +65,7 @@ export default function Game() {
   const [screen, setScreen] = useState('nameEntry'); // nameEntry, gameSelect, difficultySelect, playing
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [activeKey, setActiveKey] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [playerName, setPlayerName] = useState('');
@@ -101,16 +104,19 @@ export default function Game() {
     if (screen === 'playing') return;
 
     const handleKeyDown = (e) => {
-      const keyToGame = { '1': 1, '2': 3, '3': 2, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9 };
+      const keyToCategory = { '1': 'attention', '2': 'tracking', '3': 'memory', '4': 'speed' };
       const keyToDifficulty = { '1': 1, '2': 3, '3': 2, '4': 4 };
 
-      if (screen === 'gameSelect' && keyToGame[e.key]) {
+      if (screen === 'gameSelect' && keyToCategory[e.key]) {
         setActiveKey(e.key);
         setTimeout(() => {
-          setSelectedGame(keyToGame[e.key]);
-          setScreen('difficultySelect');
+          setSelectedCategory(keyToCategory[e.key]);
+          setScreen('categoryDetail');
           setActiveKey(null);
         }, 200);
+      } else if (screen === 'categoryDetail' && e.key === 'Escape') {
+        setScreen('gameSelect');
+        setSelectedCategory(null);
       } else if (screen === 'difficultySelect' && keyToDifficulty[e.key]) {
         setActiveKey(e.key);
         setTimeout(() => {
@@ -119,7 +125,7 @@ export default function Game() {
           setActiveKey(null);
         }, 200);
       } else if (e.key === 'Escape' && screen === 'difficultySelect') {
-        setScreen('gameSelect');
+        setScreen('categoryDetail');
         setSelectedGame(null);
       }
     };
@@ -127,6 +133,16 @@ export default function Game() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [screen]);
+
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId);
+    setScreen('categoryDetail');
+  };
+
+  const handleBackToCategories = () => {
+    setScreen('gameSelect');
+    setSelectedCategory(null);
+  };
 
   const handleGameSelect = (gameId) => {
     setSelectedGame(gameId);
@@ -157,6 +173,7 @@ export default function Game() {
     setScreen('gameSelect');
     setSelectedGame(null);
     setSelectedDifficulty(null);
+    setSelectedCategory(null);
     refetchProfile();
   };
 
@@ -372,10 +389,25 @@ export default function Game() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
             >
-              <GameSelection 
-                onSelect={handleGameSelect} 
+              <CategoryCards
+                onSelect={handleCategorySelect}
                 activeKey={activeKey}
-                unlockedGames={playerProfile?.unlocked_games || [1]}
+              />
+            </motion.div>
+          )}
+
+          {screen === 'categoryDetail' && (
+            <motion.div
+              key="categoryDetail"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="w-full max-w-4xl"
+            >
+              <CategoryDetail
+                categoryId={selectedCategory}
+                onSelect={handleGameSelect}
+                onBack={handleBackToCategories}
               />
             </motion.div>
           )}
@@ -392,7 +424,7 @@ export default function Game() {
                 gameId={selectedGame}
                 onSelect={handleDifficultySelect}
                 onBack={() => {
-                  setScreen('gameSelect');
+                  setScreen('categoryDetail');
                   setSelectedGame(null);
                 }}
                 activeKey={activeKey}
@@ -415,7 +447,7 @@ export default function Game() {
         </AnimatePresence>
 
         {/* Footer hints */}
-        {screen !== 'playing' && (
+        {screen === 'difficultySelect' && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
