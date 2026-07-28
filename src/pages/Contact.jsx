@@ -6,38 +6,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
-import { base44 } from '@/api/base44Client';
 
 export default function Contact() {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: '', email: '', message: '' });
-  const [sending, setSending] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
-    setSending(true);
-    try {
-      await base44.integrations.Core.SendEmail({
-        to: 'zoltan.i.fekete@windowslive.com',
-        subject: 'LoopyBrain - Question',
-        body: `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
-        from_name: form.name,
-      });
-      toast({
-        title: 'Message sent! 🎉',
-        description: `Thanks, ${form.name}! We'll get back to you soon.`,
-      });
-      setForm({ name: '', email: '', message: '' });
-    } catch (err) {
-      toast({
-        title: 'Message failed to send',
-        description: 'Please try again later.',
-        variant: 'destructive',
-      });
-    } finally {
-      setSending(false);
-    }
+    const subject = encodeURIComponent('LoopyBrain - Question');
+    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`);
+    window.location.href = `mailto:zoltan.i.fekete@windowslive.com?subject=${subject}&body=${body}`;
+    toast({
+      title: 'Opening your email app… ✉️',
+      description: `Thanks, ${form.name}! Your email client is ready to send.`,
+    });
+    setForm({ name: '', email: '', message: '' });
   };
 
   return (
@@ -102,11 +86,10 @@ export default function Contact() {
 
           <Button
             type="submit"
-            disabled={sending}
             className="w-full bg-purple-600 hover:bg-purple-700"
           >
             <Send className="w-4 h-4 mr-2" />
-            {sending ? 'Sending...' : 'Send Message'}
+            Send Message
           </Button>
         </motion.form>
 
