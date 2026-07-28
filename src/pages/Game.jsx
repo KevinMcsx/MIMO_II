@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, Trophy, BarChart3, Calendar, User, LogOut, Users } from 'lucide-react';
+import { Volume2, VolumeX, Trophy, BarChart3, Calendar, User, LogOut, Users, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -294,7 +294,23 @@ export default function Game() {
       <div className="absolute inset-0 bg-black/10" />
 
       {/* Top Navigation */}
-      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20">
+      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20 flex items-center gap-2">
+        {(screen === 'categoryDetail' || screen === 'difficultySelect') && (
+          <button
+            onClick={() => {
+              if (screen === 'categoryDetail') {
+                handleBackToCategories();
+              } else {
+                setScreen('categoryDetail');
+                setSelectedGame(null);
+              }
+            }}
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-white/80 hover:bg-white/95 backdrop-blur-sm text-slate-700 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg border-2 border-white/50 shrink-0"
+          >
+            <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={3} />
+            <span className="hidden sm:inline">{t('back')}</span>
+          </button>
+        )}
         {playerProfile && screen !== 'nameEntry' && (
           <LevelDisplay level={playerProfile.level} xp={playerProfile.xp} compact={false} />
         )}
@@ -369,7 +385,7 @@ export default function Game() {
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 pb-40 sm:pb-48">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 pt-16 sm:pt-20 pb-40 sm:pb-48">
         <AnimatePresence mode="wait">
           {screen === 'nameEntry' && (
             <motion.div
