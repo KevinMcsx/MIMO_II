@@ -3,6 +3,16 @@ import { calculateXP, getLevelFromXP, getUnlocksForLevel, getAllUnlocksUpToLevel
 
 const PROFILE_STORAGE_KEY = 'loopybrain_player_profiles';
 
+// Consecutive-win streak for hard/expert difficulty (bonus coin source)
+const getHardWinStreak = (playerName) => {
+  try { return Number(localStorage.getItem(`loopybrain_hard_streak_${playerName}`) || 0); }
+  catch { return 0; }
+};
+const setHardWinStreak = (playerName, n) => {
+  try { localStorage.setItem(`loopybrain_hard_streak_${playerName}`, String(n)); }
+  catch { /* ignore */ }
+};
+
 // LocalStorage helpers
 const saveProfileToLocalStorage = (profile) => {
   try {
@@ -110,7 +120,21 @@ export async function awardXP(playerName, gameResult) {
   if (!profile) return null;
   
   const xpGained = calculateXP(gameResult);
-  const coinsGained = gameResult.score;
+
+  // Bonus coins for consecutive wins on hard (3) / expert (4) difficulty.
+  // Each consecutive win adds 10% of the score as bonus, capped at 50%.
+  let streakBonus = 0;
+  let hardWinStreak = 0;
+  if (gameResult.difficulty === 3 || gameResult.difficulty === 4) {
+    hardWinStreak = getHardWinStreak(playerName) + 1;
+    setHardWinStreak(playerName, hardWinStreak);
+    streakBonus = Math.floor((gameResult.score || 0) * Math.min(hardWinStreak - 1, 5) * 0.1);
+  } else {
+    // Playing an easier difficulty breaks the hard/expert streak.
+    setHardWinStreak(playerName, 0);
+  }
+
+  const coinsGained = (gameResult.score || 0) + streakBonus;
   const newTotalXP = profile.total_xp + xpGained;
   const newCoins = (profile.coins || 0) + coinsGained;
   const oldLevel = profile.level;
@@ -174,6 +198,8 @@ export async function awardXP(playerName, gameResult) {
   return {
     xpGained,
     coinsGained,
+    streakBonus,
+    hardWinStreak,
     leveledUp,
     oldLevel,
     newLevel,
