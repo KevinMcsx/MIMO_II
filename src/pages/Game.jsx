@@ -294,7 +294,7 @@ export default function Game() {
       <div className="absolute inset-0 bg-black/10" />
 
       {/* Top Navigation */}
-      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20 flex items-center gap-2">
+      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20">
         {(screen === 'categoryDetail' || screen === 'difficultySelect') && (
           <button
             onClick={() => {
@@ -305,18 +305,18 @@ export default function Game() {
                 setSelectedGame(null);
               }
             }}
-            className="flex items-center gap-1.5 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-white/80 hover:bg-white/95 backdrop-blur-sm text-slate-700 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg border-2 border-white/50 shrink-0"
+            className="flex items-center gap-1.5 h-8 sm:h-10 px-3 rounded-2xl bg-white/80 hover:bg-white/95 backdrop-blur-sm text-slate-700 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg border-2 border-white/50 shrink-0"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={3} />
             <span className="hidden sm:inline">{t('back')}</span>
           </button>
         )}
-        {playerProfile && screen !== 'nameEntry' && (
-          <LevelDisplay level={playerProfile.level} xp={playerProfile.xp} compact={false} />
-        )}
       </div>
 
-      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end max-w-[50%] sm:max-w-none">
+      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end items-center max-w-[60%] sm:max-w-none">
+        {playerProfile && screen !== 'nameEntry' && (
+          <LevelDisplay level={playerProfile.level} xp={playerProfile.xp} compact={true} />
+        )}
         <LanguageSelector />
 
         <DropdownMenu>
