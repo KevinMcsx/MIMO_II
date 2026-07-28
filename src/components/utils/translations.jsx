@@ -10,6 +10,17 @@ export const translations = {
     useKeys: "Use",
     keysToSelect: "keys to select",
     
+    // Category Descriptions
+    catAttentionDesc: "Focus your eyes and find what hides in plain sight!",
+    catTrackingDesc: "Follow things that zoom and wiggle across the screen!",
+    catMemoryDesc: "Remember the patterns and match the pairs!",
+    catSpeedDesc: "Tap fast and think quick — how speedy are you?",
+    
+    // Card UI
+    beFirstToScore: "Be the first to score!",
+    gamesLabel: "games",
+    progressLabel: "Your Stars",
+    
     // Games
     colorReaction: "Color Reaction",
     colorShape: "Color + Shape",
@@ -297,6 +308,17 @@ export const translations = {
     categoryProcessingSpeed: "Velocidad de Procesamiento",
     useKeys: "Usa las teclas",
     keysToSelect: "para seleccionar",
+    
+    // Category Descriptions
+    catAttentionDesc: "¡Enfoca tus ojos y encuentra lo que se esconde!",
+    catTrackingDesc: "¡Sigue las cosas que zoom y se menean por la pantalla!",
+    catMemoryDesc: "¡Recuerda los patrones y empareja las parejas!",
+    catSpeedDesc: "¡Toca rápido y piensa rápido — qué tan veloz eres?",
+    
+    // Card UI
+    beFirstToScore: "¡Sé el primero en puntuar!",
+    gamesLabel: "juegos",
+    progressLabel: "Tus Estrellas",
     
     // Games
     colorReaction: "Reacción de Color",
@@ -588,6 +610,17 @@ export const translations = {
     useKeys: "Utilisez les touches",
     keysToSelect: "pour sélectionner",
     
+    // Category Descriptions
+    catAttentionDesc: "Concentre tes yeux et trouve ce qui se cache !",
+    catTrackingDesc: "Suis les choses qui bougent sur l'écran !",
+    catMemoryDesc: "Mémorise les motifs et associe les paires !",
+    catSpeedDesc: "Touche vite et pense vite — quel point es-tu rapide ?",
+    
+    // Card UI
+    beFirstToScore: "Sois le premier à marquer !",
+    gamesLabel: "jeux",
+    progressLabel: "Tes Étoiles",
+    
     // Games
     colorReaction: "Réaction Couleur",
     colorShape: "Couleur + Forme",
@@ -877,6 +910,17 @@ export const translations = {
     categoryProcessingSpeed: "Verarbeitungsgeschwindigkeit",
     useKeys: "Benutze die Tasten",
     keysToSelect: "zur Auswahl",
+    
+    // Category Descriptions
+    catAttentionDesc: "Konzentriere deine Augen und finde, was sich versteckt!",
+    catTrackingDesc: "Folge Dingen, die über den Bildschirm flitzen!",
+    catMemoryDesc: "Merke dir die Muster und finde die Paare!",
+    catSpeedDesc: "Tippe schnell und denke schnell — wie schnell bist du?",
+    
+    // Card UI
+    beFirstToScore: "Sei der Erste, der punktet!",
+    gamesLabel: "Spiele",
+    progressLabel: "Deine Sterne",
     
     // Games
     colorReaction: "Farb-Reaktion",
@@ -1168,6 +1212,17 @@ export const translations = {
     useKeys: "Használd a",
     keysToSelect: "billentyűket a választáshoz",
     
+    // Category Descriptions
+    catAttentionDesc: "Koncentrálj a szemeiddel és találd meg, ami elrejtőzik!",
+    catTrackingDesc: "Kövesd a képernyőn suhanó és cikázó dolgokat!",
+    catMemoryDesc: "Jegyezd meg a mintákat és párosítsd a párokat!",
+    catSpeedDesc: "Koppints gyorsan és gondolkodj gyorsan — milyen gyors vagy?",
+    
+    // Card UI
+    beFirstToScore: "Légy te az első, aki pontot szerez!",
+    gamesLabel: "játék",
+    progressLabel: "Csillagjaid",
+    
     // Games
     colorReaction: "Szín Reakció",
     colorShape: "Szín + Forma",
@@ -1457,6 +1512,17 @@ export const translations = {
     categoryProcessingSpeed: "سرعة المعالجة",
     useKeys: "استخدم المفاتيح",
     keysToSelect: "للاختيار",
+    
+    // Category Descriptions
+    catAttentionDesc: "ركّز بعينيك واعثر على ما يختبئ أمامك!",
+    catTrackingDesc: "تابع الأشياء التي تتحرك على الشاشة!",
+    catMemoryDesc: "تذكر الأنماط وطابق الأزواج!",
+    catSpeedDesc: "انقر بسرعة وفكر بسرعة — كم أنت سريع؟",
+    
+    // Card UI
+    beFirstToScore: "كن أول من يسجل!",
+    gamesLabel: "ألعاب",
+    progressLabel: "نجومك",
     
     // Games
     colorReaction: "رد فعل الألوان",

@@ -73,20 +73,20 @@ export default function CategoryCards({ onSelect, activeKey }) {
               </h2>
               <div className="inline-flex items-center gap-1 bg-white/30 backdrop-blur-sm px-3 py-1 rounded-full mb-3 relative z-10 border border-white/20">
                 <span className="text-xs font-black text-white">
-                  🎯 {gameIds.length} games
+                  🎯 {gameIds.length} {t('gamesLabel')}
                 </span>
               </div>
 
               {/* Description */}
               <p className="text-sm text-white/95 mb-4 leading-relaxed font-semibold relative z-10">
-                {cat.description}
+                {t(cat.descKey)}
               </p>
 
               {/* Progress bar */}
               <div className="w-full relative z-10">
                 <div className="flex justify-between items-center mb-1.5">
                   <span className="text-xs font-black text-white/90 uppercase tracking-wide">
-                    ⭐ Your Stars
+                    ⭐ {t('progressLabel')}
                   </span>
                   <span className="text-sm font-black text-white drop-shadow-sm">
                     {progress.played}/{progress.total}
@@ -108,7 +108,7 @@ export default function CategoryCards({ onSelect, activeKey }) {
 
               {/* Let's go button */}
               <div className="mt-4 flex items-center gap-1.5 bg-white text-slate-700 px-5 py-2.5 rounded-full font-black text-sm relative z-10 self-start shadow-lg hover:scale-105 transition-transform">
-                Let's Play!
+                {t('letsPlay')}
                 <ChevronRight className="w-4 h-4" strokeWidth={3} />
               </div>
             </motion.button>
