@@ -1,29 +1,43 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Send, MessageCircle, Github } from 'lucide-react';
+import { Mail, Send, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
+import { base44 } from '@/api/base44Client';
 
 export default function Contact() {
   const { toast } = useToast();
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sending, setSending] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
+    try {
+      await base44.integrations.Core.SendEmail({
+        to: 'zoltan.i.fekete@windowslive.com',
+        subject: 'LoopyBrain - Question',
+        body: `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
+        from_name: form.name,
+      });
       toast({
         title: 'Message sent! 🎉',
         description: `Thanks, ${form.name}! We'll get back to you soon.`,
       });
       setForm({ name: '', email: '', message: '' });
-    }, 800);
+    } catch (err) {
+      toast({
+        title: 'Message failed to send',
+        description: 'Please try again later.',
+        variant: 'destructive',
+      });
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -39,41 +53,6 @@ export default function Contact() {
           </div>
           <h1 className="text-4xl sm:text-5xl font-black text-slate-800 mb-3">Contact Us</h1>
           <p className="text-slate-600 text-lg">Questions, feedback, or just want to say hi?</p>
-        </motion.div>
-
-        {/* Contact methods */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="grid sm:grid-cols-2 gap-4 mb-6"
-        >
-          <a
-            href="mailto:hello@loopybrain.app"
-            className="flex items-center gap-3 bg-white/90 backdrop-blur-sm rounded-2xl p-4 border-2 border-purple-200 shadow-lg hover:scale-105 transition-transform"
-          >
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
-              <Mail className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p className="font-bold text-slate-800 text-sm">Email Us</p>
-              <p className="text-xs text-slate-500">hello@loopybrain.app</p>
-            </div>
-          </a>
-
-          <a
-            href="https://github.com/loopybrain"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-3 bg-white/90 backdrop-blur-sm rounded-2xl p-4 border-2 border-purple-200 shadow-lg hover:scale-105 transition-transform"
-          >
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center">
-              <Github className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p className="font-bold text-slate-800 text-sm">GitHub</p>
-              <p className="text-xs text-slate-500">github.com/loopybrain</p>
-            </div>
-          </a>
         </motion.div>
 
         {/* Contact form */}
