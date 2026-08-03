@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import { CREATURES, STAGE_NAMES } from './petEngine';
 import { Button } from '@/components/ui/button';
 
@@ -10,6 +12,9 @@ export default function CreatureSelect({ onAdopt }) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-rose-50 via-purple-50 to-sky-50 flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
+        <Link to="/Game" className="inline-flex items-center gap-1 text-sm font-medium text-purple-700 hover:text-purple-900 mb-4">
+          <ArrowLeft className="w-4 h-4" /> Back to games
+        </Link>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-6">
           <h1 className="text-3xl font-black text-purple-900">HeartPets</h1>
           <p className="text-purple-500 mt-1">Adopt your mythical companion</p>
