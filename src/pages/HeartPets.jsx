@@ -14,7 +14,9 @@ import CreatureSelect from '@/components/heartpets/CreatureSelect';
 import DailyReward from '@/components/heartpets/DailyReward';
 import MiniGames from '@/components/heartpets/MiniGames';
 import HappinessChart from '@/components/heartpets/HappinessChart';
+import CollectionGallery from '@/components/heartpets/CollectionGallery';
 import { recordHappiness, getHappinessLog } from '@/components/heartpets/happinessLog';
+import { recordCollection, getCollection } from '@/components/heartpets/collection';
 
 const STORAGE_KEY = 'heartpets_state';
 const SETTINGS_KEY = 'heartpets_settings';
@@ -52,6 +54,10 @@ export default function HeartPets() {
     if (!petState) return;
     setHappinessLog(recordHappiness(petState, event));
   };
+
+  const [collection, setCollection] = useState(() => getCollection());
+  const [showCollection, setShowCollection] = useState(false);
+  const updateCollection = (p) => { if (p) setCollection(recordCollection(p)); };
 
   // Load on mount
   useEffect(() => {
@@ -97,6 +103,7 @@ export default function HeartPets() {
     if (prevStage.current != null && pet && pet.stage > prevStage.current) {
       setEvolveFlash(true);
       heartbeat.playEffect('play');
+      updateCollection(pet);
       setTimeout(() => setEvolveFlash(false), 2000);
     }
     if (pet) prevStage.current = pet.stage;
@@ -126,6 +133,7 @@ export default function HeartPets() {
     setAudioReady(true);
     heartbeat.unlock();
     logPoint(newPet, null);
+    updateCollection(newPet);
   };
 
   const handleTouch = () => {
@@ -292,6 +300,17 @@ export default function HeartPets() {
           </div>
         )}
 
+        {/* Collection */}
+        <div className="mt-4">
+          <Button
+            onClick={() => setShowCollection(true)}
+            variant="outline"
+            className="w-full border-purple-300 text-purple-700 hover:bg-purple-100 font-bold rounded-2xl py-5"
+          >
+            📚 Companion Collection
+          </Button>
+        </div>
+
         <p className="text-center text-xs text-purple-400 mt-4">
           Care for your companion daily · Saves offline automatically
         </p>
@@ -305,6 +324,8 @@ export default function HeartPets() {
       />
 
       <DailyReward show={showDaily} onClaim={handleClaimDaily} streak={dailyInfo.streak} />
+
+      <CollectionGallery open={showCollection} collection={collection} onClose={() => setShowCollection(false)} />
     </div>
   );
 }
