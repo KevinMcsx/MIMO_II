@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CREATURES, STAGE_NAMES, MOOD_INFO } from './petEngine';
+import ActionEffect from './ActionEffect';
 
 export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
   const creature = CREATURES.find(c => c.id === pet.creatureId) || CREATURES[0];
@@ -50,13 +51,12 @@ export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
         {actionAnim && (
           <motion.div
             key={actionAnim.id + Date.now()}
-            initial={{ scale: 0, opacity: 0, y: 20 }}
-            animate={{ scale: 1.4, opacity: 1, y: -30 }}
+            initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
-            className="absolute z-20 text-5xl"
+            transition={{ duration: 0.2 }}
+            className="absolute inset-0 z-20"
           >
-            {actionAnim.icon}
+            <ActionEffect action={actionAnim} />
           </motion.div>
         )}
       </AnimatePresence>

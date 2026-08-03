@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Heart, Volume2, VolumeX, RotateCcw } from 'lucide-react';
+import { ArrowLeft, Heart, Volume2, VolumeX, RotateCcw, Gamepad2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
-  CREATURES, STAGE_NAMES, applyDecay, applyCare, applyTouch, calcMood,
+  CREATURES, STAGE_NAMES, applyDecay, applyCare, applyTouch, calcMood, clamp,
 } from '@/components/heartpets/petEngine';
 import { heartbeat } from '@/components/heartpets/heartbeat';
 import PetDisplay from '@/components/heartpets/PetDisplay';
@@ -12,6 +12,7 @@ import StatsPanel from '@/components/heartpets/StatsPanel';
 import CareActions from '@/components/heartpets/CareActions';
 import CreatureSelect from '@/components/heartpets/CreatureSelect';
 import DailyReward from '@/components/heartpets/DailyReward';
+import MiniGames from '@/components/heartpets/MiniGames';
 
 const STORAGE_KEY = 'heartpets_state';
 const SETTINGS_KEY = 'heartpets_settings';
@@ -37,6 +38,7 @@ export default function HeartPets() {
   const [heartbeatOn, setHeartbeatOn] = useState(true);
   const [audioReady, setAudioReady] = useState(false);
   const [actionAnim, setActionAnim] = useState(null);
+  const [showGames, setShowGames] = useState(false);
   const [evolveFlash, setEvolveFlash] = useState(false);
   const prevStage = useRef(null);
   const lastTouch = useRef(0);
@@ -125,7 +127,7 @@ export default function HeartPets() {
       return updated;
     });
     setActionAnim({ id: 'pet', icon: '💕' });
-    setTimeout(() => setActionAnim(null), 500);
+    setTimeout(() => setActionAnim(null), 800);
   };
 
   const handleCare = (action) => {
@@ -138,7 +140,23 @@ export default function HeartPets() {
     });
     setActionAnim(action);
     heartbeat.playEffect(action.id);
-    setTimeout(() => setActionAnim(null), 600);
+    setTimeout(() => setActionAnim(null), 900);
+  };
+
+  const handleGameReward = (coins) => {
+    setPet(prev => {
+      const updated = {
+        ...prev,
+        coins: prev.coins + coins,
+        stats: {
+          ...prev.stats,
+          happiness: clamp(prev.stats.happiness + Math.min(15, coins)),
+          affection: clamp(prev.stats.affection + 3),
+        },
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
   };
 
   const handleClaimDaily = (reward) => {
@@ -235,10 +253,29 @@ export default function HeartPets() {
           <CareActions onCare={handleCare} disabled={false} />
         </div>
 
+        {/* Mini-games */}
+        {pet.stage > 0 && (
+          <div className="mt-4">
+            <Button
+              onClick={() => setShowGames(true)}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold rounded-2xl py-5"
+            >
+              <Gamepad2 className="w-5 h-5 mr-2" /> Play mini-games
+            </Button>
+          </div>
+        )}
+
         <p className="text-center text-xs text-purple-400 mt-4">
           Care for your companion daily · Saves offline automatically
         </p>
       </div>
+
+      <MiniGames
+        open={showGames}
+        petEmoji={(CREATURES.find(c => c.id === pet.creatureId)?.stages[pet.stage]) || pet.emoji || '🐾'}
+        onReward={handleGameReward}
+        onClose={() => setShowGames(false)}
+      />
 
       <DailyReward show={showDaily} onClaim={handleClaimDaily} streak={dailyInfo.streak} />
     </div>
