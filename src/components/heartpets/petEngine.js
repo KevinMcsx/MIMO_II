@@ -57,12 +57,15 @@ export function calcMood(s) {
   return 'relaxed';
 }
 
-// Apply time-based stat decay since lastUpdated
+// Apply time-based stat decay since lastUpdated (also advances growth over time)
 export function applyDecay(pet) {
   if (!pet) return pet;
   const now = Date.now();
   const hours = (now - (pet.lastUpdated || now)) / 3600000;
-  if (hours <= 0) return { ...pet, mood: calcMood(pet.stats) };
+  if (hours <= 0) {
+    const stage = developStage(pet.stage, pet.level, pet.careCount, pet.bornAt, pet.stats, now);
+    return { ...pet, stage, mood: calcMood(pet.stats) };
+  }
   const s = { ...pet.stats };
   s.hunger = clamp(s.hunger - hours * 8);
   s.thirst = clamp(s.thirst - hours * 10);
@@ -72,22 +75,57 @@ export function applyDecay(pet) {
   s.happiness = clamp(s.happiness - hours * (4 + needPenalty * 0.05));
   if (s.hunger < 20 || s.thirst < 20) s.health = clamp(s.health - hours * 5);
   else if (s.hunger > 60 && s.thirst > 60 && s.health < 100) s.health = clamp(s.health + hours * 2);
-  return { ...pet, stats: s, lastUpdated: now, mood: calcMood(s) };
+  const stage = developStage(pet.stage, pet.level, pet.careCount, pet.bornAt, s, now);
+  return { ...pet, stats: s, stage, lastUpdated: now, mood: calcMood(s) };
 }
 
 const avgStats = (s) => (s.hunger + s.thirst + s.happiness + s.energy + s.cleanliness + s.health) / 6;
 const xpForLevel = (lvl) => lvl * 50;
 
+// --- Time-based growth ---
+// Real-time thresholds. Egg incubates over HATCH_MS (warmth from care speeds it up);
+// each later stage needs a minimum age, so creatures develop over real time.
+export const HATCH_MS = 2 * 60 * 1000;                                   // 2 min to hatch (passive)
+export const STAGE_AGE_MS = [0, HATCH_MS, 8 * 60 * 1000, 25 * 60 * 1000, 60 * 60 * 1000];
+
+export const ageMs = (pet, now = Date.now()) => Math.max(0, now - (pet.bornAt || now));
+
+// Human-readable age label (e.g. "3m", "2h 15m", "1d 4h").
+export function ageLabel(pet, now = Date.now()) {
+  const ms = ageMs(pet, now);
+  const m = Math.floor(ms / 60000);
+  if (m < 60) return `${m}m`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h ${m % 60}m`;
+  return `${Math.floor(h / 24)}d ${h % 24}h`;
+}
+
+// Incubation progress (0..100) toward hatching — time-based + care warmth.
+export function incubationProgress(pet, now = Date.now()) {
+  const warmth = Math.min(60, (pet.careCount || 0) * 12);
+  return Math.min(100, (ageMs(pet, now) / HATCH_MS) * 100 + warmth);
+}
+
+// Resolve the creature's stage from age + level + stats. Only ever advances.
+function developStage(stage, level, careCount, bornAt, s, now) {
+  const age = Math.max(0, now - (bornAt || now));
+  if (stage === 0) {
+    const warmth = Math.min(60, (careCount || 0) * 12);
+    if ((age / HATCH_MS) * 100 + warmth >= 100) stage = 1;
+  }
+  if (stage === 1 && level >= 3 && age >= STAGE_AGE_MS[2] && s.happiness > 50) stage = 2;
+  else if (stage === 2 && level >= 6 && age >= STAGE_AGE_MS[3] && avgStats(s) > 40) stage = 3;
+  else if (stage === 3 && level >= 10 && age >= STAGE_AGE_MS[4] && avgStats(s) > 60) stage = 4;
+  return stage;
+}
+
 // Shared XP/level/evolution processing.
-function processXp(pet, xpGain, s) {
+function processXp(pet, xpGain, s, now) {
   let xp = pet.xp + xpGain;
   let level = pet.level;
   let coins = pet.coins;
-  let stage = pet.stage;
   while (xp >= xpForLevel(level)) { xp -= xpForLevel(level); level++; coins += 20; }
-  if (stage === 1 && level >= 3 && s.happiness > 50) stage = 2;
-  else if (stage === 2 && level >= 6 && avgStats(s) > 40) stage = 3;
-  else if (stage === 3 && level >= 10 && avgStats(s) > 60) stage = 4;
+  const stage = developStage(pet.stage, level, pet.careCount, pet.bornAt, s, now);
   return { xp, level, coins, stage };
 }
 
@@ -97,12 +135,10 @@ export function applyCare(pet, action) {
   if (action.costs) for (const k in action.costs) s[k] = clamp(s[k] - action.costs[k]);
   if (action.id === 'feed' && s.hunger > 70 && s.health < 100) s.health = clamp(s.health + 2);
 
-  const careCount = pet.careCount + 1;
-  let stage = pet.stage;
-  if (stage === 0 && careCount >= 1) stage = 1; // hatch
-
-  const r = processXp({ ...pet, stage }, action.xp, s);
-  return { ...pet, stats: s, xp: r.xp, level: r.level, coins: r.coins, stage: r.stage, careCount, lastUpdated: Date.now() };
+  const now = Date.now();
+  const careCount = pet.careCount + 1; // each care adds warmth toward hatching
+  const r = processXp({ ...pet, careCount }, action.xp, s, now);
+  return { ...pet, stats: s, xp: r.xp, level: r.level, coins: r.coins, stage: r.stage, careCount, lastUpdated: now };
 }
 
 // Touching the companion: a gentle affection + happiness + small XP bump (with level-ups).
@@ -112,8 +148,9 @@ export function applyTouch(pet) {
     affection: clamp(pet.stats.affection + 2),
     happiness: clamp(pet.stats.happiness + 1),
   };
-  const r = processXp(pet, 1, s);
-  return { ...pet, stats: s, xp: r.xp, level: r.level, coins: r.coins, stage: r.stage, lastUpdated: Date.now() };
+  const now = Date.now();
+  const r = processXp(pet, 1, s, now);
+  return { ...pet, stats: s, xp: r.xp, level: r.level, coins: r.coins, stage: r.stage, lastUpdated: now };
 }
 
 export function xpProgress(pet) {

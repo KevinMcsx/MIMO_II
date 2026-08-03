@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { xpProgress, STAGE_NAMES } from './petEngine';
+import { xpProgress, STAGE_NAMES, ageLabel, incubationProgress } from './petEngine';
 
 const STAT_CONFIG = [
   { key: 'hunger', label: 'Hunger', icon: '🍔', color: 'bg-orange-400' },
@@ -31,29 +31,47 @@ function StatBar({ stat }) {
 
 export default function StatsPanel({ pet }) {
   const xp = xpProgress(pet);
+  const isEgg = pet.stage === 0;
+  const incub = isEgg ? incubationProgress(pet) : 0;
   return (
     <div className="bg-white/90 rounded-2xl p-4 shadow-lg border border-purple-100">
       <div className="flex items-center justify-between mb-3">
         <div>
           <h3 className="font-bold text-purple-900 text-lg leading-tight">{pet.name}</h3>
-          <p className="text-xs text-purple-500">{STAGE_NAMES[pet.stage]} · Lvl {pet.level}</p>
+          <p className="text-xs text-purple-500">
+            {STAGE_NAMES[pet.stage]} · Lvl {pet.level} · Age {ageLabel(pet)}
+          </p>
         </div>
         <div className="text-right">
           <span className="text-yellow-500 font-bold">🪙 {pet.coins}</span>
         </div>
       </div>
 
-      {/* XP bar */}
-      <div className="mb-3">
-        <div className="flex justify-between text-xs text-purple-500 mb-1">
-          <span>XP</span>
-          <span>{xp.current}/{xp.need}</span>
+      {/* Incubation (egg) or XP (hatched) */}
+      {isEgg ? (
+        <div className="mb-3">
+          <div className="flex justify-between text-xs text-amber-600 mb-1">
+            <span>🥚 Incubating</span>
+            <span>{Math.round(incub)}%</span>
+          </div>
+          <div className="h-2 bg-amber-100 rounded-full overflow-hidden">
+            <motion.div className="h-full bg-gradient-to-r from-amber-300 to-orange-400 rounded-full"
+              animate={{ width: `${incub}%` }} transition={{ duration: 0.4 }} />
+          </div>
+          <p className="text-[10px] text-amber-500 mt-1">Keeps warm over time · caring speeds it up</p>
         </div>
-        <div className="h-2 bg-purple-100 rounded-full overflow-hidden">
-          <motion.div className="h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
-            animate={{ width: `${xp.pct}%` }} transition={{ duration: 0.4 }} />
+      ) : (
+        <div className="mb-3">
+          <div className="flex justify-between text-xs text-purple-500 mb-1">
+            <span>XP</span>
+            <span>{xp.current}/{xp.need}</span>
+          </div>
+          <div className="h-2 bg-purple-100 rounded-full overflow-hidden">
+            <motion.div className="h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
+              animate={{ width: `${xp.pct}%` }} transition={{ duration: 0.4 }} />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="space-y-2">
         {STAT_CONFIG.map(s => (
