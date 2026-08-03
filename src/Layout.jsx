@@ -17,7 +17,7 @@ export default function Layout({ children }) {
           </Link>
         </div>
         <p className="text-white text-xs sm:text-sm font-medium">
-          © 2026 Zoltan F. and AgfiNet. All rights reserved.
+          © 2026 <Link to="/HeartPets" className="hover:underline decoration-white/60">Zoltan F.</Link> and AgfiNet. All rights reserved.
         </p>
       </footer>
     </div>
