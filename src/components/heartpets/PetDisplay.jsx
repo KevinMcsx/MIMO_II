@@ -2,7 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CREATURES, STAGE_NAMES, MOOD_INFO } from './petEngine';
 
-export default function PetDisplay({ pet, mood, actionAnim }) {
+export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
   const creature = CREATURES.find(c => c.id === pet.creatureId) || CREATURES[0];
   const stageEmoji = creature.stages[pet.stage] || creature.emoji;
   const moodInfo = MOOD_INFO[mood] || MOOD_INFO.relaxed;
@@ -27,19 +27,23 @@ export default function PetDisplay({ pet, mood, actionAnim }) {
       ))}
 
       {/* the creature */}
-      <motion.div
+      <motion.button
+        onClick={onTouch}
+        disabled={isEgg}
+        whileTap={{ scale: 0.85 }}
         animate={
           isEgg
             ? { rotate: [-3, 3, -3] }
             : { y: [0, -10, 0], rotate: [0, 2, -2, 0] }
         }
         transition={{ duration: isEgg ? 0.8 : 2.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative z-10"
+        className="relative z-10 cursor-pointer disabled:cursor-default"
+        aria-label="Pet your companion"
       >
-        <span className="text-[7rem] leading-none drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)]">
+        <span className="text-[7rem] leading-none drop-shadow-[0_8px_16px_rgba(0,0,0,0.3)] block">
           {stageEmoji}
         </span>
-      </motion.div>
+      </motion.button>
 
       {/* action effect */}
       <AnimatePresence>

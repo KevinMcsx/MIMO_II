@@ -39,6 +39,7 @@ export default function HeartPets() {
   const [actionAnim, setActionAnim] = useState(null);
   const [evolveFlash, setEvolveFlash] = useState(false);
   const prevStage = useRef(null);
+  const lastTouch = useRef(0);
 
   // Load on mount
   useEffect(() => {
@@ -109,6 +110,23 @@ export default function HeartPets() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newPet));
     setAudioReady(true);
     heartbeat.unlock();
+  };
+
+  const handleTouch = () => {
+    setAudioReady(true);
+    heartbeat.unlock();
+    heartbeat.playVoice(pet.creatureId);
+    const now = Date.now();
+    if (now - lastTouch.current < 1500) return; // small cooldown
+    lastTouch.current = now;
+    setPet(prev => {
+      const s = { ...prev.stats, affection: Math.min(100, prev.stats.affection + 2), happiness: Math.min(100, prev.stats.happiness + 1) };
+      const updated = { ...prev, stats: s, lastUpdated: now };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      return updated;
+    });
+    setActionAnim({ id: 'pet', icon: '💕' });
+    setTimeout(() => setActionAnim(null), 500);
   };
 
   const handleCare = (action) => {
@@ -201,8 +219,12 @@ export default function HeartPets() {
 
         {/* Pet */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-          <PetDisplay pet={pet} mood={mood} actionAnim={actionAnim} />
+          <PetDisplay pet={pet} mood={mood} actionAnim={actionAnim} onTouch={handleTouch} />
         </motion.div>
+
+        {pet.stage > 0 && (
+          <p className="text-center text-xs text-purple-400 mt-2">👆 Tap your companion to hear its voice</p>
+        )}
 
         {/* Stats */}
         <div className="mt-4">

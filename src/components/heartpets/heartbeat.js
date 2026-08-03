@@ -50,6 +50,15 @@ const EFFECT_FREQS = {
   sleep: [330, 262], play: [523, 659, 784], pet: [494, 587],
 };
 
+// Each creature's signature "voice" — a short tonal phrase.
+const VOICES = {
+  dragon: { freqs: [196, 220, 175, 233], type: 'sawtooth', dur: 0.22, gain: 0.5 }, // growl
+  fox:    { freqs: [880, 740, 880, 698], type: 'square',   dur: 0.12, gain: 0.35 }, // yip
+  owl:    { freqs: [392, 330, 392, 294], type: 'sine',     dur: 0.3,  gain: 0.45 }, // hoot
+  cat:    { freqs: [523, 698, 587, 659], type: 'triangle', dur: 0.18, gain: 0.4 },  // meow
+  bunny:  { freqs: [784, 988, 784, 1175], type: 'sine',   dur: 0.1,  gain: 0.35 }, // squeak
+};
+
 export const heartbeat = {
   start(mood = 'relaxed') {
     if (enabled) return;
@@ -88,6 +97,29 @@ export const heartbeat = {
         o.start(now);
         o.stop(now + 0.15);
       }, i * 80);
+    });
+  },
+  playVoice(creatureId) {
+    const ctx = ensureCtx();
+    if (!ctx) return;
+    const v = VOICES[creatureId] || VOICES.cat;
+    v.freqs.forEach((fr, i) => {
+      setTimeout(() => {
+        const c = ensureCtx();
+        if (!c) return;
+        const now = c.currentTime;
+        const o = c.createOscillator();
+        const g = c.createGain();
+        o.type = v.type;
+        o.frequency.setValueAtTime(fr, now);
+        o.frequency.linearRampToValueAtTime(fr * 0.92, now + v.dur);
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(volume * v.gain, now + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, now + v.dur);
+        o.connect(g).connect(c.destination);
+        o.start(now);
+        o.stop(now + v.dur);
+      }, i * (v.dur * 1000 + 40));
     });
   },
   unlock() { ensureCtx(); },
