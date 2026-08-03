@@ -140,7 +140,7 @@ export default function HeartPets() {
     });
     setActionAnim(action);
     heartbeat.playEffect(action.id);
-    setTimeout(() => setActionAnim(null), 900);
+    setTimeout(() => setActionAnim(null), action.id === 'clean' ? 2400 : 900);
   };
 
   const handleGameReward = (coins) => {

@@ -134,6 +134,8 @@ export function applyCare(pet, action) {
   s[action.stat] = clamp(s[action.stat] + action.amount);
   if (action.costs) for (const k in action.costs) s[k] = clamp(s[k] - action.costs[k]);
   if (action.id === 'feed' && s.hunger > 70 && s.health < 100) s.health = clamp(s.health + 2);
+  // A bath lifts spirits — washing boosts happiness too.
+  if (action.id === 'clean') s.happiness = clamp(s.happiness + 12);
 
   const now = Date.now();
   const careCount = pet.careCount + 1; // each care adds warmth toward hatching

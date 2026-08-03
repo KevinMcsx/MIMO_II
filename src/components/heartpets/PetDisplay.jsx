@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CREATURES, STAGE_NAMES, MOOD_INFO } from './petEngine';
 import ActionEffect from './ActionEffect';
+import WashAnimation from './WashAnimation';
 
 export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
   const creature = CREATURES.find(c => c.id === pet.creatureId) || CREATURES[0];
@@ -56,7 +57,7 @@ export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
             transition={{ duration: 0.2 }}
             className="absolute inset-0 z-20"
           >
-            <ActionEffect action={actionAnim} />
+            {actionAnim.id === 'clean' ? <WashAnimation /> : <ActionEffect action={actionAnim} />}
           </motion.div>
         )}
       </AnimatePresence>
