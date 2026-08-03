@@ -9,11 +9,27 @@ export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
   const stageEmoji = creature.stages[pet.stage] || creature.emoji;
   const moodInfo = MOOD_INFO[mood] || MOOD_INFO.relaxed;
   const isEgg = pet.stage === 0;
+  const sleeping = pet.isSleeping && !isEgg;
 
   return (
     <div className={`relative w-full aspect-square max-w-xs mx-auto rounded-3xl bg-gradient-to-br ${creature.color} flex items-center justify-center overflow-hidden shadow-2xl`}>
       {/* soft glow */}
       <div className="absolute inset-0 bg-white/10 rounded-3xl" />
+
+      {/* night-time ambience while asleep */}
+      {sleeping && (
+        <>
+          <div className="absolute inset-0 bg-indigo-950/45 rounded-3xl" />
+          <motion.span
+            className="absolute top-4 right-5 text-3xl"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: [0, 1, 1, 0], y: [-6, 2, -6] }}
+            transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            🌙
+          </motion.span>
+        </>
+      )}
 
       {/* floating sparkle ambiance */}
       {[...Array(6)].map((_, i) => (
@@ -31,14 +47,16 @@ export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
       {/* the creature */}
       <motion.button
         onClick={onTouch}
-        disabled={isEgg}
+        disabled={isEgg || sleeping}
         whileTap={{ scale: 0.85 }}
         animate={
           isEgg
             ? { rotate: [-3, 3, -3] }
+            : sleeping
+            ? { scale: [1, 1.06, 1], rotate: [0, -2, 2, 0] }
             : { y: [0, -10, 0], rotate: [0, 2, -2, 0] }
         }
-        transition={{ duration: isEgg ? 0.8 : 2.5, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: isEgg ? 0.8 : sleeping ? 4 : 2.5, repeat: Infinity, ease: 'easeInOut' }}
         className="relative z-10 cursor-pointer disabled:cursor-default"
         aria-label="Pet your companion"
       >
@@ -46,6 +64,24 @@ export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
           {stageEmoji}
         </span>
       </motion.button>
+
+      {/* drifting Zzz while asleep */}
+      {sleeping && (
+        <div className="absolute z-10 top-10 right-10 pointer-events-none">
+          {[0, 1, 2].map((i) => (
+            <motion.span
+              key={i}
+              className="absolute font-black text-white/80"
+              style={{ fontSize: `${1 + i * 0.5}rem` }}
+              initial={{ opacity: 0, y: 0, x: 0 }}
+              animate={{ opacity: [0, 1, 0], y: [0, -50], x: [0, 16] }}
+              transition={{ duration: 2.6, delay: i * 0.8, repeat: Infinity, ease: 'easeOut' }}
+            >
+              z
+            </motion.span>
+          ))}
+        </div>
+      )}
 
       {/* action effect */}
       <AnimatePresence>
@@ -65,8 +101,8 @@ export default function PetDisplay({ pet, mood, actionAnim, onTouch }) {
       {/* mood badge */}
       {!isEgg && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 bg-white/90 rounded-full px-3 py-1 flex items-center gap-1 shadow-md">
-          <span className="text-lg">{moodInfo.emoji}</span>
-          <span className="text-xs font-semibold text-slate-700">{moodInfo.label}</span>
+          <span className="text-lg">{sleeping ? '😴' : moodInfo.emoji}</span>
+          <span className="text-xs font-semibold text-slate-700">{sleeping ? 'Sleeping' : moodInfo.label}</span>
         </div>
       )}
     </div>

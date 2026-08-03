@@ -67,10 +67,11 @@ export function applyDecay(pet) {
     return { ...pet, stage, mood: calcMood(pet.stats) };
   }
   const s = { ...pet.stats };
-  s.hunger = clamp(s.hunger - hours * 8);
-  s.thirst = clamp(s.thirst - hours * 10);
-  s.energy = clamp(s.energy - hours * 4);
-  s.cleanliness = clamp(s.cleanliness - hours * 3);
+  const sleeping = !!pet.isSleeping;
+  s.hunger = clamp(s.hunger - hours * (sleeping ? 4 : 8));
+  s.thirst = clamp(s.thirst - hours * (sleeping ? 5 : 10));
+  s.energy = sleeping ? clamp(s.energy + hours * 20) : clamp(s.energy - hours * 4);
+  s.cleanliness = clamp(s.cleanliness - hours * (sleeping ? 2 : 3));
   const needPenalty = (100 - s.hunger) + (100 - s.thirst);
   s.happiness = clamp(s.happiness - hours * (4 + needPenalty * 0.05));
   if (s.hunger < 20 || s.thirst < 20) s.health = clamp(s.health - hours * 5);
@@ -153,6 +154,13 @@ export function applyTouch(pet) {
   const now = Date.now();
   const r = processXp(pet, 1, s, now);
   return { ...pet, stats: s, xp: r.xp, level: r.level, coins: r.coins, stage: r.stage, lastUpdated: now };
+}
+
+// Tuck the companion in or wake it up. While asleep, energy regenerates and
+// needs decay more slowly (handled in applyDecay).
+export function toggleSleep(pet) {
+  const d = applyDecay(pet);
+  return { ...d, isSleeping: !pet.isSleeping };
 }
 
 export function xpProgress(pet) {

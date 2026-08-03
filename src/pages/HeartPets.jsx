@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Heart, Volume2, VolumeX, RotateCcw, Gamepad2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
-  CREATURES, STAGE_NAMES, applyDecay, applyCare, applyTouch, calcMood, clamp,
+  CREATURES, STAGE_NAMES, applyDecay, applyCare, applyTouch, toggleSleep, calcMood, clamp,
 } from '@/components/heartpets/petEngine';
 import { heartbeat } from '@/components/heartpets/heartbeat';
 import PetDisplay from '@/components/heartpets/PetDisplay';
@@ -148,6 +148,16 @@ export default function HeartPets() {
   const handleCare = (action) => {
     setAudioReady(true);
     heartbeat.unlock();
+    if (action.id === 'sleep') {
+      const updated = toggleSleep(pet);
+      setPet(updated);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+      heartbeat.playEffect('sleep');
+      setActionAnim(action);
+      logPoint(updated, 'care');
+      setTimeout(() => setActionAnim(null), 900);
+      return;
+    }
     setPet(prev => {
       const updated = applyCare(prev, action);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
@@ -267,7 +277,7 @@ export default function HeartPets() {
 
         {/* Care actions */}
         <div className="mt-4">
-          <CareActions onCare={handleCare} disabled={false} />
+          <CareActions onCare={handleCare} disabled={false} isSleeping={!!pet.isSleeping} />
         </div>
 
         {/* Mini-games */}
