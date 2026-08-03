@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import FetchGame from './FetchGame';
+import TreatCatchGame from './TreatCatchGame';
 import HideSeekGame from './HideSeekGame';
 
 const GAMES = [
-  { id: 'fetch', name: 'Fetch', icon: '🎾', desc: 'Catch the ball fast!' },
+  { id: 'treatcatch', name: 'Treat Catch', icon: '🦴', desc: 'Catch falling treats!' },
   { id: 'hideseek', name: 'Hide & Seek', icon: '🌳', desc: 'Track your pet!' },
 ];
 
@@ -53,8 +53,8 @@ export default function MiniGames({ open, petEmoji, onReward, onClose }) {
                   </motion.button>
                 ))}
               </div>
-            ) : active === 'fetch' ? (
-              <FetchGame onReward={handleReward} onExit={() => setActive(null)} />
+            ) : active === 'treatcatch' ? (
+              <TreatCatchGame petEmoji={petEmoji} onReward={handleReward} onExit={() => setActive(null)} />
             ) : (
               <HideSeekGame petEmoji={petEmoji} onReward={handleReward} onExit={() => setActive(null)} />
             )}
