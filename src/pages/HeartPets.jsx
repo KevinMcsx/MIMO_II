@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, Heart, Volume2, VolumeX, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
-  CREATURES, STAGE_NAMES, applyDecay, applyCare, calcMood,
+  CREATURES, STAGE_NAMES, applyDecay, applyCare, applyTouch, calcMood,
 } from '@/components/heartpets/petEngine';
 import { heartbeat } from '@/components/heartpets/heartbeat';
 import PetDisplay from '@/components/heartpets/PetDisplay';
@@ -120,8 +120,7 @@ export default function HeartPets() {
     if (now - lastTouch.current < 1500) return; // small cooldown
     lastTouch.current = now;
     setPet(prev => {
-      const s = { ...prev.stats, affection: Math.min(100, prev.stats.affection + 2), happiness: Math.min(100, prev.stats.happiness + 1) };
-      const updated = { ...prev, stats: s, lastUpdated: now };
+      const updated = applyTouch(prev);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       return updated;
     });

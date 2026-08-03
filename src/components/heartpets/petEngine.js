@@ -78,26 +78,42 @@ export function applyDecay(pet) {
 const avgStats = (s) => (s.hunger + s.thirst + s.happiness + s.energy + s.cleanliness + s.health) / 6;
 const xpForLevel = (lvl) => lvl * 50;
 
+// Shared XP/level/evolution processing.
+function processXp(pet, xpGain, s) {
+  let xp = pet.xp + xpGain;
+  let level = pet.level;
+  let coins = pet.coins;
+  let stage = pet.stage;
+  while (xp >= xpForLevel(level)) { xp -= xpForLevel(level); level++; coins += 20; }
+  if (stage === 1 && level >= 3 && s.happiness > 50) stage = 2;
+  else if (stage === 2 && level >= 6 && avgStats(s) > 40) stage = 3;
+  else if (stage === 3 && level >= 10 && avgStats(s) > 60) stage = 4;
+  return { xp, level, coins, stage };
+}
+
 export function applyCare(pet, action) {
   const s = { ...pet.stats };
   s[action.stat] = clamp(s[action.stat] + action.amount);
   if (action.costs) for (const k in action.costs) s[k] = clamp(s[k] - action.costs[k]);
   if (action.id === 'feed' && s.hunger > 70 && s.health < 100) s.health = clamp(s.health + 2);
 
-  let xp = pet.xp + action.xp;
-  let level = pet.level;
-  let coins = pet.coins;
-  let stage = pet.stage;
   const careCount = pet.careCount + 1;
-
-  while (xp >= xpForLevel(level)) { xp -= xpForLevel(level); level++; coins += 20; }
-
+  let stage = pet.stage;
   if (stage === 0 && careCount >= 1) stage = 1; // hatch
-  if (stage === 1 && level >= 3 && s.happiness > 50) stage = 2;
-  else if (stage === 2 && level >= 6 && avgStats(s) > 40) stage = 3;
-  else if (stage === 3 && level >= 10 && avgStats(s) > 60) stage = 4;
 
-  return { ...pet, stats: s, xp, level, coins, stage, careCount, lastUpdated: Date.now() };
+  const r = processXp({ ...pet, stage }, action.xp, s);
+  return { ...pet, stats: s, xp: r.xp, level: r.level, coins: r.coins, stage: r.stage, careCount, lastUpdated: Date.now() };
+}
+
+// Touching the companion: a gentle affection + happiness + small XP bump (with level-ups).
+export function applyTouch(pet) {
+  const s = {
+    ...pet.stats,
+    affection: clamp(pet.stats.affection + 2),
+    happiness: clamp(pet.stats.happiness + 1),
+  };
+  const r = processXp(pet, 1, s);
+  return { ...pet, stats: s, xp: r.xp, level: r.level, coins: r.coins, stage: r.stage, lastUpdated: Date.now() };
 }
 
 export function xpProgress(pet) {

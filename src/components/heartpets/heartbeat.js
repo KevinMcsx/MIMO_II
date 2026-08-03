@@ -50,13 +50,13 @@ const EFFECT_FREQS = {
   sleep: [330, 262], play: [523, 659, 784], pet: [494, 587],
 };
 
-// Each creature's signature "voice" — a short tonal phrase.
+// Each creature's signature "voice" — a short, friendly, gentle phrase.
 const VOICES = {
-  dragon: { freqs: [196, 220, 175, 233], type: 'sawtooth', dur: 0.22, gain: 0.5 }, // growl
-  fox:    { freqs: [880, 740, 880, 698], type: 'square',   dur: 0.12, gain: 0.35 }, // yip
-  owl:    { freqs: [392, 330, 392, 294], type: 'sine',     dur: 0.3,  gain: 0.45 }, // hoot
-  cat:    { freqs: [523, 698, 587, 659], type: 'triangle', dur: 0.18, gain: 0.4 },  // meow
-  bunny:  { freqs: [784, 988, 784, 1175], type: 'sine',   dur: 0.1,  gain: 0.35 }, // squeak
+  dragon: { freqs: [165, 196, 147],     type: 'sine',     dur: 0.3,  gain: 0.42 }, // warm purr-rumble
+  fox:    { freqs: [700, 900, 700, 850], type: 'triangle', dur: 0.13, gain: 0.3 },  // friendly yip
+  owl:    { freqs: [294, 247, 294],      type: 'sine',     dur: 0.36, gain: 0.4 },  // soft hoo-hoo
+  cat:    { freqs: [440, 523, 415],      type: 'sine',     dur: 0.24, gain: 0.36 }, // gentle mew
+  bunny:  { freqs: [880, 988, 880],      type: 'sine',     dur: 0.11, gain: 0.28 }, // soft squeak
 };
 
 export const heartbeat = {
@@ -99,27 +99,40 @@ export const heartbeat = {
       }, i * 80);
     });
   },
-  playVoice(creatureId) {
+playVoice(creatureId) {
     const ctx = ensureCtx();
     if (!ctx) return;
     const v = VOICES[creatureId] || VOICES.cat;
+    const note = (fr) => {
+      const c = ensureCtx();
+      if (!c) return;
+      const now = c.currentTime;
+      // main gentle tone with smooth attack
+      const o = c.createOscillator();
+      const g = c.createGain();
+      o.type = v.type;
+      o.frequency.setValueAtTime(fr, now);
+      o.frequency.linearRampToValueAtTime(fr * 0.96, now + v.dur);
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(volume * v.gain, now + 0.045);
+      g.gain.exponentialRampToValueAtTime(0.001, now + v.dur);
+      o.connect(g).connect(c.destination);
+      o.start(now);
+      o.stop(now + v.dur);
+      // soft warmth harmonic (one octave below) for a friendly body
+      const o2 = c.createOscillator();
+      const g2 = c.createGain();
+      o2.type = 'sine';
+      o2.frequency.setValueAtTime(fr * 0.5, now);
+      g2.gain.setValueAtTime(0, now);
+      g2.gain.linearRampToValueAtTime(volume * v.gain * 0.32, now + 0.05);
+      g2.gain.exponentialRampToValueAtTime(0.001, now + v.dur);
+      o2.connect(g2).connect(c.destination);
+      o2.start(now);
+      o2.stop(now + v.dur);
+    };
     v.freqs.forEach((fr, i) => {
-      setTimeout(() => {
-        const c = ensureCtx();
-        if (!c) return;
-        const now = c.currentTime;
-        const o = c.createOscillator();
-        const g = c.createGain();
-        o.type = v.type;
-        o.frequency.setValueAtTime(fr, now);
-        o.frequency.linearRampToValueAtTime(fr * 0.92, now + v.dur);
-        g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(volume * v.gain, now + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.001, now + v.dur);
-        o.connect(g).connect(c.destination);
-        o.start(now);
-        o.stop(now + v.dur);
-      }, i * (v.dur * 1000 + 40));
+      setTimeout(() => note(fr), i * (v.dur * 1000 + 50));
     });
   },
   unlock() { ensureCtx(); },
