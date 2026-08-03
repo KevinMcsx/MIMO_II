@@ -13,6 +13,8 @@ import CareActions from '@/components/heartpets/CareActions';
 import CreatureSelect from '@/components/heartpets/CreatureSelect';
 import DailyReward from '@/components/heartpets/DailyReward';
 import MiniGames from '@/components/heartpets/MiniGames';
+import HappinessChart from '@/components/heartpets/HappinessChart';
+import { recordHappiness, getHappinessLog } from '@/components/heartpets/happinessLog';
 
 const STORAGE_KEY = 'heartpets_state';
 const SETTINGS_KEY = 'heartpets_settings';
@@ -42,13 +44,23 @@ export default function HeartPets() {
   const [evolveFlash, setEvolveFlash] = useState(false);
   const prevStage = useRef(null);
   const lastTouch = useRef(0);
+  const petRef = useRef(null);
+  petRef.current = pet;
+  const [happinessLog, setHappinessLog] = useState(() => getHappinessLog());
+
+  const logPoint = (petState, event = null) => {
+    if (!petState) return;
+    setHappinessLog(recordHappiness(petState, event));
+  };
 
   // Load on mount
   useEffect(() => {
-    setPet(loadPet());
+    const loaded = loadPet();
+    setPet(loaded);
     const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
     setHeartbeatOn(s.heartbeatOn !== false);
     setLoading(false);
+    logPoint(loaded, null);
   }, []);
 
   // Daily reward check
@@ -63,6 +75,7 @@ export default function HeartPets() {
     if (!pet) return;
     const id = setInterval(() => {
       setPet(p => { const d = applyDecay(p); localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); return d; });
+      if (petRef.current) setHappinessLog(recordHappiness(applyDecay(petRef.current), null));
     }, 30000);
     return () => clearInterval(id);
   }, [pet?.creatureId]);
@@ -112,6 +125,7 @@ export default function HeartPets() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(newPet));
     setAudioReady(true);
     heartbeat.unlock();
+    logPoint(newPet, null);
   };
 
   const handleTouch = () => {
@@ -126,6 +140,7 @@ export default function HeartPets() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
       return updated;
     });
+    logPoint(applyTouch(pet), 'touch');
     setActionAnim({ id: 'pet', icon: '💕' });
     setTimeout(() => setActionAnim(null), 800);
   };
@@ -140,23 +155,23 @@ export default function HeartPets() {
     });
     setActionAnim(action);
     heartbeat.playEffect(action.id);
+    logPoint(applyCare(pet, action), 'care');
     setTimeout(() => setActionAnim(null), action.id === 'clean' ? 2400 : 900);
   };
 
   const handleGameReward = (coins) => {
-    setPet(prev => {
-      const updated = {
-        ...prev,
-        coins: prev.coins + coins,
-        stats: {
-          ...prev.stats,
-          happiness: clamp(prev.stats.happiness + Math.min(15, coins)),
-          affection: clamp(prev.stats.affection + 3),
-        },
-      };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      return updated;
-    });
+    const updated = {
+      ...pet,
+      coins: pet.coins + coins,
+      stats: {
+        ...pet.stats,
+        happiness: clamp(pet.stats.happiness + Math.min(15, coins)),
+        affection: clamp(pet.stats.affection + 3),
+      },
+    };
+    setPet(updated);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    logPoint(updated, 'game');
   };
 
   const handleClaimDaily = (reward) => {
@@ -166,11 +181,10 @@ export default function HeartPets() {
     const info = { last: today, streak: newStreak };
     setDailyInfo(info);
     localStorage.setItem(DAILY_KEY, JSON.stringify(info));
-    setPet(prev => {
-      const updated = { ...prev, coins: prev.coins + reward.coins };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      return updated;
-    });
+    const updated = { ...pet, coins: pet.coins + reward.coins };
+    setPet(updated);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    logPoint(updated, 'daily');
     setShowDaily(false);
   };
 
@@ -247,6 +261,9 @@ export default function HeartPets() {
         <div className="mt-4">
           <StatsPanel pet={pet} />
         </div>
+
+        {/* Happiness trend */}
+        <HappinessChart data={happinessLog} />
 
         {/* Care actions */}
         <div className="mt-4">
