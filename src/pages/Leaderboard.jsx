@@ -82,7 +82,7 @@ export default function Leaderboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6 pb-24 md:pb-6 safe-top">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 p-6 pb-24 md:pb-6 safe-top">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-4">
           <Link to={createPageUrl('Game')}>
@@ -102,14 +102,14 @@ export default function Leaderboard() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-8"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">🏆 {t('leaderboard')}</h1>
+          <h1 className="text-5xl font-black text-slate-800 dark:text-slate-100 mb-2">🏆 {t('leaderboard')}</h1>
           <p className="text-slate-600 text-lg">{t('topPlayers')}</p>
         </motion.div>
 
         {/* Filters */}
         <div className="flex gap-3 mb-6 flex-wrap justify-center">
           <Select value={timeFilter} onValueChange={setTimeFilter}>
-            <SelectTrigger className="w-[150px] bg-white border-2 border-purple-300 rounded-lg font-semibold text-purple-700">
+            <SelectTrigger className="w-[150px] bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-500 rounded-lg font-semibold text-purple-700 dark:text-purple-300">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -124,7 +124,7 @@ export default function Leaderboard() {
             value={selectedGame != null ? String(selectedGame) : 'all'}
             onValueChange={(v) => setSelectedGame(v === 'all' ? null : Number(v))}
           >
-            <SelectTrigger className="w-[180px] bg-white border-2 border-slate-300 rounded-lg font-semibold">
+            <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 rounded-lg font-semibold">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -139,7 +139,7 @@ export default function Leaderboard() {
             value={selectedDifficulty != null ? String(selectedDifficulty) : 'all'}
             onValueChange={(v) => setSelectedDifficulty(v === 'all' ? null : Number(v))}
           >
-            <SelectTrigger className="w-[170px] bg-white border-2 border-slate-300 rounded-lg font-semibold">
+            <SelectTrigger className="w-[170px] bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 rounded-lg font-semibold">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -155,9 +155,9 @@ export default function Leaderboard() {
         <PullToRefresh onRefresh={async () => { await Promise.all([refetchScores(), refetchProfiles()]); }}>
         <div className="space-y-3">
           {isLoading ? (
-            <div className="text-center py-12 text-slate-500">Loading...</div>
+            <div className="text-center py-12 text-slate-500 dark:text-slate-400">Loading...</div>
           ) : scores.length === 0 ? (
-            <div className="text-center py-12 text-slate-500">No scores yet!</div>
+            <div className="text-center py-12 text-slate-500 dark:text-slate-400">No scores yet!</div>
           ) : (
             scores.map((score, index) => {
               const isCurrentPlayer = score.player_name === playerName;
@@ -170,9 +170,9 @@ export default function Leaderboard() {
                 transition={{ delay: index * 0.05 }}
                 className={`
                   flex items-center gap-4 p-4 rounded-xl border-2 relative
-                  ${isCurrentPlayer ? 'bg-gradient-to-r from-purple-100 to-blue-100 border-purple-400 ring-2 ring-purple-400' : 
-                    index < 3 ? 'bg-gradient-to-r from-yellow-50 to-amber-50 border-yellow-300' : 
-                    'bg-white border-slate-200'}
+                  ${isCurrentPlayer ? 'bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/50 dark:to-blue-900/50 border-purple-400 dark:border-purple-500 ring-2 ring-purple-400' : 
+                    index < 3 ? 'bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/40 dark:to-amber-900/40 border-yellow-300 dark:border-yellow-600' : 
+                    'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'}
                 `}
               >
                 {isCurrentPlayer && (
@@ -196,15 +196,15 @@ export default function Leaderboard() {
                 )}
 
                 <div className="flex-1">
-                  <p className="font-bold text-lg text-slate-800">{score.player_name}</p>
-                  <p className="text-sm text-slate-500">
+                  <p className="font-bold text-lg text-slate-800 dark:text-slate-100">{score.player_name}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
                     {gameNames[score.game_type - 1]} • {difficultyNames[score.difficulty - 1]}
                   </p>
                 </div>
 
                 <div className="text-right">
                   <p className="text-2xl font-black text-purple-600">{score.score}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {(score.avg_reaction_time || 0).toFixed(0)}ms avg
                   </p>
                 </div>

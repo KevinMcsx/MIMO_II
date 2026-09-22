@@ -84,7 +84,7 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
           title: '🧠 ' + t('rules'),
           description: t('game2Tutorial2'),
           visual: (
-            <div className="bg-slate-100 rounded-xl p-4 my-4 text-sm sm:text-base">
+            <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-4 my-4 text-sm sm:text-base">
               <div className="font-bold mb-2">{t('ifMatch')}:</div>
               <div className="ml-4 mb-3">✓ {t('pressShapeButton')}</div>
               <div className="font-bold mb-2">{t('ifNoMatch')}:</div>
@@ -116,10 +116,10 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
           title: '⌨️ ' + t('controls'),
           description: t('game3Tutorial2'),
           visual: (
-            <div className="bg-slate-100 rounded-xl p-4 my-4 text-sm sm:text-base">
+            <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-4 my-4 text-sm sm:text-base">
               <div className="space-y-2">
-                <div>• <kbd className="px-2 py-1 bg-white rounded shadow">↑↓←→</kbd> {t('arrowsToMove')}</div>
-                <div>• <kbd className="px-2 py-1 bg-white rounded shadow">Space</kbd> / <kbd className="px-2 py-1 bg-white rounded shadow">Enter</kbd> {t('toSelect')}</div>
+                <div>• <kbd className="px-2 py-1 bg-white dark:bg-slate-700 dark:text-white rounded shadow">↑↓←→</kbd> {t('arrowsToMove')}</div>
+                <div>• <kbd className="px-2 py-1 bg-white dark:bg-slate-700 dark:text-white rounded shadow">Space</kbd> / <kbd className="px-2 py-1 bg-white dark:bg-slate-700 dark:text-white rounded shadow">Enter</kbd> {t('toSelect')}</div>
                 <div>• {t('clickCards')}</div>
               </div>
             </div>
@@ -153,7 +153,7 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
           title: '🎮 ' + t('gameplay'),
           description: t('game4Tutorial2'),
           visual: (
-            <div className="bg-slate-100 rounded-xl p-4 my-4 text-sm sm:text-base">
+            <div className="bg-slate-100 dark:bg-slate-800 rounded-xl p-4 my-4 text-sm sm:text-base">
               <div className="space-y-2">
                 <div>• {t('lane')} 1: {t('colorMatching')}</div>
                 <div>• {t('lane')} 2: {t('colorMatching')}</div>
@@ -430,7 +430,7 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-            className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="relative bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
           >
             <div className="sticky top-0 bg-gradient-to-r from-purple-600 to-blue-600 text-white p-4 sm:p-6 rounded-t-2xl sm:rounded-t-3xl">
               <button
@@ -450,16 +450,16 @@ export default function TutorialModal({ isOpen, onClose, gameId }) {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className="border-2 border-slate-200 rounded-xl p-4 sm:p-5"
+                  className="border-2 border-slate-200 dark:border-slate-700 rounded-xl p-4 sm:p-5"
                 >
-                  <h3 className="text-lg sm:text-xl font-bold text-slate-800 mb-2 sm:mb-3">{step.title}</h3>
-                  <p className="text-sm sm:text-base text-slate-600 mb-3">{step.description}</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-100 mb-2 sm:mb-3">{step.title}</h3>
+                  <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 mb-3">{step.description}</p>
                   {step.visual && <div>{step.visual}</div>}
                 </motion.div>
               ))}
             </div>
 
-            <div className="sticky bottom-0 bg-slate-50 p-4 sm:p-6 rounded-b-2xl sm:rounded-b-3xl border-t-2 border-slate-200">
+            <div className="sticky bottom-0 bg-slate-50 dark:bg-slate-800 p-4 sm:p-6 rounded-b-2xl sm:rounded-b-3xl border-t-2 border-slate-200 dark:border-slate-700">
               <Button
                 onClick={onClose}
                 className="w-full h-12 sm:h-14 text-base sm:text-lg font-bold bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"

@@ -232,7 +232,7 @@ export default function HeartPets() {
   const mood = calcMood(pet.stats);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-b from-rose-50 via-purple-50 to-sky-50 p-4 pb-10`}>
+    <div className={`min-h-screen bg-gradient-to-b from-rose-50 via-purple-50 to-sky-50 p-4 pb-10 safe-top`}>
       <div className="max-w-md mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">

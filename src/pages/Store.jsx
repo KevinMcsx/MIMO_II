@@ -60,7 +60,7 @@ export default function Store() {
   if (isLoading || !profile) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 flex items-center justify-center">
-        <div className="text-2xl font-bold text-slate-800">{t('loading')}</div>
+        <div className="text-2xl font-bold text-slate-800 dark:text-slate-100">{t('loading')}</div>
       </div>
     );
   }
@@ -71,7 +71,7 @@ export default function Store() {
   const purchasableThemes = Object.entries(THEMES).filter(([id, theme]) => theme.price);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 p-6 pb-24 md:pb-6 safe-top">
       <div className="max-w-4xl mx-auto">
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
@@ -85,13 +85,13 @@ export default function Store() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-6"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">🛍️ {t('cosmeticStore')}</h1>
-          <p className="text-slate-600 text-lg">{t('useCoinsToUnlock')}</p>
+          <h1 className="text-5xl font-black text-slate-800 dark:text-slate-100 mb-2">🛍️ {t('cosmeticStore')}</h1>
+          <p className="text-slate-600 dark:text-slate-300 text-lg">{t('useCoinsToUnlock')}</p>
           
           <div className="inline-flex items-center gap-2 mt-4 bg-yellow-100 border-2 border-yellow-300 rounded-full px-6 py-3">
             <Coins className="w-6 h-6 text-yellow-600" />
             <span className="text-2xl font-black text-yellow-700">{profile.coins || 0}</span>
-            <span className="text-slate-600">{t('coins')}</span>
+            <span className="text-slate-600 dark:text-slate-300">{t('coins')}</span>
           </div>
         </motion.div>
 
@@ -129,14 +129,14 @@ export default function Store() {
                   <motion.div
                     key={id}
                     whileHover={{ scale: 1.02 }}
-                    className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 flex items-center gap-4"
+                    className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 flex items-center gap-4"
                   >
                     <div className={`w-20 h-20 rounded-full ${avatar.color} flex items-center justify-center text-4xl ${avatar.animated ? 'animate-bounce' : ''}`}>
                       {avatar.emoji}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-slate-800">{avatar.name}</h3>
-                      <p className="text-sm text-slate-500">{avatar.animated ? `✨ ${t('animated')}` : t('staticAvatar')}</p>
+                      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{avatar.name}</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">{avatar.animated ? `✨ ${t('animated')}` : t('staticAvatar')}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Coins className="w-4 h-4 text-yellow-600" />
                         <span className="font-bold text-yellow-700">{avatar.price}</span>
@@ -170,12 +170,12 @@ export default function Store() {
                   <motion.div
                     key={id}
                     whileHover={{ scale: 1.02 }}
-                    className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 flex items-center gap-4"
+                    className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 flex items-center gap-4"
                   >
                     <div className={`w-20 h-20 rounded-lg bg-gradient-to-br ${theme.gradient}`} />
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-slate-800">{theme.name}</h3>
-                      <p className="text-sm text-slate-500">{t('backgroundTheme')}</p>
+                      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{theme.name}</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">{t('backgroundTheme')}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Coins className="w-4 h-4 text-yellow-600" />
                         <span className="font-bold text-yellow-700">{theme.price}</span>
@@ -209,14 +209,14 @@ export default function Store() {
                   <motion.div
                     key={id}
                     whileHover={{ scale: 1.02 }}
-                    className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 flex items-center gap-4"
+                    className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 flex items-center gap-4"
                   >
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center text-3xl">
                       {pack.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-slate-800">{pack.name}</h3>
-                      <p className="text-sm text-slate-500">{pack.description}</p>
+                      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{pack.name}</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">{pack.description}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Coins className="w-4 h-4 text-yellow-600" />
                         <span className="font-bold text-yellow-700">{pack.price}</span>
@@ -250,14 +250,14 @@ export default function Store() {
                   <motion.div
                     key={id}
                     whileHover={{ scale: 1.02 }}
-                    className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 flex items-center gap-4"
+                    className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 flex items-center gap-4"
                   >
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-pink-400 to-purple-500 flex items-center justify-center text-3xl">
                       {cursor.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-slate-800">{cursor.name}</h3>
-                      <p className="text-sm text-slate-500">{cursor.description}</p>
+                      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100">{cursor.name}</h3>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">{cursor.description}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Coins className="w-4 h-4 text-yellow-600" />
                         <span className="font-bold text-yellow-700">{cursor.price}</span>
@@ -285,8 +285,8 @@ export default function Store() {
         </motion.div>
 
         {/* Tips */}
-        <div className="mt-8 bg-blue-50 border-2 border-blue-200 rounded-xl p-4 text-center">
-          <p className="text-blue-800 font-semibold">{t('tipEarnCoins')}</p>
+        <div className="mt-8 bg-blue-50 dark:bg-blue-900/40 border-2 border-blue-200 dark:border-blue-800 rounded-xl p-4 text-center">
+          <p className="text-blue-800 dark:text-blue-200 font-semibold">{t('tipEarnCoins')}</p>
         </div>
       </div>
     </div>

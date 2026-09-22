@@ -167,7 +167,7 @@ export default function Statistics() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6 pb-24 md:pb-6 safe-top">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 p-6 pb-24 md:pb-6 safe-top">
       <PullToRefresh onRefresh={refetchScores} className="max-w-6xl mx-auto">
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
@@ -181,8 +181,8 @@ export default function Statistics() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-6"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">📊 {t('statisticsTitle')}</h1>
-          <p className="text-slate-600 text-lg">{t('gamePerformance')}</p>
+          <h1 className="text-5xl font-black text-slate-800 dark:text-slate-100 mb-2">📊 {t('statisticsTitle')}</h1>
+          <p className="text-slate-600 dark:text-slate-300 text-lg">{t('gamePerformance')}</p>
           <div className="flex gap-3 mt-3 justify-center">
             <Button
               onClick={downloadStats}
@@ -200,7 +200,7 @@ export default function Statistics() {
             value={selectedPlayer || 'all'}
             onValueChange={(v) => setSelectedPlayer(v === 'all' ? null : v)}
           >
-            <SelectTrigger className="w-[170px] bg-white border-2 border-purple-300 rounded-lg font-semibold text-purple-700">
+            <SelectTrigger className="w-[170px] bg-white dark:bg-slate-800 border-2 border-purple-300 dark:border-purple-500 rounded-lg font-semibold text-purple-700 dark:text-purple-300">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -215,7 +215,7 @@ export default function Statistics() {
             value={selectedGame != null ? String(selectedGame) : 'all'}
             onValueChange={(v) => setSelectedGame(v === 'all' ? null : Number(v))}
           >
-            <SelectTrigger className="w-[180px] bg-white border-2 border-blue-300 rounded-lg font-semibold text-blue-700">
+            <SelectTrigger className="w-[180px] bg-white dark:bg-slate-800 border-2 border-blue-300 dark:border-blue-600 rounded-lg font-semibold text-blue-700 dark:text-blue-300">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -232,66 +232,66 @@ export default function Statistics() {
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 text-center"
           >
             <TrendingUp className="w-8 h-8 mx-auto mb-2 text-blue-500" />
-            <p className="text-3xl font-black text-slate-800">{totalGames}</p>
-            <p className="text-slate-600 text-sm">{t('gamesPlayed')}</p>
+            <p className="text-3xl font-black text-slate-800 dark:text-slate-100">{totalGames}</p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">{t('gamesPlayed')}</p>
           </motion.div>
 
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 text-center"
           >
             <Target className="w-8 h-8 mx-auto mb-2 text-green-500" />
-            <p className="text-3xl font-black text-slate-800">{bestScore}</p>
-            <p className="text-slate-600 text-sm">{t('bestScore')}</p>
+            <p className="text-3xl font-black text-slate-800 dark:text-slate-100">{bestScore}</p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">{t('bestScore')}</p>
           </motion.div>
 
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 text-center"
           >
             <Zap className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
-            <p className="text-3xl font-black text-slate-800">{avgScore}</p>
-            <p className="text-slate-600 text-sm">{t('avgScore')}</p>
+            <p className="text-3xl font-black text-slate-800 dark:text-slate-100">{avgScore}</p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">{t('avgScore')}</p>
           </motion.div>
 
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 text-center"
           >
             <Clock className="w-8 h-8 mx-auto mb-2 text-purple-500" />
-            <p className="text-3xl font-black text-slate-800">{avgReaction}ms</p>
-            <p className="text-slate-600 text-sm">{t('avgReaction')}</p>
+            <p className="text-3xl font-black text-slate-800 dark:text-slate-100">{avgReaction}ms</p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">{t('avgReaction')}</p>
           </motion.div>
 
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.4 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 text-center"
           >
             <Zap className="w-8 h-8 mx-auto mb-2 text-green-500 fill-green-500" />
-            <p className="text-3xl font-black text-slate-800">{bestReaction === Infinity ? 0 : bestReaction.toFixed(0)}ms</p>
-            <p className="text-slate-600 text-sm">{t('bestReaction')}</p>
+            <p className="text-3xl font-black text-slate-800 dark:text-slate-100">{bestReaction === Infinity ? 0 : bestReaction.toFixed(0)}ms</p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">{t('bestReaction')}</p>
           </motion.div>
 
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200 text-center"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700 text-center"
           >
             <Target className="w-8 h-8 mx-auto mb-2 text-pink-500" />
-            <p className="text-3xl font-black text-slate-800">{overallAccuracy}%</p>
-            <p className="text-slate-600 text-sm">Accuracy</p>
+            <p className="text-3xl font-black text-slate-800 dark:text-slate-100">{overallAccuracy}%</p>
+            <p className="text-slate-600 dark:text-slate-300 text-sm">Accuracy</p>
           </motion.div>
         </div>
 
@@ -300,9 +300,9 @@ export default function Statistics() {
           <motion.div
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">{t('gamesByType')}</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">{t('gamesByType')}</h3>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={gamesByType}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -317,9 +317,9 @@ export default function Statistics() {
           <motion.div
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Win Rate by Game Mode</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Win Rate by Game Mode</h3>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={winLossByGame}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -342,7 +342,7 @@ export default function Statistics() {
             transition={{ delay: 0.1 }}
             className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border-2 border-blue-300"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">📈 Average Score Over Time</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">📈 Average Score Over Time</h3>
             <ResponsiveContainer width="100%" height={250}>
               <AreaChart data={scoreOverTime}>
                 <defs>
@@ -366,7 +366,7 @@ export default function Statistics() {
             transition={{ delay: 0.1 }}
             className="bg-gradient-to-br from-amber-50 to-yellow-50 rounded-2xl p-6 border-2 border-amber-300"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">🎯 Accuracy Trends</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">🎯 Accuracy Trends</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={accuracyTrends}>
                 <defs>
@@ -394,7 +394,7 @@ export default function Statistics() {
             transition={{ delay: 0.2 }}
             className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border-2 border-green-300"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">⚡ {t('reactionProgression')}</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">⚡ {t('reactionProgression')}</h3>
             <ResponsiveContainer width="100%" height={250}>
               <LineChart data={reactionProgression}>
                 <defs>
@@ -416,9 +416,9 @@ export default function Statistics() {
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">Performance by Difficulty</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Performance by Difficulty</h3>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={difficultyPerformance}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -436,29 +436,29 @@ export default function Statistics() {
           <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="mb-8 bg-white rounded-2xl p-6 border-2 border-slate-200"
+            className="mb-8 bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700"
           >
-            <h3 className="text-xl font-bold text-slate-800 mb-4">{t('playerRankings')}</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">{t('playerRankings')}</h3>
             <div className="space-y-2">
               {playerStats.slice(0, 10).map((player, i) => (
-                <div key={player.name} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 border border-slate-200">
+                <div key={player.name} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
                   <div className="flex items-center gap-3">
                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
                       i === 0 ? 'bg-yellow-400 text-white' : 
                       i === 1 ? 'bg-slate-400 text-white' : 
                       i === 2 ? 'bg-amber-600 text-white' : 
-                      'bg-slate-200 text-slate-600'
+                      'bg-slate-200 text-slate-600 dark:text-slate-300'
                     }`}>
                       {i + 1}
                     </div>
                     <div>
-                      <p className="font-semibold text-slate-800">{player.name}</p>
-                      <p className="text-xs text-slate-500">{player.games} games played</p>
+                      <p className="font-semibold text-slate-800 dark:text-slate-100">{player.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{player.games} games played</p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-xl font-bold text-purple-600">{player.avgScore}</p>
-                    <p className="text-xs text-slate-500">Avg: {player.avgReaction}ms</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Avg: {player.avgReaction}ms</p>
                   </div>
                 </div>
               ))}
@@ -470,23 +470,23 @@ export default function Statistics() {
         <motion.div
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="bg-white rounded-2xl p-6 border-2 border-slate-200"
+          className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700"
         >
-          <h3 className="text-xl font-bold text-slate-800 mb-4">{t('recentGames')}</h3>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">{t('recentGames')}</h3>
           <div className="space-y-2">
             {filteredScores.slice(0, 10).map((score, i) => (
-              <div key={score.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-50">
+              <div key={score.id} className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-800">
                 <div>
-                  <p className="font-semibold text-slate-800">
+                  <p className="font-semibold text-slate-800 dark:text-slate-100">
                     {gameNames[score.game_type - 1]} - {difficultyNames[score.difficulty - 1]}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {score.player_name} • {new Date(score.created_date).toLocaleDateString()}
                   </p>
                 </div>
                 <div className="text-right">
                   <p className="text-2xl font-bold text-purple-600">{score.score}</p>
-                  <p className="text-xs text-slate-500">{(score.avg_reaction_time || 0).toFixed(0)}ms</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{(score.avg_reaction_time || 0).toFixed(0)}ms</p>
                 </div>
               </div>
             ))}

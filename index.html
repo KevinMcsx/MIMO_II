@@ -6,6 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="manifest" href="/manifest.json" />
 
+    <!-- Sync Tailwind dark mode with the system color scheme (runs before React to avoid a flash) -->
+    <script>
+      (function () {
+        var mq = window.matchMedia('(prefers-color-scheme: dark)');
+        var apply = function () { document.documentElement.classList.toggle('dark', mq.matches); };
+        apply();
+        if (mq.addEventListener) { mq.addEventListener('change', apply); } else { mq.addListener(apply); }
+      })();
+    </script>
+
     <!-- Primary SEO Meta Tags -->
     <title>LoopyBrain — Fast-Paced Brain Training & Reflex Game</title>
     <meta name="title" content="LoopyBrain — Fast-Paced Brain Training & Reflex Game" />

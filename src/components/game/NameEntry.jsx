@@ -28,12 +28,12 @@ export default function NameEntry({ onSubmit }) {
           animate={{ y: 0 }}
           className="mb-2 sm:mb-3 md:mb-4"
         >
-          <User className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto text-slate-700 drop-shadow-lg" strokeWidth={1.5} />
+          <User className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto text-slate-700 dark:text-slate-200 drop-shadow-lg" strokeWidth={1.5} />
         </motion.div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight mb-2 sm:mb-3 md:mb-4 drop-shadow-lg">
           {t('welcomeToMIMO')}
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-slate-700 font-semibold drop-shadow-sm">
+        <p className="text-base sm:text-lg md:text-xl text-slate-700 dark:text-slate-200 font-semibold drop-shadow-sm">
           {t('enterName')}
         </p>
       </div>
@@ -44,7 +44,7 @@ export default function NameEntry({ onSubmit }) {
           placeholder={t('yourName')}
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="h-12 sm:h-14 text-lg sm:text-xl text-center bg-white/90 border-3 sm:border-4 border-slate-700 focus:border-blue-500 transition-colors"
+          className="h-12 sm:h-14 text-lg sm:text-xl text-center bg-white/90 dark:bg-slate-800/90 border-3 sm:border-4 border-slate-700 dark:border-slate-300 focus:border-blue-500 transition-colors"
           maxLength={20}
           autoFocus
         />

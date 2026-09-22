@@ -306,17 +306,19 @@ export default function Game() {
       <div className="absolute inset-0 bg-black/10" />
 
       {/* Top Navigation */}
-      <div className="absolute top-2 sm:top-4 left-2 sm:left-4 z-20">
-        {(screen === 'categoryDetail' || screen === 'difficultySelect') && (
+      <div className="absolute top-[calc(env(safe-area-inset-top)+0.5rem)] sm:top-[calc(env(safe-area-inset-top)+1rem)] left-2 sm:left-4 z-20">
+        {(screen === 'categoryDetail' || screen === 'difficultySelect' || screen === 'playing') && (
           <button
             onClick={() => {
-              if (screen === 'categoryDetail') {
+              if (screen === 'playing') {
+                handleMainMenu();
+              } else if (screen === 'categoryDetail') {
                 handleBackToCategories();
               } else {
                 navigate(`/Game/category/${selectedCategory}`);
               }
             }}
-            className="flex items-center gap-1.5 h-8 sm:h-10 px-3 rounded-2xl bg-white/80 hover:bg-white/95 backdrop-blur-sm text-slate-700 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg border-2 border-white/50 shrink-0"
+            className="flex items-center gap-1.5 h-8 sm:h-10 px-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 hover:bg-white/95 dark:hover:bg-slate-800 backdrop-blur-sm text-slate-700 dark:text-slate-200 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg border-2 border-white/50 dark:border-slate-600/50 shrink-0"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={3} />
             <span className="hidden sm:inline">{t('back')}</span>
@@ -324,7 +326,7 @@ export default function Game() {
         )}
       </div>
 
-      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end items-center max-w-[calc(100%-3.5rem)] sm:max-w-none">
+      <div className="absolute top-[calc(env(safe-area-inset-top)+0.5rem)] sm:top-[calc(env(safe-area-inset-top)+1rem)] right-2 sm:right-4 z-20 flex flex-wrap gap-1 sm:gap-2 justify-end items-center max-w-[calc(100%-3.5rem)] sm:max-w-none">
         {playerProfile && screen !== 'nameEntry' && (
           <LevelDisplay level={playerProfile.level} xp={playerProfile.xp} compact={true} />
         )}
@@ -332,8 +334,8 @@ export default function Game() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
-              <User className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
+            <Button variant="ghost" size="icon" className="bg-white/60 dark:bg-slate-800/70 hover:bg-white/80 dark:hover:bg-slate-700/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+              <User className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-200" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
@@ -367,36 +369,36 @@ export default function Game() {
           </DropdownMenuContent>
         </DropdownMenu>
         <Link to={createPageUrl('DailyChallenge')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
-            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
+          <Button variant="ghost" size="icon" className="bg-white/60 dark:bg-slate-800/70 hover:bg-white/80 dark:hover:bg-slate-700/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+            <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-200" />
           </Button>
         </Link>
         <Link to={createPageUrl('Statistics')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
-            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
+          <Button variant="ghost" size="icon" className="bg-white/60 dark:bg-slate-800/70 hover:bg-white/80 dark:hover:bg-slate-700/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+            <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-200" />
           </Button>
         </Link>
         <Link to={createPageUrl('Leaderboard')}>
-          <Button variant="ghost" size="icon" className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
-            <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
+          <Button variant="ghost" size="icon" className="bg-white/60 dark:bg-slate-800/70 hover:bg-white/80 dark:hover:bg-slate-700/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10">
+            <Trophy className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-200" />
           </Button>
         </Link>
         <Button
           onClick={toggleSound}
           variant="ghost"
           size="icon"
-          className="bg-white/60 hover:bg-white/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10"
+          className="bg-white/60 dark:bg-slate-800/70 hover:bg-white/80 dark:hover:bg-slate-700/80 backdrop-blur-sm h-8 w-8 sm:h-10 sm:w-10"
         >
           {soundEnabled ? (
-            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
+            <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-200" />
           ) : (
-            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700" />
+            <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 text-slate-700 dark:text-slate-200" />
           )}
         </Button>
       </div>
 
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 pt-16 sm:pt-20 pb-40 sm:pb-48">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pt-[calc(env(safe-area-inset-top)+5rem)] pb-40 sm:pb-48">
         <AnimatePresence mode="wait">
           {screen === 'nameEntry' && (
             <motion.div
@@ -479,7 +481,7 @@ export default function Game() {
             className="absolute bottom-4 sm:bottom-8 left-0 right-0 px-4"
           >
             <div className="text-center mb-3">
-              <p className="text-slate-700 text-xs sm:text-sm font-medium drop-shadow-sm">
+              <p className="text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-medium drop-shadow-sm">
                 {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs sm:text-sm">1</span> 
                 <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">2</span>
                 <span className="text-white font-mono bg-slate-700 px-1 sm:px-2 py-0.5 sm:py-1 rounded mx-0.5 sm:mx-1 text-xs sm:text-sm">3</span>

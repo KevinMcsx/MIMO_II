@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Star, Trophy, ChevronLeft, CheckCircle, Flame, Medal, Sparkles, History, Award } from 'lucide-react';
+import { Calendar, Star, Trophy, ChevronLeft, CheckCircle, Flame, Medal, Sparkles, History, Award, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -208,7 +208,14 @@ export default function DailyChallenge() {
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100">
         <div className="relative bg-[url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1920')] bg-cover bg-center">
           <div className="absolute inset-0 bg-gradient-to-b from-purple-900/60 to-pink-900/60" />
-          <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+          <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 safe-top">
+            <button
+              onClick={() => setPlaying(false)}
+              className="absolute top-2 left-2 z-30 flex items-center gap-1.5 h-8 px-3 rounded-2xl bg-white/80 dark:bg-slate-900/80 hover:bg-white/95 dark:hover:bg-slate-800 backdrop-blur-sm text-slate-700 dark:text-slate-200 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg border-2 border-white/50 dark:border-slate-600/50"
+            >
+              <ArrowLeft className="w-4 h-4" strokeWidth={3} />
+              <span className="hidden sm:inline">{t('back')}</span>
+            </button>
             {renderGame()}
           </div>
         </div>
@@ -221,7 +228,7 @@ export default function DailyChallenge() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900 p-6 safe-top">
       <div className="max-w-6xl mx-auto">
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
@@ -235,8 +242,8 @@ export default function DailyChallenge() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-8"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">📅 {t('dailyChallenge')}</h1>
-          <p className="text-slate-600 text-lg">{t('completeTodaysChallenge')}</p>
+          <h1 className="text-5xl font-black text-slate-800 dark:text-slate-100 mb-2">📅 {t('dailyChallenge')}</h1>
+          <p className="text-slate-600 dark:text-slate-300 text-lg">{t('completeTodaysChallenge')}</p>
           
           {/* Action Buttons */}
           <div className="flex justify-center gap-3 mt-4">
@@ -297,10 +304,10 @@ export default function DailyChallenge() {
               <div className="flex items-center gap-3">
                 <Calendar className="w-8 h-8 text-blue-500" />
                 <div>
-                  <p className="text-2xl font-black text-slate-800">
+                  <p className="text-2xl font-black text-slate-800 dark:text-slate-100">
                     {gameNames[challenge.game_type - 1]}
                   </p>
-                  <p className="text-slate-600">{difficultyNames[challenge.difficulty - 1]}</p>
+                  <p className="text-slate-600 dark:text-slate-300">{difficultyNames[challenge.difficulty - 1]}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -349,15 +356,15 @@ export default function DailyChallenge() {
                     </>
                   ) : (
                     <>
-                      <Trophy className="w-8 h-8 text-slate-500" />
+                      <Trophy className="w-8 h-8 text-slate-500 dark:text-slate-400" />
                       <div className="text-left">
                         <p className="font-black text-slate-700 text-xl">{t('challengeAttempted')}</p>
-                        <p className="text-slate-600">{t('score')}: {completion.score} ({t('targetScore')}: {challenge.target_score})</p>
+                        <p className="text-slate-600 dark:text-slate-300">{t('score')}: {completion.score} ({t('targetScore')}: {challenge.target_score})</p>
                       </div>
                     </>
                   )}
                 </motion.div>
-                <p className="text-slate-500">{t('comeBackTomorrow')}</p>
+                <p className="text-slate-500 dark:text-slate-400">{t('comeBackTomorrow')}</p>
               </div>
             ) : (
               <Button
@@ -380,11 +387,11 @@ export default function DailyChallenge() {
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="bg-white rounded-3xl p-8 border-4 border-slate-300 shadow-xl"
+            className="bg-white dark:bg-slate-900 rounded-3xl p-8 border-4 border-slate-300 dark:border-slate-700 shadow-xl"
           >
             <div className="flex items-center gap-3 mb-6">
               <Trophy className="w-8 h-8 text-yellow-500" />
-              <h2 className="text-2xl font-black text-slate-800">{t('dailyLeaderboard')}</h2>
+              <h2 className="text-2xl font-black text-slate-800 dark:text-slate-100">{t('dailyLeaderboard')}</h2>
             </div>
 
             {leaderboard && leaderboard.length > 0 ? (
@@ -402,7 +409,7 @@ export default function DailyChallenge() {
                       className={`flex items-center justify-between p-3 rounded-xl ${
                         isCurrentPlayer 
                           ? 'bg-gradient-to-r from-purple-100 to-blue-100 border-2 border-purple-400' 
-                          : 'bg-slate-50'
+                          : 'bg-slate-50 dark:bg-slate-800'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -410,7 +417,7 @@ export default function DailyChallenge() {
                           {index < 3 ? medalColors[index] : `#${index + 1}`}
                         </div>
                         <div>
-                          <p className={`font-bold ${isCurrentPlayer ? 'text-purple-700' : 'text-slate-800'}`}>
+                          <p className={`font-bold ${isCurrentPlayer ? 'text-purple-700' : 'text-slate-800 dark:text-slate-100'}`}>
                             {entry.player_name}
                             {isCurrentPlayer && <span className="ml-2 text-xs">({t('you')})</span>}
                           </p>
@@ -437,7 +444,7 @@ export default function DailyChallenge() {
                 })}
               </div>
             ) : (
-              <p className="text-center text-slate-500 py-8">{t('noCompletions')}</p>
+              <p className="text-center text-slate-500 dark:text-slate-400 py-8">{t('noCompletions')}</p>
             )}
           </motion.div>
         </div>
@@ -447,11 +454,11 @@ export default function DailyChallenge() {
           <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            className="mt-6 bg-white rounded-3xl p-8 border-4 border-slate-300 shadow-xl"
+            className="mt-6 bg-white dark:bg-slate-900 rounded-3xl p-8 border-4 border-slate-300 dark:border-slate-700 shadow-xl"
           >
             <div className="flex items-center gap-3 mb-6">
               <History className="w-8 h-8 text-indigo-500" />
-              <h2 className="text-2xl font-black text-slate-800">Challenge History</h2>
+              <h2 className="text-2xl font-black text-slate-800 dark:text-slate-100">Challenge History</h2>
             </div>
 
             {challengeHistory.length > 0 ? (
@@ -465,11 +472,11 @@ export default function DailyChallenge() {
                     className={`p-4 rounded-xl border-2 ${
                       entry.completed
                         ? 'bg-green-50 border-green-300'
-                        : 'bg-slate-50 border-slate-300'
+                        : 'bg-slate-50 dark:bg-slate-800 border-slate-300'
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <p className="text-sm font-semibold text-slate-600">
+                      <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">
                         {new Date(entry.challenge_date).toLocaleDateString()}
                       </p>
                       {entry.challenge?.is_featured && (
@@ -477,17 +484,17 @@ export default function DailyChallenge() {
                       )}
                     </div>
                     
-                    <p className="font-bold text-slate-800 mb-1">
+                    <p className="font-bold text-slate-800 dark:text-slate-100 mb-1">
                       {gameNames[entry.challenge.game_type - 1]}
                     </p>
-                    <p className="text-xs text-slate-600 mb-2">
+                    <p className="text-xs text-slate-600 dark:text-slate-300 mb-2">
                       {difficultyNames[entry.challenge.difficulty - 1]}
                     </p>
                     
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="text-2xl font-black text-purple-600">{entry.score}</p>
-                        <p className="text-xs text-slate-500">Target: {entry.challenge.target_score}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">Target: {entry.challenge.target_score}</p>
                       </div>
                       {entry.completed ? (
                         <CheckCircle className="w-6 h-6 text-green-600" />
@@ -507,7 +514,7 @@ export default function DailyChallenge() {
                 ))}
               </div>
             ) : (
-              <p className="text-center text-slate-500 py-8">No challenge history yet. Start completing daily challenges!</p>
+              <p className="text-center text-slate-500 dark:text-slate-400 py-8">No challenge history yet. Start completing daily challenges!</p>
             )}
           </motion.div>
         )}
@@ -519,7 +526,7 @@ export default function DailyChallenge() {
           transition={{ delay: 0.5 }}
           className="text-center mt-8"
         >
-          <p className="text-slate-700 text-sm font-medium drop-shadow-sm">
+          <p className="text-slate-700 dark:text-slate-200 text-sm font-medium drop-shadow-sm">
             {t('useKeys')} <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded text-sm">1</span> 
             <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">2</span>
             <span className="text-white font-mono bg-slate-700 px-2 py-1 rounded mx-1 text-sm">3</span>

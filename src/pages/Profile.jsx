@@ -67,7 +67,7 @@ export default function Profile() {
   if (isLoading || !profile) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 flex items-center justify-center">
-        <div className="text-2xl font-bold text-slate-800">{t('loading')}</div>
+        <div className="text-2xl font-bold text-slate-800 dark:text-slate-100">{t('loading')}</div>
       </div>
     );
   }
@@ -136,15 +136,15 @@ export default function Profile() {
           animate={{ y: 0, opacity: 1 }}
           className="text-center mb-6"
         >
-          <h1 className="text-5xl font-black text-slate-800 mb-2">👤 {t('profile')}</h1>
-          <p className="text-slate-600 text-lg">{playerName}</p>
+          <h1 className="text-5xl font-black text-slate-800 dark:text-slate-100 mb-2">👤 {t('profile')}</h1>
+          <p className="text-slate-600 dark:text-slate-300 text-lg">{playerName}</p>
         </motion.div>
 
         {/* Profile Card */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-white/90 backdrop-blur-sm rounded-3xl p-8 mb-6 border-2 border-slate-200 shadow-xl"
+          className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-3xl p-8 mb-6 border-2 border-slate-200 dark:border-slate-700 shadow-xl"
         >
           <div className="flex flex-col md:flex-row items-center gap-6">
             <PlayerAvatar 
@@ -155,7 +155,7 @@ export default function Profile() {
             />
             
             <div className="flex-1 text-center md:text-left">
-              <h2 className="text-3xl font-black text-slate-800 mb-2">{playerName}</h2>
+              <h2 className="text-3xl font-black text-slate-800 dark:text-slate-100 mb-2">{playerName}</h2>
               <LevelDisplay level={profile.level} xp={profile.xp} />
             </div>
           </div>
@@ -172,7 +172,7 @@ export default function Profile() {
           <div className="inline-flex items-center gap-2 bg-yellow-100 border-2 border-yellow-300 rounded-full px-4 py-2">
             <span className="text-2xl">🪙</span>
             <span className="text-xl font-black text-yellow-700">{profile.coins || 0}</span>
-            <span className="text-slate-600 text-sm">{t('coins')}</span>
+            <span className="text-slate-600 dark:text-slate-300 text-sm">{t('coins')}</span>
           </div>
           <Link to={createPageUrl('Store')}>
             <Button className="bg-purple-600 hover:bg-purple-700">
@@ -208,7 +208,7 @@ export default function Profile() {
           key={activeTab}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200"
+          className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700"
         >
           {activeTab === 'avatars' && (
             <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
@@ -223,7 +223,7 @@ export default function Profile() {
                     onClick={() => isUnlocked && equipAvatar(id)}
                     className={`
                       relative p-4 rounded-xl border-2 flex flex-col items-center gap-2
-                      ${isEquipped ? 'border-purple-600 bg-purple-50 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${isEquipped ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-900/40 ring-2 ring-purple-600' : 'border-slate-200 dark:border-slate-700'}
                       ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
                     `}
                   >
@@ -233,7 +233,7 @@ export default function Profile() {
                     <div className={`w-16 h-16 rounded-full ${avatar.color} flex items-center justify-center text-4xl`}>
                       {avatar.emoji}
                     </div>
-                    <p className="text-xs font-semibold text-slate-700">{avatar.name}</p>
+                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">{avatar.name}</p>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
                         ✓
@@ -258,7 +258,7 @@ export default function Profile() {
                     onClick={() => isUnlocked && equipBadge(id)}
                     className={`
                       relative p-4 rounded-xl border-2 flex flex-col items-center gap-2
-                      ${isEquipped ? 'border-purple-600 bg-purple-50 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${isEquipped ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-900/40 ring-2 ring-purple-600' : 'border-slate-200 dark:border-slate-700'}
                       ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
                     `}
                   >
@@ -266,7 +266,7 @@ export default function Profile() {
                       <Lock className="absolute top-2 right-2 w-4 h-4 text-slate-400" />
                     )}
                     <div className="text-5xl">{badge.emoji}</div>
-                    <p className="text-xs font-semibold text-slate-700">{badge.name}</p>
+                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">{badge.name}</p>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
                         ✓
@@ -291,17 +291,17 @@ export default function Profile() {
                     onClick={() => isUnlocked && equipFrame(id)}
                     className={`
                       relative p-4 rounded-xl border-2 flex flex-col items-center gap-3
-                      ${isEquipped ? 'border-purple-600 bg-purple-50 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${isEquipped ? 'border-purple-600 dark:border-purple-400 bg-purple-50 dark:bg-purple-900/40 ring-2 ring-purple-600' : 'border-slate-200 dark:border-slate-700'}
                       ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
                     `}
                   >
                     {!isUnlocked && (
                       <Lock className="absolute top-2 right-2 w-4 h-4 text-slate-400" />
                     )}
-                    <div className={`w-20 h-20 rounded-full bg-slate-200 flex items-center justify-center ${frame.border} ${frame.shadow}`}>
+                    <div className={`w-20 h-20 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center ${frame.border} ${frame.shadow}`}>
                       <Star className="w-8 h-8 text-slate-400" />
                     </div>
-                    <p className="text-xs font-semibold text-slate-700">{frame.name}</p>
+                    <p className="text-xs font-semibold text-slate-700 dark:text-slate-300">{frame.name}</p>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
                         ✓
@@ -326,7 +326,7 @@ export default function Profile() {
                     onClick={() => isUnlocked && equipTheme(id)}
                     className={`
                       relative p-6 rounded-xl border-2 flex items-center gap-4
-                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200 dark:border-slate-700'}
                       ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
                     `}
                   >
@@ -335,8 +335,8 @@ export default function Profile() {
                     )}
                     <div className={`w-20 h-20 rounded-lg bg-gradient-to-br ${theme.gradient}`} />
                     <div className="text-left">
-                      <p className="font-bold text-lg text-slate-800">{theme.name}</p>
-                      <p className="text-xs text-slate-500">{t('backgroundTheme')}</p>
+                      <p className="font-bold text-lg text-slate-800 dark:text-slate-100">{theme.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{t('backgroundTheme')}</p>
                     </div>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -362,7 +362,7 @@ export default function Profile() {
                     onClick={() => isUnlocked && equipSoundPack(id)}
                     className={`
                       relative p-6 rounded-xl border-2 flex items-center gap-4
-                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200 dark:border-slate-700'}
                       ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
                     `}
                   >
@@ -371,8 +371,8 @@ export default function Profile() {
                     )}
                     <div className="text-5xl">{pack.icon}</div>
                     <div className="text-left flex-1">
-                      <p className="font-bold text-lg text-slate-800">{pack.name}</p>
-                      <p className="text-xs text-slate-500">{pack.description}</p>
+                      <p className="font-bold text-lg text-slate-800 dark:text-slate-100">{pack.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{pack.description}</p>
                     </div>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -398,7 +398,7 @@ export default function Profile() {
                     onClick={() => isUnlocked && equipCursor(id)}
                     className={`
                       relative p-6 rounded-xl border-2 flex items-center gap-4
-                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200'}
+                      ${isEquipped ? 'border-purple-600 ring-2 ring-purple-600' : 'border-slate-200 dark:border-slate-700'}
                       ${!isUnlocked && 'opacity-50 cursor-not-allowed'}
                     `}
                   >
@@ -407,8 +407,8 @@ export default function Profile() {
                     )}
                     <div className="text-5xl">{cursor.icon}</div>
                     <div className="text-left flex-1">
-                      <p className="font-bold text-lg text-slate-800">{cursor.name}</p>
-                      <p className="text-xs text-slate-500">{cursor.description}</p>
+                      <p className="font-bold text-lg text-slate-800 dark:text-slate-100">{cursor.name}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">{cursor.description}</p>
                     </div>
                     {isEquipped && (
                       <div className="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -426,13 +426,13 @@ export default function Profile() {
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="mt-6 bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-red-200 shadow-lg"
+          className="mt-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-red-200 dark:border-red-800 shadow-lg"
         >
           <div className="flex items-center gap-3 mb-2">
             <AlertTriangle className="w-6 h-6 text-red-500" />
-            <h3 className="text-lg font-bold text-slate-800">Danger Zone</h3>
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">Danger Zone</h3>
           </div>
-          <p className="text-sm text-slate-600 mb-4">
+          <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
             Deleting your account permanently removes your profile, progress, cosmetics, and all saved game results. This cannot be undone.
           </p>
           {!deleteConfirm ? (

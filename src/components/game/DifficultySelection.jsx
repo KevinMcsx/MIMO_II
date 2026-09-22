@@ -252,7 +252,7 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
       <Button
         onClick={onBack}
         variant="ghost"
-        className="absolute top-2 left-2 sm:top-4 sm:left-4 text-slate-700 hover:text-slate-900 font-semibold bg-white/50 hover:bg-white/70 h-8 sm:h-10 text-xs sm:text-sm"
+        className="absolute top-[calc(env(safe-area-inset-top)+0.5rem)] left-2 sm:top-[calc(env(safe-area-inset-top)+1rem)] sm:left-4 text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white font-semibold bg-white/50 dark:bg-slate-800/60 hover:bg-white/70 dark:hover:bg-slate-700/80 h-8 sm:h-10 text-xs sm:text-sm"
       >
         <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" />
         {t('back')}
@@ -266,7 +266,7 @@ export default function DifficultySelection({ gameId, onSelect, onBack, activeKe
         {t('chooseDifficulty')}
       </motion.h1>
       
-      <p className="text-sm sm:text-lg md:text-xl text-slate-700 font-semibold text-center drop-shadow-sm">
+      <p className="text-sm sm:text-lg md:text-xl text-slate-700 dark:text-slate-200 font-semibold text-center drop-shadow-sm">
         {t('useKeys')} 1-4 {t('keysToSelect')}
       </p>
 
