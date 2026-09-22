@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Area, AreaChart, Legend } from 'recharts';
 import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import PullToRefresh from '@/components/PullToRefresh';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { useTranslation } from '../components/utils/translations';
@@ -20,7 +22,7 @@ export default function Statistics() {
   const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory')];
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
-  const { data: allScores = [] } = useQuery({
+  const { data: allScores = [], refetch: refetchScores } = useQuery({
     queryKey: ['allScores'],
     queryFn: getAllResults,
   });
@@ -165,8 +167,8 @@ export default function Statistics() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6 pb-24 md:pb-6 safe-top">
+      <PullToRefresh onRefresh={refetchScores} className="max-w-6xl mx-auto">
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
             <ChevronLeft className="w-5 h-5 mr-2" />
@@ -194,27 +196,35 @@ export default function Statistics() {
 
         {/* Filters */}
         <div className="flex gap-3 mb-6 flex-wrap justify-center">
-          <select
-            value={selectedPlayer || ''}
-            onChange={(e) => setSelectedPlayer(e.target.value || null)}
-            className="px-4 py-2 rounded-lg bg-white border-2 border-purple-300 font-semibold text-purple-700"
+          <Select
+            value={selectedPlayer || 'all'}
+            onValueChange={(v) => setSelectedPlayer(v === 'all' ? null : v)}
           >
-            <option value="">{t('allPlayers')}</option>
-            {uniquePlayers.map((player) => (
-              <option key={player} value={player}>{player}</option>
-            ))}
-          </select>
+            <SelectTrigger className="w-[170px] bg-white border-2 border-purple-300 rounded-lg font-semibold text-purple-700">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t('allPlayers')}</SelectItem>
+              {uniquePlayers.map((player) => (
+                <SelectItem key={player} value={player}>{player}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          <select
-            value={selectedGame || ''}
-            onChange={(e) => setSelectedGame(e.target.value ? Number(e.target.value) : null)}
-            className="px-4 py-2 rounded-lg bg-white border-2 border-blue-300 font-semibold text-blue-700"
+          <Select
+            value={selectedGame != null ? String(selectedGame) : 'all'}
+            onValueChange={(v) => setSelectedGame(v === 'all' ? null : Number(v))}
           >
-            <option value="">{t('allGames')}</option>
-            {gameNames.map((name, i) => (
-              <option key={i} value={i + 1}>{name}</option>
-            ))}
-          </select>
+            <SelectTrigger className="w-[180px] bg-white border-2 border-blue-300 rounded-lg font-semibold text-blue-700">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t('allGames')}</SelectItem>
+              {gameNames.map((name, i) => (
+                <SelectItem key={i} value={String(i + 1)}>{name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Quick Stats */}
@@ -482,7 +492,7 @@ export default function Statistics() {
             ))}
           </div>
         </motion.div>
-      </div>
+      </PullToRefresh>
     </div>
   );
 }

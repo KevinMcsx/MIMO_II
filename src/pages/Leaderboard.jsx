@@ -6,6 +6,8 @@ import { Trophy, Medal, Award, ChevronLeft, RefreshCw } from 'lucide-react';
 import { useToast } from '@/components/ui/use-toast';
 import PlayerAvatar from '../components/profile/PlayerAvatar';
 import { Button } from '@/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import PullToRefresh from '@/components/PullToRefresh';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { useTranslation } from '../components/utils/translations';
@@ -36,14 +38,14 @@ export default function Leaderboard() {
     }
   };
 
-  const { data: allProfiles = [] } = useQuery({
+  const { data: allProfiles = [], refetch: refetchProfiles } = useQuery({
     queryKey: ['allProfiles'],
     queryFn: () => base44.entities.PlayerProfile.list(),
   });
 
   const getPlayerProfile = (name) => allProfiles.find(p => p.player_name === name);
 
-  const { data: scores = [], isLoading } = useQuery({
+  const { data: scores = [], isLoading, refetch: refetchScores } = useQuery({
     queryKey: ['leaderboard', selectedGame, selectedDifficulty, timeFilter],
     queryFn: async () => {
       const filters = {};
@@ -80,7 +82,7 @@ export default function Leaderboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-pink-100 p-6 pb-24 md:pb-6 safe-top">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-4">
           <Link to={createPageUrl('Game')}>
@@ -106,41 +108,51 @@ export default function Leaderboard() {
 
         {/* Filters */}
         <div className="flex gap-3 mb-6 flex-wrap justify-center">
-          <select
-            value={timeFilter}
-            onChange={(e) => setTimeFilter(e.target.value)}
-            className="px-4 py-2 rounded-lg bg-white border-2 border-purple-300 font-semibold text-purple-700"
-          >
-            <option value="daily">{t('daily')}</option>
-            <option value="weekly">{t('weekly')}</option>
-            <option value="monthly">{t('monthly')}</option>
-            <option value="all-time">{t('allTime')}</option>
-          </select>
+          <Select value={timeFilter} onValueChange={setTimeFilter}>
+            <SelectTrigger className="w-[150px] bg-white border-2 border-purple-300 rounded-lg font-semibold text-purple-700">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="daily">{t('daily')}</SelectItem>
+              <SelectItem value="weekly">{t('weekly')}</SelectItem>
+              <SelectItem value="monthly">{t('monthly')}</SelectItem>
+              <SelectItem value="all-time">{t('allTime')}</SelectItem>
+            </SelectContent>
+          </Select>
 
-          <select
-            value={selectedGame || ''}
-            onChange={(e) => setSelectedGame(e.target.value ? Number(e.target.value) : null)}
-            className="px-4 py-2 rounded-lg bg-white border-2 border-slate-300 font-semibold"
+          <Select
+            value={selectedGame != null ? String(selectedGame) : 'all'}
+            onValueChange={(v) => setSelectedGame(v === 'all' ? null : Number(v))}
           >
-            <option value="">{t('allGames')}</option>
-            {gameNames.map((name, i) => (
-              <option key={i} value={i + 1}>{name}</option>
-            ))}
-          </select>
+            <SelectTrigger className="w-[180px] bg-white border-2 border-slate-300 rounded-lg font-semibold">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t('allGames')}</SelectItem>
+              {gameNames.map((name, i) => (
+                <SelectItem key={i} value={String(i + 1)}>{name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          <select
-            value={selectedDifficulty || ''}
-            onChange={(e) => setSelectedDifficulty(e.target.value ? Number(e.target.value) : null)}
-            className="px-4 py-2 rounded-lg bg-white border-2 border-slate-300 font-semibold"
+          <Select
+            value={selectedDifficulty != null ? String(selectedDifficulty) : 'all'}
+            onValueChange={(v) => setSelectedDifficulty(v === 'all' ? null : Number(v))}
           >
-            <option value="">{t('allDifficulties')}</option>
-            {difficultyNames.map((name, i) => (
-              <option key={i} value={i + 1}>{name}</option>
-            ))}
-          </select>
+            <SelectTrigger className="w-[170px] bg-white border-2 border-slate-300 rounded-lg font-semibold">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">{t('allDifficulties')}</SelectItem>
+              {difficultyNames.map((name, i) => (
+                <SelectItem key={i} value={String(i + 1)}>{name}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
         {/* Leaderboard */}
+        <PullToRefresh onRefresh={async () => { await Promise.all([refetchScores(), refetchProfiles()]); }}>
         <div className="space-y-3">
           {isLoading ? (
             <div className="text-center py-12 text-slate-500">Loading...</div>
@@ -201,6 +213,7 @@ export default function Leaderboard() {
             })
           )}
         </div>
+        </PullToRefresh>
       </div>
     </div>
   );

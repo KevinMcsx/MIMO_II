@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import GameSelection from '../components/game/GameSelection';
 import CategoryCards from '../components/game/CategoryCards';
@@ -62,15 +62,37 @@ import { useQuery } from '@tanstack/react-query';
 
 export default function Game() {
   const t = useTranslation();
-  const [screen, setScreen] = useState('nameEntry'); // nameEntry, gameSelect, difficultySelect, playing
-  const [selectedGame, setSelectedGame] = useState(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [activeKey, setActiveKey] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [playerName, setPlayerName] = useState('');
   const [showTutorial, setShowTutorial] = useState(false);
-  
+  const [pendingDifficulty, setPendingDifficulty] = useState(null);
+
+  // Menu steps are URL-driven so the Android hardware back button returns to
+  // the previous screen:
+  // /Game/start (name entry) · /Game (category select) · /Game/category/:cat
+  // · /Game/game/:cat/:id (difficulty) · /Game/play/:id/:diff
+  const segs = location.pathname.replace(/^\/Game\/?/, '').split('/').filter(Boolean);
+  let screen, selectedCategory, selectedGame, selectedDifficulty;
+  if (segs[0] === 'start') {
+    screen = 'nameEntry';
+  } else if (segs[0] === 'category' && segs[1]) {
+    screen = 'categoryDetail';
+    selectedCategory = segs[1];
+  } else if (segs[0] === 'game' && segs[2]) {
+    screen = 'difficultySelect';
+    selectedCategory = segs[1];
+    selectedGame = Number(segs[2]);
+  } else if (segs[0] === 'play' && segs[1]) {
+    screen = 'playing';
+    selectedGame = Number(segs[1]);
+    selectedDifficulty = segs[2] ? Number(segs[2]) : null;
+  } else {
+    screen = playerName ? 'gameSelect' : 'nameEntry';
+  }
+
   const { data: playerProfile, refetch: refetchProfile } = useQuery({
     queryKey: ['playerProfile', playerName],
     queryFn: () => getPlayerProfile(playerName),
@@ -82,7 +104,6 @@ export default function Game() {
     const savedName = localStorage.getItem('loopybrainPlayerName');
     if (savedName) {
       setPlayerName(savedName);
-      setScreen('gameSelect');
     }
   }, []);
 
@@ -96,7 +117,7 @@ export default function Game() {
   const handleNameSubmit = (name) => {
     setPlayerName(name);
     localStorage.setItem('loopybrainPlayerName', name);
-    setScreen('gameSelect');
+    navigate('/Game', { replace: true });
   };
 
   // Keyboard handling for menus
@@ -110,23 +131,19 @@ export default function Game() {
       if (screen === 'gameSelect' && keyToCategory[e.key]) {
         setActiveKey(e.key);
         setTimeout(() => {
-          setSelectedCategory(keyToCategory[e.key]);
-          setScreen('categoryDetail');
+          navigate(`/Game/category/${keyToCategory[e.key]}`);
           setActiveKey(null);
         }, 200);
       } else if (screen === 'categoryDetail' && e.key === 'Escape') {
-        setScreen('gameSelect');
-        setSelectedCategory(null);
+        navigate('/Game');
       } else if (screen === 'difficultySelect' && keyToDifficulty[e.key]) {
         setActiveKey(e.key);
         setTimeout(() => {
-          setSelectedDifficulty(keyToDifficulty[e.key]);
-          setScreen('playing');
+          navigate(`/Game/play/${selectedGame}/${keyToDifficulty[e.key]}`);
           setActiveKey(null);
         }, 200);
       } else if (e.key === 'Escape' && screen === 'difficultySelect') {
-        setScreen('categoryDetail');
-        setSelectedGame(null);
+        navigate(`/Game/category/${selectedCategory}`);
       }
     };
 
@@ -135,59 +152,54 @@ export default function Game() {
   }, [screen]);
 
   const handleCategorySelect = (categoryId) => {
-    setSelectedCategory(categoryId);
-    setScreen('categoryDetail');
+    navigate(`/Game/category/${categoryId}`);
   };
 
   const handleBackToCategories = () => {
-    setScreen('gameSelect');
-    setSelectedCategory(null);
+    navigate('/Game');
   };
 
   const handleGameSelect = (gameId) => {
-    setSelectedGame(gameId);
-    setScreen('difficultySelect');
+    navigate(`/Game/game/${selectedCategory}/${gameId}`);
   };
 
   const handleDifficultySelect = (difficultyId) => {
-    setSelectedDifficulty(difficultyId);
-    
     // Check if this is first time playing this game
     const tutorialKey = `loopybrain_tutorial_game${selectedGame}`;
     const hasSeenTutorial = localStorage.getItem(tutorialKey);
-    
+
     if (!hasSeenTutorial) {
+      setPendingDifficulty(difficultyId);
       setShowTutorial(true);
       localStorage.setItem(tutorialKey, 'true');
     } else {
-      setScreen('playing');
+      navigate(`/Game/play/${selectedGame}/${difficultyId}`);
     }
   };
 
   const handleTutorialClose = () => {
     setShowTutorial(false);
-    setScreen('playing');
+    if (screen === 'difficultySelect' && selectedGame && pendingDifficulty) {
+      navigate(`/Game/play/${selectedGame}/${pendingDifficulty}`);
+    }
   };
 
   const handleMainMenu = () => {
-    setScreen('gameSelect');
-    setSelectedGame(null);
-    setSelectedDifficulty(null);
-    setSelectedCategory(null);
+    navigate('/Game');
     refetchProfile();
   };
 
   const handleLogout = () => {
     localStorage.removeItem('loopybrainPlayerName');
     setPlayerName('');
-    setScreen('nameEntry');
+    navigate('/Game/start');
   };
 
   const handleSwitchProfile = (name) => {
     localStorage.setItem('loopybrainPlayerName', name);
     setPlayerName(name);
-    setScreen('gameSelect');
     refetchProfile();
+    if (location.pathname !== '/Game') navigate('/Game');
   };
 
   const getAllProfiles = () => {
@@ -301,8 +313,7 @@ export default function Game() {
               if (screen === 'categoryDetail') {
                 handleBackToCategories();
               } else {
-                setScreen('categoryDetail');
-                setSelectedGame(null);
+                navigate(`/Game/category/${selectedCategory}`);
               }
             }}
             className="flex items-center gap-1.5 h-8 sm:h-10 px-3 rounded-2xl bg-white/80 hover:bg-white/95 backdrop-blur-sm text-slate-700 font-black text-sm transition-all hover:scale-105 active:scale-95 shadow-lg border-2 border-white/50 shrink-0"
@@ -439,10 +450,7 @@ export default function Game() {
               <DifficultySelection
                 gameId={selectedGame}
                 onSelect={handleDifficultySelect}
-                onBack={() => {
-                  setScreen('categoryDetail');
-                  setSelectedGame(null);
-                }}
+                onBack={() => navigate(`/Game/category/${selectedCategory}`)}
                 activeKey={activeKey}
                 unlockedDifficulties={playerProfile?.unlocked_difficulties?.[selectedGame] || [1]}
               />

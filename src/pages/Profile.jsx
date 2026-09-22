@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
-import { ChevronLeft, Star, Lock, ShoppingBag } from 'lucide-react';
+import { ChevronLeft, Star, Lock, ShoppingBag, Trash2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
@@ -18,6 +18,8 @@ export default function Profile() {
   const t = useTranslation();
   const playerName = localStorage.getItem('loopybrainPlayerName');
   const [activeTab, setActiveTab] = useState('avatars');
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -95,10 +97,32 @@ export default function Profile() {
     updateProfileMutation.mutate({ equipped_cursor: cursorId });
   };
 
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      await base44.entities.PlayerProfile.delete(profile.id);
+      await base44.entities.GameScore.deleteMany({ player_name: playerName });
+      await base44.entities.ChallengeCompletion.deleteMany({ player_name: playerName });
+    } catch (error) {
+      console.error('Failed to delete account data from database:', error);
+    }
+    try {
+      const stored = localStorage.getItem('loopybrain_player_profiles');
+      const profiles = stored ? JSON.parse(stored) : {};
+      delete profiles[playerName];
+      localStorage.setItem('loopybrain_player_profiles', JSON.stringify(profiles));
+    } catch (error) {
+      console.error('Failed to clean local profile data:', error);
+    }
+    localStorage.removeItem('loopybrainPlayerName');
+    localStorage.removeItem('loopybrainSoundPack');
+    window.location.href = createPageUrl('Game');
+  };
+
   const currentTheme = THEMES[profile.cosmetic_theme] || THEMES.default;
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${currentTheme.gradient} p-6`}>
+    <div className={`min-h-screen bg-gradient-to-br ${currentTheme.gradient} p-6 pb-24 md:pb-6 safe-top`}>
       <div className="max-w-4xl mx-auto">
         <Link to={createPageUrl('Game')}>
           <Button variant="ghost" className="mb-4">
@@ -394,6 +418,37 @@ export default function Profile() {
                   </motion.button>
                 );
               })}
+            </div>
+          )}
+        </motion.div>
+
+        {/* Danger Zone — account deletion */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="mt-6 bg-white/90 backdrop-blur-sm rounded-2xl p-6 border-2 border-red-200 shadow-lg"
+        >
+          <div className="flex items-center gap-3 mb-2">
+            <AlertTriangle className="w-6 h-6 text-red-500" />
+            <h3 className="text-lg font-bold text-slate-800">Danger Zone</h3>
+          </div>
+          <p className="text-sm text-slate-600 mb-4">
+            Deleting your account permanently removes your profile, progress, cosmetics, and all saved game results. This cannot be undone.
+          </p>
+          {!deleteConfirm ? (
+            <Button variant="destructive" onClick={() => setDeleteConfirm(true)}>
+              <Trash2 className="w-4 h-4 mr-2" />
+              Delete account
+            </Button>
+          ) : (
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button variant="destructive" onClick={handleDeleteAccount} disabled={deleting}>
+                <Trash2 className="w-4 h-4 mr-2" />
+                {deleting ? 'Deleting…' : 'Yes, delete everything'}
+              </Button>
+              <Button variant="outline" onClick={() => setDeleteConfirm(false)} disabled={deleting}>
+                Cancel
+              </Button>
             </div>
           )}
         </motion.div>

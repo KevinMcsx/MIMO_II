@@ -3,7 +3,10 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import NavigationTracker from '@/lib/NavigationTracker'
 import { pagesConfig } from './pages.config'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import BottomTabBar from '@/components/BottomTabBar';
+import Game from './pages/Game';
 import PageNotFound from './lib/PageNotFound';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -16,11 +19,22 @@ const mainPageKey = mainPage ?? Object.keys(Pages)[0];
 const MainPage = mainPageKey ? Pages[mainPageKey] : <></>;
 
 const LayoutWrapper = ({ children, currentPageName }) => Layout ?
-  <Layout currentPageName={currentPageName}>{children}</Layout>
+  <Layout currentPageName={currentPageName}>
+    <motion.div
+      key={currentPageName}
+      initial={{ opacity: 0, x: 24 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -24 }}
+      transition={{ duration: 0.22, ease: 'easeOut' }}
+    >
+      {children}
+    </motion.div>
+  </Layout>
   : <>{children}</>;
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+  const location = useLocation();
 
   // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
@@ -44,7 +58,10 @@ const AuthenticatedApp = () => {
 
   // Render the main app
   return (
-    <Routes>
+    <>
+      <BottomTabBar />
+      <AnimatePresence mode="wait" initial={false}>
+      <Routes location={location} key={location.pathname.split('/')[1] || 'home'}>
       <Route path="/" element={
         <LayoutWrapper currentPageName={mainPageKey}>
           <MainPage />
@@ -64,8 +81,11 @@ const AuthenticatedApp = () => {
       <Route path="/About" element={<LayoutWrapper currentPageName="About"><About /></LayoutWrapper>} />
       <Route path="/Contact" element={<LayoutWrapper currentPageName="Contact"><Contact /></LayoutWrapper>} />
       <Route path="/HeartPets" element={<LayoutWrapper currentPageName="HeartPets"><HeartPets /></LayoutWrapper>} />
+      <Route path="/Game/*" element={<LayoutWrapper currentPageName="Game"><Game /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
-    </Routes>
+      </Routes>
+      </AnimatePresence>
+    </>
   );
 };
 

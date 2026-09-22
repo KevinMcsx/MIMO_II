@@ -6,7 +6,7 @@ export default function Layout({ children }) {
       <div className="flex-1">
         {children}
       </div>
-      <footer className="bg-sky-300/90 backdrop-blur-sm py-4 text-center mt-8">
+      <footer className="hidden md:block bg-sky-300/90 backdrop-blur-sm py-4 text-center mt-8">
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 mb-2">
           <Link to="/About" className="text-white text-xs sm:text-sm font-medium hover:underline">
             About
