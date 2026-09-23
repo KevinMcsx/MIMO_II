@@ -127,11 +127,22 @@
   }
 }
 
-/* Native feel: no rubber-band overscroll on the page or inner scroll areas */
+/* Native feel: no rubber-band overscroll on the page or inner scroll areas.
+   NOTE: overflow-x must be `clip`, not `hidden` — `hidden` on <body> turns the
+   body into its own scroll container, which breaks native page scrolling on
+   web and in the mobile WebView. `clip` prevents horizontal overflow without
+   creating a scroll container. */
 html,
 body {
   overscroll-behavior: none;
-  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* Fallback for older browsers without overflow-x: clip support */
+@supports not (overflow-x: clip) {
+  html {
+    overflow-x: hidden;
+  }
 }
 
 [class*="overflow-auto"],
