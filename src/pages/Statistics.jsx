@@ -1,6 +1,8 @@
+import { inputLabels, recentRounds } from '@/lib/scoreComparison';
+import RoundTable from '@/components/game/RoundTable';
+import { gameLabels } from '@/lib/gameDefinitions';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Area, AreaChart, Legend } from 'recharts';
 import { TrendingUp, Target, Clock, Zap, ChevronLeft, Download } from 'lucide-react';
@@ -18,8 +20,10 @@ export default function Statistics() {
   const currentPlayerName = localStorage.getItem('loopybrainPlayerName') || 'Player';
   const [selectedPlayer, setSelectedPlayer] = useState(currentPlayerName);
   const [selectedGame, setSelectedGame] = useState(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState('');
+  const [selectedInput, setSelectedInput] = useState('');
   
-  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory')];
+  const gameNames = gameLabels(t);
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
   const { data: allScores = [], refetch: refetchScores } = useQuery({
@@ -34,23 +38,26 @@ export default function Statistics() {
   const filteredScores = allScores.filter(score => {
     const playerMatch = !selectedPlayer || score.player_name === selectedPlayer;
     const gameMatch = !selectedGame || score.game_type === selectedGame;
-    return playerMatch && gameMatch;
+    const difficultyMatch = !selectedDifficulty || score.difficulty === Number(selectedDifficulty);
+    const inputMatch = !selectedInput || (score.input_mode ?? 'unknown') === selectedInput;
+    return playerMatch && gameMatch && difficultyMatch && inputMatch;
   });
 
   // Calculate stats
   const totalGames = filteredScores.length;
   const avgScore = totalGames > 0 ? Math.round(filteredScores.reduce((sum, s) => sum + (s.score || 0), 0) / totalGames) : 0;
   const bestScore = totalGames > 0 ? Math.max(...filteredScores.map(s => s.score || 0)) : 0;
-  const avgReaction = totalGames > 0 ? Math.round(filteredScores.reduce((sum, s) => sum + (s.avg_reaction_time || 0), 0) / totalGames) : 0;
-  const bestReaction = totalGames > 0 ? Math.min(...filteredScores.filter(s => s.avg_reaction_time > 0).map(s => s.avg_reaction_time || Infinity)) : 0;
+  const reactionTimes = filteredScores.map(score => score.avg_reaction_time).filter(time => time > 0);
+  const avgReaction = reactionTimes.length ? Math.round(reactionTimes.reduce((sum, value) => sum + value, 0) / reactionTimes.length) : 0;
+  const bestReaction = reactionTimes.length ? Math.round(Math.min(...reactionTimes)) : 0;
 
-  // Win/Loss ratios by game (score > 0 considered a win for simplicity)
+  // Answer counts use each game?s recorded hits.
   const winLossByGame = gameNames.map((name, i) => {
     const gameScores = filteredScores.filter(s => s.game_type === i + 1);
-    const wins = gameScores.filter(s => s.score > 500).length; // Threshold for "win"
-    const losses = gameScores.length - wins;
+    const wins = gameScores.reduce((count, score) => count + (score.correct_hits ?? 0), 0);
+    const losses = gameScores.reduce((count, score) => count + (score.wrong_hits ?? 0), 0);
     return {
-      name: name.split(' ')[0],
+      name,
       wins,
       losses,
       total: gameScores.length,
@@ -112,20 +119,19 @@ export default function Statistics() {
 
   // Games by type
   const gamesByType = gameNames.map((name, i) => ({
-    name: name.split(' ')[0],
+    name,
     games: filteredScores.filter(s => s.game_type === i + 1).length,
-  }));
+  })).filter(game => game.games > 0);
 
   // Reaction time progression
-  const reactionProgression = filteredScores.slice(0, 20).reverse().map((s, i) => ({
+  const reactionProgression = filteredScores.filter(score => score.avg_reaction_time > 0).slice(0, 20).reverse().map((s, i) => ({
     game: `#${i + 1}`,
     reaction: s.avg_reaction_time || 0,
   }));
 
   // Stats by player
   const playerStats = uniquePlayers.map(player => {
-    const playerScores = allScores.filter(s => s.player_name === player);
-    const gameFilter = selectedGame ? playerScores.filter(s => s.game_type === selectedGame) : playerScores;
+    const gameFilter = filteredScores.filter(s => s.player_name === player);
     return {
       name: player,
       games: gameFilter.length,
@@ -137,7 +143,7 @@ export default function Statistics() {
 
   const downloadStats = () => {
     // CSV Header
-    let csv = 'Player Name,Game Type,Difficulty,Score,Avg Reaction Time (ms),Correct Hits,Wrong Hits,Total Time (ms),Date\n';
+    let csv = 'Player Name,Game Type,Difficulty,Controls,Score,Avg Reaction Time (ms),Correct Hits,Wrong Hits,Total Time (ms),Date\n';
 
     // CSV Data Rows
     filteredScores.forEach((score) => {
@@ -145,6 +151,7 @@ export default function Statistics() {
         score.player_name,
         gameNames[score.game_type - 1],
         difficultyNames[score.difficulty - 1],
+        inputLabels[score.input_mode ?? 'unknown'],
         score.score,
         (score.avg_reaction_time || 0).toFixed(0),
         score.correct_hits || 0,
@@ -152,7 +159,11 @@ export default function Statistics() {
         score.total_time || 0,
         new Date(score.created_date).toLocaleString()
       ];
-      csv += row.map(field => `"${field}"`).join(',') + '\n';
+      csv += row.map(field => {
+        const value = String(field ?? '');
+        const safe = typeof field === 'string' && /^[=+@\t\r-]/.test(value) ? "'" + value : value;
+        return '"' + safe.replaceAll('"', '""') + '"';
+      }).join(',') + '\n';
     });
 
     const blob = new Blob([csv], { type: 'text/csv' });
@@ -226,6 +237,27 @@ export default function Statistics() {
             </SelectContent>
           </Select>
         </div>
+
+        <div className="mb-6 flex flex-wrap justify-center gap-3">
+          <label className="grid gap-1">Difficulty
+            <select className="rounded border bg-white p-2 text-slate-900" value={selectedDifficulty} onChange={event => setSelectedDifficulty(event.target.value)}>
+              <option value="">All difficulties</option>
+              {difficultyNames.map((name, index) => <option key={name} value={index + 1}>{name}</option>)}
+            </select>
+          </label>
+          <label className="grid gap-1">Controls
+            <select className="rounded border bg-white p-2 text-slate-900" value={selectedInput} onChange={event => setSelectedInput(event.target.value)}>
+              <option value="">All controls</option>
+              {Object.entries(inputLabels).map(([mode, label]) => <option key={mode} value={mode}>{label}</option>)}
+            </select>
+          </label>
+        </div>
+        {selectedPlayer && selectedGame && selectedDifficulty && selectedInput && !['unknown', 'mixed'].includes(selectedInput) && (
+          <section className="mb-8 rounded-2xl border bg-white p-5 dark:bg-slate-900">
+            <h2 className="mb-3 text-xl font-semibold">Last five comparable rounds</h2>
+            <RoundTable rounds={recentRounds(filteredScores)} />
+          </section>
+        )}
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-8">
@@ -319,7 +351,7 @@ export default function Statistics() {
             animate={{ x: 0, opacity: 1 }}
             className="bg-white dark:bg-slate-900 rounded-2xl p-6 border-2 border-slate-200 dark:border-slate-700"
           >
-            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Win Rate by Game Mode</h3>
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mb-4">Correct and incorrect answers</h3>
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={winLossByGame}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -327,8 +359,8 @@ export default function Statistics() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="wins" fill="#10b981" name="Wins" radius={[8, 8, 0, 0]} />
-                <Bar dataKey="losses" fill="#ef4444" name="Losses" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="wins" fill="#10b981" name="Correct" radius={[8, 8, 0, 0]} />
+                <Bar dataKey="losses" fill="#ef4444" name="Incorrect" radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </motion.div>

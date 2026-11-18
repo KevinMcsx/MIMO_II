@@ -1,6 +1,7 @@
+import { gameLabels } from '@/lib/gameDefinitions';
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { localData } from '@/api/localData';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Star, Trophy, ChevronLeft, CheckCircle, Flame, Medal, Sparkles, History, Award, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -22,7 +23,7 @@ export default function DailyChallenge() {
   const today = new Date().toISOString().split('T')[0];
   const queryClient = useQueryClient();
   
-  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge')];
+  const gameNames = gameLabels(t);
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
 
   // Redirect to game if no player name
@@ -35,7 +36,7 @@ export default function DailyChallenge() {
   const { data: challenge } = useQuery({
     queryKey: ['dailyChallenge', today],
     queryFn: async () => {
-      const challenges = await base44.entities.DailyChallenge.filter({ date: today }, '-created_date', 1);
+      const challenges = await localData.entities.DailyChallenge.filter({ date: today }, '-created_date', 1);
       if (challenges.length > 0) return challenges[0];
       
       // Determine if this should be a featured challenge (every Monday)
@@ -50,7 +51,7 @@ export default function DailyChallenge() {
       const featuredThemes = ['Speed Week', 'Accuracy Week', 'Master Week', 'Champion Week'];
       const randomTheme = featuredThemes[Math.floor(Math.random() * featuredThemes.length)];
       
-      return await base44.entities.DailyChallenge.create({
+      return await localData.entities.DailyChallenge.create({
         date: today,
         game_type: gameType,
         difficulty: difficulty,
@@ -67,7 +68,7 @@ export default function DailyChallenge() {
     queryKey: ['challengeCompletion', today, playerName],
     queryFn: async () => {
       if (!playerName) return null;
-      const completions = await base44.entities.ChallengeCompletion.filter(
+      const completions = await localData.entities.ChallengeCompletion.filter(
         { challenge_date: today, player_name: playerName },
         '-created_date',
         1
@@ -80,7 +81,7 @@ export default function DailyChallenge() {
   const { data: leaderboard } = useQuery({
     queryKey: ['dailyLeaderboard', today],
     queryFn: async () => {
-      const completions = await base44.entities.ChallengeCompletion.filter(
+      const completions = await localData.entities.ChallengeCompletion.filter(
         { challenge_date: today },
         '-score',
         50
@@ -105,7 +106,7 @@ export default function DailyChallenge() {
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
       const thirtyDaysAgoStr = thirtyDaysAgo.toISOString().split('T')[0];
       
-      const completions = await base44.entities.ChallengeCompletion.filter(
+      const completions = await localData.entities.ChallengeCompletion.filter(
         { player_name: playerName },
         '-challenge_date',
         30
@@ -113,7 +114,7 @@ export default function DailyChallenge() {
       
       // Get all corresponding challenges
       const dates = completions.map(c => c.challenge_date);
-      const allChallenges = await base44.entities.DailyChallenge.list();
+      const allChallenges = await localData.entities.DailyChallenge.list();
       const relevantChallenges = allChallenges.filter(ch => dates.includes(ch.date));
       
       return completions.map(comp => {
@@ -129,7 +130,7 @@ export default function DailyChallenge() {
 
   const completeMutation = useMutation({
     mutationFn: async (data) => {
-      return await base44.entities.ChallengeCompletion.create(data);
+      return await localData.entities.ChallengeCompletion.create(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['challengeCompletion']);
@@ -138,7 +139,7 @@ export default function DailyChallenge() {
 
   const updateStreakMutation = useMutation({
     mutationFn: async ({ profileId, updates }) => {
-      await base44.entities.PlayerProfile.update(profileId, updates);
+      await localData.entities.PlayerProfile.update(profileId, updates);
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['playerProfile']);

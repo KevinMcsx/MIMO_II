@@ -1,3 +1,4 @@
+import { Link as FeatureLink } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Volume2, VolumeX, Trophy, BarChart3, Calendar, User, LogOut, Users, ArrowLeft } from 'lucide-react';
@@ -298,7 +299,7 @@ export default function Game() {
       <div 
         className="absolute inset-0 bg-cover bg-center"
         style={{
-          backgroundImage: 'url(https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6960edafe7400f149624e055/0cbaa8d79_MIMOBackground.png)',
+          backgroundImage: 'url(/loopybrain-background.jpg)',
         }}
       />
       
@@ -400,6 +401,12 @@ export default function Game() {
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pt-[calc(env(safe-area-inset-top)+5rem)] pb-40 sm:pb-48">
         <AnimatePresence mode="wait">
+          {(screen === 'nameEntry' || screen === 'gameSelect') && (
+            <nav className="mx-auto mb-5 flex max-w-xl flex-wrap justify-center gap-3" aria-label="More activities">
+              <FeatureLink className="rounded-xl bg-indigo-800 px-4 py-2 font-semibold text-white" to="/RobotMission">Robot Mission</FeatureLink>
+              <FeatureLink className="rounded-xl bg-white px-4 py-2 font-semibold text-indigo-800" to="/School">Classroom session</FeatureLink>
+            </nav>
+          )}
           {screen === 'nameEntry' && (
             <motion.div
               key="nameEntry"

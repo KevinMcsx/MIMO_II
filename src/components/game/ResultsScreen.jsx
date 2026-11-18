@@ -16,7 +16,8 @@ export default function ResultsScreen({
   onMainMenu,
   gameTitle,
   gameResult,
-  playerName
+  playerName,
+  schoolMode = false
 }) {
   const t = useTranslation();
   const [showLevelUp, setShowLevelUp] = React.useState(false);
@@ -183,14 +184,14 @@ export default function ResultsScreen({
         </Button>
       </div>
 
-      <Button
+      {!schoolMode && (<Button
         onClick={downloadResultsAsText}
         variant="ghost"
         className="mt-4 text-slate-400 hover:text-white"
       >
         <Download className="w-4 h-4 mr-2" />
         {t('downloadResults')}
-      </Button>
+      </Button>)}
       
       {progressionData && (
         <div className="flex gap-3 w-full max-w-md">

@@ -1,9 +1,9 @@
+import { gameLabels } from '@/lib/gameDefinitions';
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { localData } from '@/api/localData';
 import { motion } from 'framer-motion';
-import { Trophy, Medal, Award, ChevronLeft, RefreshCw } from 'lucide-react';
-import { useToast } from '@/components/ui/use-toast';
+import { Trophy, Medal, Award, ChevronLeft } from 'lucide-react';
 import PlayerAvatar from '../components/profile/PlayerAvatar';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -19,28 +19,12 @@ export default function Leaderboard() {
   const [timeFilter, setTimeFilter] = useState('all-time');
   const playerName = localStorage.getItem('loopybrainPlayerName') || '';
   
-  const gameNames = [t('colorReaction'), t('colorShape'), t('memoryMatch'), t('proChallenge'), t('patternRecognition'), t('numberMemory'), t('sequenceMemory'), t('juiceMaker'), t('patternPrediction'), t('shapeSorting'), t('twinHunt'), t('quickCount'), t('speedMatch'), t('lightTrack'), t('colorInvaders'), t('reverseSequence'), t('visualSearch'), t('stroopColor'), t('reactionTarget'), t('speedTap'), t('quickColor'), t('goNoGo'), t('memoryMatrix'), t('shapeStack'), t('nBack'), t('oddColor'), t('oddSize'), t('spotDifference'), t('findMax'), t('tapOrder'), t('mathFlash'), t('higherLower'), t('numberSequence'), t('evenOdd'), t('colorSort'), t('shapeMatch')];
+  const gameNames = gameLabels(t);
   const difficultyNames = [t('easy'), t('medium'), t('hard'), t('expert')];
-
-  const { toast } = useToast();
-  const [syncing, setSyncing] = useState(false);
-
-  const handleSync = async () => {
-    setSyncing(true);
-    try {
-      const res = await base44.functions.invoke('saveScoreToDrive', { syncAll: true });
-      const count = res?.synced ?? 0;
-      toast({ title: t('syncComplete').replace('{count}', count) });
-    } catch (e) {
-      toast({ title: t('syncFailed'), variant: 'destructive' });
-    } finally {
-      setSyncing(false);
-    }
-  };
 
   const { data: allProfiles = [], refetch: refetchProfiles } = useQuery({
     queryKey: ['allProfiles'],
-    queryFn: () => base44.entities.PlayerProfile.list(),
+    queryFn: () => localData.entities.PlayerProfile.list(),
   });
 
   const getPlayerProfile = (name) => allProfiles.find(p => p.player_name === name);
@@ -52,7 +36,7 @@ export default function Leaderboard() {
       if (selectedGame) filters.game_type = selectedGame;
       if (selectedDifficulty) filters.difficulty = selectedDifficulty;
       
-      const allScores = await base44.entities.GameScore.filter(filters, '-score', 500);
+      const allScores = await localData.entities.GameScore.filter(filters, '-score', 500);
       
       // Filter by time
       if (timeFilter !== 'all-time') {
@@ -91,10 +75,6 @@ export default function Leaderboard() {
               {t('backToGame')}
             </Button>
           </Link>
-          <Button variant="outline" onClick={handleSync} disabled={syncing}>
-            <RefreshCw className={`w-4 h-4 mr-2 ${syncing ? 'animate-spin' : ''}`} />
-            {t('syncToSheet')}
-          </Button>
         </div>
 
         <motion.div
@@ -103,7 +83,7 @@ export default function Leaderboard() {
           className="text-center mb-8"
         >
           <h1 className="text-5xl font-black text-slate-800 dark:text-slate-100 mb-2">🏆 {t('leaderboard')}</h1>
-          <p className="text-slate-600 text-lg">{t('topPlayers')}</p>
+          <p className="text-slate-600 text-lg">{t('localLeaderboard')}</p>
         </motion.div>
 
         {/* Filters */}

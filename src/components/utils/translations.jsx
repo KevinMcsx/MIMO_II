@@ -189,6 +189,7 @@ export const translations = {
     comeBackTomorrow: "Come back tomorrow for a new challenge!",
     
     // Leaderboard
+    localLeaderboard: 'Scores saved in this browser',
     topPlayers: "Top Players",
     allGames: "All Games",
     allDifficulties: "All Difficulties",
@@ -492,6 +493,7 @@ export const translations = {
     comeBackTomorrow: "¡Vuelve mañana para un nuevo desafío!",
     
     // Leaderboard
+    localLeaderboard: 'Scores saved in this browser',
     topPlayers: "Mejores Jugadores",
     allGames: "Todos los Juegos",
     allDifficulties: "Todas las Dificultades",
@@ -797,6 +799,7 @@ export const translations = {
     comeBackTomorrow: "Revenez demain pour un nouveau défi !",
     
     // Leaderboard
+    localLeaderboard: 'Scores saved in this browser',
     topPlayers: "Meilleurs Joueurs",
     allGames: "Tous les Jeux",
     allDifficulties: "Toutes Difficultés",
@@ -1102,6 +1105,7 @@ export const translations = {
     comeBackTomorrow: "Komm morgen für eine neue Herausforderung zurück!",
     
     // Leaderboard
+    localLeaderboard: 'Scores saved in this browser',
     topPlayers: "Top-Spieler",
     allGames: "Alle Spiele",
     allDifficulties: "Alle Schwierigkeiten",
@@ -1407,6 +1411,7 @@ export const translations = {
     comeBackTomorrow: "Gyere vissza holnap egy új kihívásért!",
     
     // Leaderboard
+    localLeaderboard: 'Scores saved in this browser',
     topPlayers: "Legjobb Játékosok",
     allGames: "Minden Játék",
     allDifficulties: "Minden Nehézség",
@@ -1712,6 +1717,7 @@ export const translations = {
     comeBackTomorrow: "عد غداً لتحدي جديد!",
     
     // Leaderboard
+    localLeaderboard: 'Scores saved in this browser',
     topPlayers: "أفضل اللاعبين",
     allGames: "كل الألعاب",
     allDifficulties: "كل المستويات",

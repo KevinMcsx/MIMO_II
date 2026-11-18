@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { localData } from '@/api/localData';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ShoppingBag, Coins, Lock, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -42,7 +42,7 @@ export default function Store() {
         updates.unlocked_themes = [...(profile.unlocked_themes || ['default']), itemId];
       }
 
-      return base44.entities.PlayerProfile.update(profile.id, updates);
+      return localData.entities.PlayerProfile.update(profile.id, updates);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['playerProfile'] });

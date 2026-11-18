@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { localData } from '@/api/localData';
 import { motion } from 'framer-motion';
 import { ChevronLeft, Star, Lock, ShoppingBag, Trash2, AlertTriangle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -39,7 +39,7 @@ export default function Profile() {
   const updateProfileMutation = useMutation({
     mutationFn: async (updates) => {
       try {
-        await base44.entities.PlayerProfile.update(profile.id, updates);
+        await localData.entities.PlayerProfile.update(profile.id, updates);
       } catch (error) {
         console.error('Failed to update profile in database, updating localStorage only:', error);
       }
@@ -100,11 +100,11 @@ export default function Profile() {
   const handleDeleteAccount = async () => {
     setDeleting(true);
     try {
-      await base44.entities.PlayerProfile.delete(profile.id);
-      await base44.entities.GameScore.deleteMany({ player_name: playerName });
-      await base44.entities.ChallengeCompletion.deleteMany({ player_name: playerName });
+      await localData.entities.PlayerProfile.delete(profile.id);
+      await localData.entities.GameScore.deleteMany({ player_name: playerName });
+      await localData.entities.ChallengeCompletion.deleteMany({ player_name: playerName });
     } catch (error) {
-      console.error('Failed to delete account data from database:', error);
+      console.error('Failed to delete account data from browser storage:', error);
     }
     try {
       const stored = localStorage.getItem('loopybrain_player_profiles');

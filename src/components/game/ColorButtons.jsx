@@ -14,7 +14,8 @@ export default function ColorButtons({ activeKey, onPress, disabled, showLabels 
       {buttons.map((btn) => (
         <motion.button
           key={btn.key}
-          onClick={() => !disabled && onPress(btn.color)}
+          onClick={event => !disabled && onPress(btn.color,
+            event.detail === 0 ? 'keyboard' : event.nativeEvent.pointerType || 'mouse')}
           whileTap={{ scale: 0.9 }}
           animate={{
             scale: activeKey === btn.key ? 1.1 : 1,

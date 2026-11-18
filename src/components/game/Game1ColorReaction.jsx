@@ -1,3 +1,4 @@
+import { median } from '@/lib/scoreComparison';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Info } from 'lucide-react';
@@ -15,7 +16,7 @@ const SHAPES = ['circle', 'square', 'triangle', 'star'];
 
 const SHAPE_COUNTS = { 1: 20, 2: 40, 3: 60, 4: 80 };
 
-export default function Game1ColorReaction({ difficulty, onMainMenu, playerName }) {
+export default function Game1ColorReaction({ difficulty, onMainMenu, playerName, onSave = saveGameResult, schoolMode = false }) {
   const t = useTranslation();
   const [gameState, setGameState] = useState('countdown'); // countdown, playing, finished
   const [countdown, setCountdown] = useState(3);
@@ -60,11 +61,18 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
     shapeStartTime.current = Date.now();
   }, []);
 
-  const handleColorPress = useCallback((pressedColor) => {
+  const inputs = useRef(new Set());
+  const correctTimes = useRef([]);
+  const acceptedShape = useRef(null);
+  const handleColorPress = useCallback((pressedColor, inputMode) => {
     if (gameState !== 'playing' || !currentColor) return;
 
     const reactionTime = Date.now() - shapeStartTime.current;
     const isCorrect = pressedColor === currentColor;
+    if (acceptedShape.current === shapeStartTime.current) return;
+    acceptedShape.current = shapeStartTime.current;
+    inputs.current.add(inputMode);
+    if (isCorrect) correctTimes.current.push(reactionTime);
 
     if (isCorrect) {
       sounds.correctHit();
@@ -96,7 +104,9 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
       }));
       
       // Save result
-      saveGameResult({
+      onSave({
+        input_mode: inputs.current.size === 1 ? [...inputs.current][0] : 'mixed',
+        median_reaction_time: median(correctTimes.current),
         game_type: 1,
         difficulty: difficulty,
         total_time: finalTime,
@@ -115,14 +125,14 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
     
     setCurrentShape(null);
     setCurrentColor(null);
-  }, [gameState, currentColor, shapeIndex, totalShapes, generateNewShape]);
+  }, [gameState, currentColor, shapeIndex, totalShapes, generateNewShape, difficulty, onSave, playerName, stats]);
 
   // Keyboard controls
   useEffect(() => {
     const handleKeyDown = (e) => {
       const keyMap = { '1': 'yellow', '2': 'green', '3': 'blue', '4': 'red' };
-      if (keyMap[e.key]) {
-        handleColorPress(keyMap[e.key]);
+      if (keyMap[e.key] && !e.repeat) {
+        handleColorPress(keyMap[e.key], 'keyboard');
       }
     };
 
@@ -152,8 +162,12 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName 
           correct_hits: stats.correctHits,
           avg_reaction_time: avgReactionTime,
         }}
-        playerName={playerName}
+        playerName={schoolMode ? undefined : playerName}
+        schoolMode={schoolMode}
         onPlayAgain={() => {
+          inputs.current.clear();
+          correctTimes.current = [];
+          acceptedShape.current = null;
           setGameState('countdown');
           setCountdown(3);
           setShapeIndex(0);

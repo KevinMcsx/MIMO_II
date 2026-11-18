@@ -1,4 +1,4 @@
-import { base44 } from '@/api/base44Client';
+import { localData } from '@/api/localData';
 import { calculateXP, getLevelFromXP, getUnlocksForLevel, getAllUnlocksUpToLevel } from './ProgressionSystem';
 
 const PROFILE_STORAGE_KEY = 'loopybrain_player_profiles';
@@ -69,7 +69,7 @@ export async function getPlayerProfile(playerName) {
   if (!playerName) return null;
   
   try {
-    const profiles = await base44.entities.PlayerProfile.filter({ player_name: playerName });
+    const profiles = await localData.entities.PlayerProfile.filter({ player_name: playerName });
     
     if (profiles.length > 0) {
       // Save to localStorage as backup
@@ -77,7 +77,7 @@ export async function getPlayerProfile(playerName) {
       return profiles[0];
     } else {
       // Create new profile in database
-      const newProfile = await base44.entities.PlayerProfile.create({
+      const newProfile = await localData.entities.PlayerProfile.create({
         player_name: playerName,
         level: 1,
         xp: 0,
@@ -103,7 +103,7 @@ export async function getPlayerProfile(playerName) {
       return newProfile;
     }
   } catch (error) {
-    console.error('Error fetching player profile from database, using localStorage:', error);
+    console.error('Error fetching player profile from browser storage, using localStorage:', error);
     // Fallback to localStorage
     let localProfile = getProfileFromLocalStorage(playerName);
     if (!localProfile) {
@@ -185,7 +185,7 @@ export async function awardXP(playerName, gameResult) {
     };
     
     try {
-      await base44.entities.PlayerProfile.update(profile.id, updatedData);
+      await localData.entities.PlayerProfile.update(profile.id, updatedData);
     } catch (error) {
       console.error('Failed to update profile in database, saving to localStorage only:', error);
     }
@@ -201,7 +201,7 @@ export async function awardXP(playerName, gameResult) {
     };
     
     try {
-      await base44.entities.PlayerProfile.update(profile.id, updatedData);
+      await localData.entities.PlayerProfile.update(profile.id, updatedData);
     } catch (error) {
       console.error('Failed to update profile in database, saving to localStorage only:', error);
     }
