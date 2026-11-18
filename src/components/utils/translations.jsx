@@ -1,5 +1,14 @@
 export const translations = {
   en: {
+    hidConnect: "Connect console",
+    hidDisconnect: "Disconnect console",
+    hidConnecting: "Connecting\u2026",
+    hidClosing: "Disconnecting\u2026",
+    hidConsole: "RGB console",
+    hidUnsupported: "Console LEDs require WebHID in a compatible desktop browser.",
+    hidIncompatible: "This device uses a different LED report.",
+    hidDisconnected: "Console disconnected.",
+    hidError: "Could not communicate with the console.",
     // Main Menu
     chooseGame: "Choose a Game!",
     categoryAll: "All",
@@ -1222,6 +1231,15 @@ export const translations = {
   },
   
   hu: {
+    hidConnect: "Konzol csatlakoztat\u00e1sa",
+    hidDisconnect: "Konzol lev\u00e1laszt\u00e1sa",
+    hidConnecting: "Csatlakoz\u00e1s\u2026",
+    hidClosing: "Lev\u00e1laszt\u00e1s\u2026",
+    hidConsole: "RGB-konzol",
+    hidUnsupported: "A konzol LED-jeihez WebHID-et t\u00e1mogat\u00f3 asztali b\u00f6ng\u00e9sz\u0151 sz\u00fcks\u00e9ges.",
+    hidIncompatible: "Az eszk\u00f6z m\u00e1s LED-parancsform\u00e1tumot haszn\u00e1l.",
+    hidDisconnected: "A konzol lev\u00e1lt.",
+    hidError: "Nem siker\u00fclt kommunik\u00e1lni a konzollal.",
     // Main Menu
     chooseGame: "Válassz Játékot!",
     categoryAll: "Összes",

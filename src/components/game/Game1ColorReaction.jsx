@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import { median } from '@/lib/scoreComparison';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -235,6 +236,8 @@ export default function Game1ColorReaction({ difficulty, onMainMenu, playerName,
           </div>
         </div>
       </div>
+
+      <ConsoleLeds dark color={gameState === 'playing' ? currentColor : null} />
 
       {/* Game Area */}
       <div className="w-full max-w-2xl h-80 bg-slate-800/50 rounded-3xl border border-slate-700 flex items-center justify-center">

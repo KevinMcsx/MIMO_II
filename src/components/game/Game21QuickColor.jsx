@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -76,6 +77,7 @@ export default function Game21QuickColor({ difficulty, onMainMenu, playerName })
         </div>
         <AnimatePresence>{gameState === 'countdown' && countdown > 0 && (<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-3xl"><div className="text-9xl font-black text-white">{countdown}</div></motion.div>)}</AnimatePresence>
         <AnimatePresence>{paused && (<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={togglePause} className="absolute inset-0 flex items-center justify-center bg-black/70 rounded-3xl cursor-pointer z-50"><div className="text-center"><Play className="w-24 h-24 text-white mx-auto mb-4" /><p className="text-3xl font-bold text-white">PAUSED</p></div></motion.div>)}</AnimatePresence>
+        <ConsoleLeds color={gameState === 'playing' && !paused && !showTutorial ? targetColor : null} />
         <p className="mb-4 text-center text-sm font-semibold text-slate-500 uppercase">Tap the matching color</p>
         <div className="flex justify-center mb-8">
           {targetColor && <motion.div key={round} initial={{ scale: 0 }} animate={{ scale: 1 }} className="w-28 h-28 rounded-full shadow-lg" style={{ backgroundColor: targetColor }} />}
