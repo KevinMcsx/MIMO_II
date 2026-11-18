@@ -1,3 +1,4 @@
+import ConsoleLeds from '@/components/game/ConsoleLeds';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Bot, Circle, Diamond, Square, Triangle } from 'lucide-react';
@@ -134,6 +135,7 @@ export default function RobotMission() {
           <Bot className={screen === 'finished' && !reducedMotion ? 'size-12 motion-safe:animate-bounce' : 'size-12'} aria-hidden="true" />
           <div><h1 className="text-3xl font-bold">Robot Mission</h1><p>Help the robot collect three parts.</p></div>
         </header>
+        <ConsoleLeds color={screen === 'playing' && phase === 2 && ready && !feedback ? '#4338CA' : null} />
         <section className="space-y-5 rounded-2xl bg-white p-6 shadow-sm dark:bg-slate-900">
           {screen === 'intro' && <>
             <p>Match shapes, repeat patterns and respond when the signal says Go.</p>

@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -137,6 +138,7 @@ export default function Game14LightTrack({ difficulty, onMainMenu, playerName })
           )}
         </AnimatePresence>
 
+        <ConsoleLeds color={gameState === 'playing' && phase === 'show' && activeCell != null && !paused && !showTutorial ? cellColor : null} />
         <div className="mb-6 text-center">
           <p className="text-lg font-semibold text-slate-700">{phase === 'show' ? '💡 Watch the sequence...' : `Repeat it! (${inputIndex}/${sequence.length})`}</p>
         </div>

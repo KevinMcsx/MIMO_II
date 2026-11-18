@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -184,6 +185,7 @@ export default function Game12QuickCount({ difficulty, onMainMenu, playerName })
           )}
         </AnimatePresence>
 
+        <ConsoleLeds color={gameState === 'playing' && !paused && !showTutorial ? target?.color : null} />
         {target && (
           <div className="mb-6 text-center">
             <p className="text-sm text-slate-500 font-semibold uppercase tracking-wide">Count the</p>

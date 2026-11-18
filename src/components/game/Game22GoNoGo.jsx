@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -86,6 +87,7 @@ export default function Game22GoNoGo({ difficulty, onMainMenu, playerName }) {
           <div><p className="text-lg font-semibold text-green-600">{t('score')}: {score}</p><p className="text-sm text-slate-500">🟢 Tap &nbsp; 🔴 Don't</p></div>
           <div className="flex gap-2 items-center"><p className="text-xl font-bold text-slate-700">⏱️ {timeLeft}s</p><Button onClick={togglePause} size="icon" variant="ghost">{paused ? <Play className="w-5 h-5" /> : <Pause className="w-5 h-5" />}</Button><Button onClick={() => setShowTutorial(true)} size="icon" variant="ghost"><HelpCircle className="w-5 h-5" /></Button></div>
         </div>
+        <ConsoleLeds color={gameState === 'playing' && !paused && !showTutorial && phase === 'show' ? stimulus : null} />
         <AnimatePresence>{gameState === 'countdown' && countdown > 0 && (<motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-3xl"><div className="text-9xl font-black text-white">{countdown}</div></motion.div>)}</AnimatePresence>
         <AnimatePresence>{paused && (<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={togglePause} className="absolute inset-0 flex items-center justify-center bg-black/70 rounded-3xl cursor-pointer z-50"><div className="text-center"><Play className="w-24 h-24 text-white mx-auto mb-4" /><p className="text-3xl font-bold text-white">PAUSED</p></div></motion.div>)}</AnimatePresence>
         <div onClick={handleTap} className="relative bg-slate-100 rounded-2xl border-2 border-slate-200 cursor-pointer flex items-center justify-center" style={{ height: 360 }}>

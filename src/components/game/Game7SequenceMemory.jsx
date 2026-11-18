@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -265,6 +266,7 @@ export default function Game7SequenceMemory({ difficulty, onMainMenu, playerName
           )}
         </AnimatePresence>
 
+        <ConsoleLeds color={gameState === 'showing' && !paused && !showTutorial ? colors[sequence[showingIndex]] : null} cueStep={showingIndex} />
         <div className="mb-6 text-center">
           <p className="text-lg font-semibold text-slate-700">
             {gameState === 'showing' ? `👀 ${t('watchSequence')}` : `🧠 ${t('repeatSequence')}`}

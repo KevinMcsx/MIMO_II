@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -173,6 +174,7 @@ export default function Game10ShapeSorting({ difficulty, onMainMenu, playerName 
           )}
         </AnimatePresence>
 
+        <ConsoleLeds color={gameState === 'playing' && !paused && !showTutorial ? currentShape?.color : null} />
         {rule && (
           <div className="mb-6 text-center">
             <p className="text-sm text-slate-500 font-semibold uppercase tracking-wide">Rule</p>

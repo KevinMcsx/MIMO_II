@@ -1,3 +1,4 @@
+import ConsoleLeds from './ConsoleLeds';
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
@@ -138,6 +139,7 @@ export default function Game15ColorInvaders({ difficulty, onMainMenu, playerName
           </div>
         </div>
 
+        <ConsoleLeds color={gameState === 'playing' && !paused && !showTutorial ? targetColor : null} />
         <AnimatePresence>
           {gameState === 'countdown' && countdown > 0 && (
             <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }} className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-3xl">

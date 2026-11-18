@@ -3,7 +3,7 @@ import { Usb } from 'lucide-react';
 import { BUTTON_COUNT, CONSOLE_USAGE, CONSOLE_USAGE_PAGE, OFF, createLedLink, isConsole } from '@/lib/consoleHid';
 import { useTranslation } from '@/components/utils/translations';
 
-export default function ConsoleLeds({ color = OFF, dark = false }) {
+export default function ConsoleLeds({ color = OFF, cueStep, dark = false }) {
   const t = useTranslation();
   const [status, setStatus] = useState('idle');
   const [name, setName] = useState('');
@@ -30,8 +30,18 @@ export default function ConsoleLeds({ color = OFF, dark = false }) {
 
   useEffect(() => {
     if (status !== 'connected') return;
-    void connection.current?.link.send(Array(BUTTON_COUNT).fill(color ?? OFF));
-  }, [color, status]);
+    const link = connection.current?.link;
+    const frame = Array(BUTTON_COUNT).fill(color ?? OFF);
+    if (cueStep == null || !color || color === OFF) {
+      void link?.send(frame);
+      return;
+    }
+
+    // A short dark gap keeps adjacent repeats of the same color distinct.
+    void link?.send(Array(BUTTON_COUNT).fill(OFF));
+    const timer = setTimeout(() => void link?.send(frame), 90);
+    return () => clearTimeout(timer);
+  }, [color, cueStep, status]);
 
   async function connect() {
     const attempt = ++generation.current;
