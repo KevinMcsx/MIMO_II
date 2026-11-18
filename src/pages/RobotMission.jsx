@@ -147,7 +147,7 @@ export default function RobotMission() {
           {screen === 'playing' && <>
             <div className="flex flex-wrap items-center justify-between gap-2">
               <h2 className="text-xl font-semibold">{phases[phase]}</h2>
-              <p>Part {phase + 1} of 3{!practice && ' ? ' + Math.max(0, Math.ceil((90000 - elapsed) / 1000)) + ' s'}</p>
+              <p>Part {phase + 1} of 3{!practice && ' \u00b7 ' + Math.max(0, Math.ceil((90000 - elapsed) / 1000)) + ' s'}</p>
             </div>
             <p>Trial {trial % 5 + 1} of 5</p>
             {phase === 0 && <p className="text-lg">Find <strong>{shapes[pattern[0]].name}</strong></p>}
@@ -156,7 +156,7 @@ export default function RobotMission() {
                 const { Icon, name } = shapes[value];
                 return <span className="inline-flex items-center gap-1" key={index}><Icon aria-hidden="true" />{name}</span>;
               })}
-              {practice && <button className={controls} onClick={() => setPracticeReveal(true)}>I?m ready</button>}
+              {practice && <button className={controls} onClick={() => setPracticeReveal(true)}>Ready to repeat</button>}
             </div> : <p>Repeat the shapes in order. {answers.length} of 3 selected.</p>)}
             {phase !== 2 && !revealing && <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               {shapes.map(({ Icon, name }, index) => <button key={name} className={controls}
@@ -175,7 +175,7 @@ export default function RobotMission() {
           </>}
           {screen === 'finished' && <>
             <h2 className="text-xl font-bold">All three robot parts collected</h2>
-            <p>{correctCount} correct out of {trialCount}{practice && ' ? practice'}</p>
+            <p>{correctCount} correct out of {trialCount}{practice && ' \u00b7 practice'}</p>
             <button className={primary} onClick={() => setScreen('intro')}>Play again</button>
           </>}
         </section>

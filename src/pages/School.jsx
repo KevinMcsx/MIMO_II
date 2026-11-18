@@ -90,7 +90,7 @@ export default function School() {
           {schoolError && <p role="alert">{schoolError}</p>}
         </section>
         <section className="space-y-4 rounded-xl border border-slate-300 p-5">
-          <h2 className="text-xl font-semibold">Color Reaction ? last five comparable rounds</h2>
+          <h2 className="text-xl font-semibold">Color Reaction &middot; last five comparable rounds</h2>
           <div className="flex flex-wrap gap-4">
             <label className="grid gap-1">Player code
               <select className="rounded border bg-white p-2 text-slate-900" value={selectedCode} onChange={event => setSelectedCode(event.target.value)}>

@@ -13,8 +13,8 @@ export default function RoundTable({ rounds }) {
           const typical = round.median_reaction_time ?? (round.avg_reaction_time > 0 ? round.avg_reaction_time : null);
           return <tr className="border-t" key={round.id}>
             <td className="p-2">{new Date(round.created_date).toLocaleString()}</td>
-            <td className="p-2">{accuracy == null ? '?' : accuracy + '%'}</td>
-            <td className="p-2">{typical == null ? '?' : Math.round(typical) + ' ms' + (round.median_reaction_time == null ? ' (avg)' : ' (median)')}</td>
+            <td className="p-2">{accuracy == null ? '\u2014' : accuracy + '%'}</td>
+            <td className="p-2">{typical == null ? '\u2014' : Math.round(typical) + ' ms' + (round.median_reaction_time == null ? ' (avg)' : ' (median)')}</td>
             <td className="p-2">{round.score}</td>
           </tr>;
         })}</tbody>
