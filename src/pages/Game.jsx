@@ -1,3 +1,4 @@
+import InstallLoopyBrain from '@/components/InstallLoopyBrain';
 import { Link as FeatureLink } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -403,6 +404,7 @@ export default function Game() {
         <AnimatePresence mode="wait">
           {(screen === 'nameEntry' || screen === 'gameSelect') && (
             <nav className="mx-auto mb-5 flex max-w-xl flex-wrap justify-center gap-3" aria-label="More activities">
+              <InstallLoopyBrain />
               <FeatureLink className="rounded-xl bg-indigo-800 px-4 py-2 font-semibold text-white" to="/RobotMission">Robot Mission</FeatureLink>
               <FeatureLink className="rounded-xl bg-white px-4 py-2 font-semibold text-indigo-800" to="/School">Classroom session</FeatureLink>
             </nav>

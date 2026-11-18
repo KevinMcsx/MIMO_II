@@ -1,5 +1,6 @@
 export const translations = {
   en: {
+    installLoopyBrain: "Install LoopyBrain",
     hidConnect: "Connect console",
     hidDisconnect: "Disconnect console",
     hidConnecting: "Connecting\u2026",
@@ -1231,6 +1232,7 @@ export const translations = {
   },
   
   hu: {
+    installLoopyBrain: "LoopyBrain telep\u00edt\u00e9se",
     hidConnect: "Konzol csatlakoztat\u00e1sa",
     hidDisconnect: "Konzol lev\u00e1laszt\u00e1sa",
     hidConnecting: "Csatlakoz\u00e1s\u2026",

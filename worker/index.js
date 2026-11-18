@@ -55,7 +55,7 @@ export default {
     const asset = assets[path];
     if (asset) {
       return new Response(request.method === 'HEAD' ? null : Uint8Array.from(atob(asset.data), c => c.charCodeAt(0)), {
-        headers: { 'Content-Type': asset.type, 'Cache-Control': path.startsWith('/assets/') ? 'public,max-age=31536000,immutable' : 'public,max-age=3600' },
+        headers: { 'Content-Type': asset.type, 'Cache-Control': path === '/sw.js' || path === '/manifest.json' ? 'no-cache' : path.startsWith('/assets/') ? 'public,max-age=31536000,immutable' : 'public,max-age=3600' },
       });
     }
     if (path.startsWith('/api/') || path.startsWith('/assets/')) return new Response(null, { status: 404 });

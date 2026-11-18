@@ -1,0 +1,31 @@
+{
+  "id": "/",
+  "name": "LoopyBrain",
+  "short_name": "LoopyBrain",
+  "description": "Play LoopyBrain games and follow your progress.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#17143A",
+  "background_color": "#17143A",
+  "icons": [
+    {
+      "src": "/icons/loopybrain-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/loopybrain-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/loopybrain-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
